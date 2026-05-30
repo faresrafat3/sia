@@ -1,0 +1,186 @@
+from __future__ import annotations
+
+from ...core.objects.ledger import LedgerEntry
+from ...core.objects.memory import MemoryUnit
+from ..anomaly_runtime.service import extract_anomaly_candidates
+from ..blackboard_core.service import attach_context, close_blackboard, create_blackboard, snapshot_blackboard
+from ..concept_engine.registry import InMemoryConceptRegistry
+from ..contradiction_runtime.service import detect_contradictions
+from ..economy_control.escalation import should_escalate
+from ..economy_control.ledger import InMemoryLedgerStore
+from ..economy_control.router import choose_tier
+from ..memory_os.retriever import retrieve_memory
+from ..memory_os.store import InMemoryMemoryStore
+from ..reasoning_runtime.service import run_reasoning
+from ..task_ingress.service import ingest_task
+from ..theory_runtime.registry import InMemoryTheoryRegistry
+from ..verification_runtime.service import is_good_enough, verify_output
+
+
+def run_minimal_pipeline(
+    raw_task: str | dict | object,
+    store: InMemoryMemoryStore | None = None,
+    ledger_store: InMemoryLedgerStore | None = None,
+    *,
+    use_memory: bool = True,
+    use_economy: bool = True,
+    forced_tier: str | None = None,
+    concept_registry: InMemoryConceptRegistry | None = None,
+    theory_registry: InMemoryTheoryRegistry | None = None,
+    use_concepts: bool = False,
+) -> dict:
+    store = store or InMemoryMemoryStore()
+    ledger_store = ledger_store or InMemoryLedgerStore()
+    concept_registry = concept_registry or InMemoryConceptRegistry()
+    theory_registry = theory_registry or InMemoryTheoryRegistry()
+
+    task = ingest_task(raw_task)
+    blackboard = create_blackboard(task)
+    attach_context(blackboard, user_context_summary="prototype run", tool_availability=["local"], constraints=[])
+    ranked_frames = list((task.meta or {}).get("ranked_frames", []))
+    secondary_frames = list((task.meta or {}).get("secondary_frames", []))
+    task_contract = (task.meta or {}).get("normalized_envelope", {})
+    blackboard.situation_model.candidate_frames = ranked_frames
+    if (task.meta or {}).get("family_ambiguity"):
+        blackboard.situation_model.uncertainties.append("task framing ambiguity detected")
+
+    concept_items = concept_registry.list_concepts() if use_concepts else []
+    theory_items = theory_registry.list_theories()
+    family_candidates = [task.task_family] + secondary_frames
+    memory_pack = retrieve_memory(
+        task.task_family,
+        task.normalized_text,
+        store.all(),
+        budget=3,
+        concept_items=concept_items,
+        theory_items=theory_items,
+        family_candidates=family_candidates,
+        task_contract=task_contract,
+    ) if use_memory else retrieve_memory(task.task_family, task.normalized_text, [], budget=0, concept_items=concept_items, theory_items=theory_items, family_candidates=family_candidates, task_contract=task_contract)
+    blackboard.retrieved_memory_pack = memory_pack
+
+    if forced_tier is not None:
+        tier_decision = choose_tier(task, blackboard, memory_pack)
+        tier_decision.chosen_tier = forced_tier
+        tier_decision.decision_reason = f"forced tier: {forced_tier}"
+    elif use_economy:
+        tier_decision = choose_tier(task, blackboard, memory_pack)
+    else:
+        tier_decision = choose_tier(task, blackboard, memory_pack)
+        tier_decision.chosen_tier = "tier_1"
+        tier_decision.decision_reason = "fixed default tier without economy-aware routing"
+
+    reasoning = run_reasoning(
+        task.normalized_text,
+        task.task_family,
+        memory_pack,
+        chosen_tier=tier_decision.chosen_tier,
+        framing_candidates=family_candidates,
+    )
+    blackboard.candidate_claims = reasoning["candidate_claims"]
+
+    verification = verify_output(
+        task.task_family,
+        blackboard.candidate_claims[0]["claim_text"],
+        framing_candidates=family_candidates,
+        task_contract=task_contract,
+    )
+    blackboard.verification_state = verification
+    blackboard.contradictions = [c.to_dict() for c in detect_contradictions(task, verification, tier_decision)]
+
+    pre_escalation_snapshot = snapshot_blackboard(blackboard, phase="post_verification", reason="before escalation decision")
+
+    final_tier = tier_decision.chosen_tier
+    if use_economy:
+        escalation = should_escalate(task, verification, current_tier=final_tier)
+    else:
+        escalation = {
+            "escalate": False,
+            "target_tier": None,
+            "reason": "economy-aware escalation disabled",
+            "expected_value": 0.0,
+            "blockers": [],
+        }
+
+    if escalation["escalate"]:
+        final_tier = escalation["target_tier"]
+        escalated_reasoning = run_reasoning(
+            task.normalized_text,
+            task.task_family,
+            memory_pack,
+            chosen_tier=final_tier,
+            framing_candidates=family_candidates,
+        )
+        blackboard.candidate_claims = escalated_reasoning["candidate_claims"]
+        verification = verify_output(
+            task.task_family,
+            blackboard.candidate_claims[0]["claim_text"],
+            framing_candidates=family_candidates,
+            task_contract=task_contract,
+        )
+        blackboard.verification_state = verification
+        blackboard.contradictions = [c.to_dict() for c in detect_contradictions(task, verification, tier_decision)]
+        reasoning = escalated_reasoning
+        snapshot_blackboard(blackboard, phase="post_escalation", reason=escalation["reason"])
+
+    ledger = LedgerEntry.create(task_ref=task.id, phase="answering", action_type="reasoning_and_verification")
+    ledger.tier_used = final_tier
+    ledger.estimated_cost = tier_decision.expected_cost
+    ledger.estimated_immediate_gain = tier_decision.expected_immediate_gain
+    ledger.estimated_reuse_gain = tier_decision.expected_reuse_gain
+    ledger.actual_cost_profile = reasoning["cost_profile"]
+    ledger.actual_immediate_effect = f"good_enough={is_good_enough(verification)}"
+    ledger.notes = tier_decision.decision_reason
+    ledger_store.record_cognitive_spend(ledger)
+
+    anomaly_candidates = [a.to_dict() for a in extract_anomaly_candidates({
+        "task": task.to_dict(),
+        "blackboard": blackboard.to_dict(),
+        "ledger": ledger.to_dict(),
+    })]
+
+    episode_memory = MemoryUnit.create(
+        summary=f"Task {task.task_family} finished with good_enough={verification['verification_summary']['good_enough']} on {final_tier}",
+        memory_type="episodic",
+    )
+    episode_memory.scope.task_families = [task.task_family]
+    episode_memory.meta = {
+        "task_family": task.task_family,
+        "good_enough": verification["verification_summary"]["good_enough"],
+        "tier_used": final_tier,
+        "used_memory": use_memory,
+        "used_economy": use_economy,
+        "used_concepts": use_concepts,
+        "secondary_frames": secondary_frames,
+        "ranked_frames": ranked_frames,
+        "required_properties": task_contract.get("required_properties", []),
+        "forbidden_shortcuts": task_contract.get("forbidden_shortcuts", []),
+        "property_checks": verification.get("property_checks", {}),
+        "shortcut_checks": verification.get("shortcut_checks", {}),
+    }
+    store.store_memory(episode_memory)
+
+    close_blackboard(
+        blackboard,
+        {
+            "task_outcome": verification['verification_summary']['good_enough'],
+            "lessons_to_extract": [],
+            "candidate_concepts": [],
+            "candidate_contradictions": blackboard.contradictions,
+            "candidate_anomalies": anomaly_candidates,
+        },
+    )
+
+    return {
+        "task": task.to_dict(),
+        "blackboard": blackboard.to_dict(),
+        "snapshot": pre_escalation_snapshot.state_copy,
+        "tier_decision": tier_decision.to_dict(),
+        "escalation": escalation,
+        "ledger": ledger.to_dict(),
+        "stored_memory": episode_memory.to_dict(),
+        "concept_count": len(concept_registry.list_concepts()),
+        "used_concepts_count": len(memory_pack.concept_refs),
+        "anomaly_candidates": anomaly_candidates,
+        "used_theories_count": len(memory_pack.theory_refs),
+    }
