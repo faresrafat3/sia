@@ -27,7 +27,7 @@ DEFAULT_MIN_ACTIVATION_SCORE = 7
 ```python
 DEFAULT_FAMILY_SELECTIVITY = {
     'comparison': {'max_active': 1, 'min_score': 7},
-    'synthesis': {'max_active': 1, 'min_score': 7},
+    'synthesis': {'max_active': 2, 'min_score': 7},
     'procedure': {'max_active': 0, 'min_score': 99},
 }
 
@@ -45,7 +45,7 @@ FAMILY_SELECTIVITY_STRATEGY = {
 | Global max_active | 1 | Selectivity ablation: top2 gives identical success (0.986) and activation_rate (0.653) as top1 |
 | Min activation score | 7 | Score 6 and score 7 produce identical results on current concept set; 7 is more conservative for future growth |
 | Comparison max_active | 1 | Family ablation: current_default already achieves maximum success |
-| Synthesis max_active | 1 | synthesis_top2 override shows no improvement |
+| Synthesis max_active | 2 | Raised to enable secondary concept admission when a competitive second concept exists via semantic_balanced strategy |
 | Procedure max_active | 0 | procedure_top1 raises activation_rate (0.653 to 0.708) without improving success |
 | Comparison strategy | contract_heavy | Contract alignment is the primary distinguishing signal for comparison tasks |
 | Synthesis strategy | semantic_balanced | Broader token matching suits multi-source integration tasks |
@@ -88,12 +88,12 @@ The economy-aware tier router (condition_b / condition_c):
 
 ### 3.1 Synthesis Top-2 Policy
 
-**Status**: Tested, not clearly better.
+**Status**: Enabled (max_active=2).
 
-- synthesis_top2 configuration allows 2 concepts for synthesis tasks
-- Result: identical success (0.986) and identical activation rate (0.653)
-- The second concept slot is never filled in practice (no competitive second candidate)
-- **Decision**: Keep synthesis at max_active=1 until the concept set grows and a second candidate becomes viable
+- Raised synthesis to max_active=2 to enable secondary concept admission when a competitive second concept exists
+- The semantic_balanced strategy admits a secondary concept if it also exceeds the min_score threshold
+- Result on current concept set: identical success (0.986) and identical activation rate (0.653) since no competitive second candidate exists yet
+- **Decision**: Keep synthesis at max_active=2 so the secondary admission path is available as the concept set grows
 
 ### 3.2 Procedure Concept Activation
 
@@ -220,7 +220,7 @@ From the Decision Memo (Option B stabilization), the following cycles are availa
 | Result | theory count post-warmup | 4 | Stable |
 | Thesis | Thesis 1 confidence | Moderate-to-high | Documented |
 | Thesis | Thesis 2 confidence | High | Documented |
-| Open | synthesis top-2 | No benefit observed | Monitor |
+| Open | synthesis top-2 | Enabled (max_active=2), no second candidate yet | Monitor |
 | Open | procedure concepts | No benefit observed | Monitor |
 | Open | governance bridge | Not implemented | Deferred |
 | Open | cross-family transfer | Not explored | Deferred |

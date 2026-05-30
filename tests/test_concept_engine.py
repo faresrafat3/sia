@@ -36,18 +36,18 @@ def test_select_applicable_concepts_empty_when_no_family_match():
 
 
 def test_select_applicable_concepts_respects_max_active():
-    """With max_active=1 for comparison, only 1 concept should be selected even with multiple matching."""
+    """With max_active=1 for comparison, exactly 1 concept should be selected when multiple match."""
     c1 = _make_concept(
         "contrast_rule",
         "identifies decisive differences between two proposals",
         ["comparison"],
-        operational_meaning="compare contrast difference decisive between proposals",
+        operational_meaning="compare contrast difference decisive between proposals identify",
     )
     c2 = _make_concept(
         "evidence_weighting",
         "weights evidence sources for comparison between options",
         ["comparison"],
-        operational_meaning="compare evidence weighting options between proposals",
+        operational_meaning="compare evidence weighting options between proposals identify",
     )
 
     selected, decisions = select_applicable_concepts(
@@ -55,8 +55,9 @@ def test_select_applicable_concepts_respects_max_active():
         task_text="Compare these two proposals and identify the decisive difference between them",
         concepts=[c1, c2],
     )
-    # comparison max_active is 1
-    assert len(selected) <= DEFAULT_FAMILY_SELECTIVITY["comparison"]["max_active"]
+    # Both concepts have enough token overlap to score above min_score (7),
+    # but comparison max_active=1 so only 1 is selected.
+    assert len(selected) == 1
 
 
 def test_select_applicable_concepts_redundancy_penalty():
@@ -154,3 +155,70 @@ def test_contract_heavy_doubles_contract_fit():
     assert decisions_with[0].contract_fit > 0
     # With contract_heavy, the activation_score should be higher due to 2x contract_fit
     assert decisions_with[0].activation_score > decisions_without[0].activation_score
+
+
+def test_semantic_balanced_secondary_admission():
+    """semantic_balanced strategy admits a 2nd concept when both score >= min_score and max_active >= 2."""
+    # Both concepts scoped to synthesis with high semantic overlap to task text
+    c1 = _make_concept(
+        "integration_pattern",
+        "combines multiple evidence sources into unified synthesis framework analysis",
+        ["synthesis"],
+        operational_meaning="combines multiple evidence sources unified synthesis framework analysis integration",
+    )
+    c2 = _make_concept(
+        "convergence_rule",
+        "identifies convergence points across multiple evidence sources in synthesis",
+        ["synthesis"],
+        operational_meaning="convergence points across multiple evidence sources synthesis framework analysis",
+    )
+
+    # Task text with heavy token overlap to both concepts
+    task_text = (
+        "Synthesize these multiple evidence sources into a unified framework "
+        "analysis identifying convergence points and integration across all sources"
+    )
+
+    selected, decisions = select_applicable_concepts(
+        task_family="synthesis",
+        task_text=task_text,
+        concepts=[c1, c2],
+    )
+    # synthesis max_active=2 and semantic_balanced strategy admits secondary concept
+    # Both concepts should score >= 7 due to high token overlap
+    assert len(selected) == 2, (
+        f"Expected 2 selected but got {len(selected)}; "
+        f"scores: {[(d.notes, d.activation_score, d.selected) for d in decisions]}"
+    )
+
+
+def test_structural_only_high_threshold_fallback():
+    """structural_only strategy admits 1 concept via high-threshold fallback when score >= 10."""
+    # Create a concept with VERY high token overlap to produce score >= 10
+    c1 = _make_concept(
+        "extraction_protocol",
+        "extracts structured fields from document following strict procedure steps",
+        ["procedure"],
+        operational_meaning=(
+            "extracts structured fields document following strict procedure "
+            "steps protocol output format required properties schema"
+        ),
+    )
+
+    # Task text with massive token overlap to the concept
+    task_text = (
+        "Following the strict procedure protocol, extracts structured fields "
+        "from this document and output the required properties in the schema format steps"
+    )
+
+    selected, decisions = select_applicable_concepts(
+        task_family="procedure",
+        task_text=task_text,
+        concepts=[c1],
+    )
+    # procedure has max_active=0 and min_score=99, but structural_only
+    # high-threshold fallback admits 1 concept when score >= 10
+    assert len(selected) == 1, (
+        f"Expected 1 selected via high-threshold fallback but got {len(selected)}; "
+        f"scores: {[(d.notes, d.activation_score, d.selected) for d in decisions]}"
+    )
