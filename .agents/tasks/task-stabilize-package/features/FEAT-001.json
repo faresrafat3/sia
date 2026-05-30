@@ -2,7 +2,7 @@
   "id": "FEAT-001",
   "type": "feat",
   "description": "Enhance family-specific concept selectivity with differentiated policies per TaskFamily, fix the config variable bug in run_selectivity_ablation.py, and ensure the retriever respects per-family limits rather than a single global cap.",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "Step 1: Fix the bug in virtual_sia/eval/runners/run_selectivity_ablation.py where _set_selectivity() references concept_config.DEFAULT_MAX_ACTIVE_CONCEPTS which does not exist. The correct variable is concept_config.DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS.",
     "Step 2: Update virtual_sia/runtime/concept_engine/config.py to add a TaskFamily enum import-free comment block documenting the policy rationale. Add a FAMILY_SELECTIVITY_STRATEGY dict that maps each family to a strategy descriptor (e.g., comparison='contract_heavy', synthesis='semantic_balanced', procedure='structural_only'). This extends the existing DEFAULT_FAMILY_SELECTIVITY with strategy metadata.",
@@ -25,5 +25,5 @@
     "~/.pyenv/versions/3.12.13/bin/python -m virtual_sia.eval.runners.run_family_selectivity_ablation"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "All verification commands pass. The bug fix (DEFAULT_MAX_ACTIVE_CONCEPTS -> DEFAULT_GLOBAL_MAX_ACTIVE_CONCEPTS) was the critical fix enabling run_selectivity_ablation to import cleanly. The contract_heavy strategy now correctly doubles contract_fit for comparison family scoring. Eval results regenerated successfully with updated scoring logic."
 }
