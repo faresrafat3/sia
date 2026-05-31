@@ -17,7 +17,9 @@ from ..reasoning_runtime.service import run_reasoning
 from ..task_ingress.service import ingest_task
 from ..theory_runtime.registry import InMemoryTheoryRegistry
 from ..theory_runtime.apply import select_applicable_theories, get_theory_prediction_for_task, update_theory_predictive_value, check_theory_explains_contradiction
+from ..identity_runtime.crisis_detector import detect_crisis
 from ..identity_runtime.governance import check_identity_alignment
+from ..identity_runtime.paradigm_fork import propose_fork, execute_fork
 from ..verification_runtime.service import is_good_enough, verify_output, verify_output_anomaly_aware, verify_output_theory_guided
 
 
@@ -36,6 +38,7 @@ def run_minimal_pipeline(
     use_theory_leverage: bool = False,
     use_productive_forgetting: bool = False,
     use_identity_governance: bool = False,
+    use_paradigm_fork: bool = False,
     identity: AgentIdentityObject | None = None,
 ) -> dict:
     store = store or InMemoryMemoryStore()
@@ -258,6 +261,28 @@ def run_minimal_pipeline(
         "ledger": ledger.to_dict(),
     })]
 
+    # Paradigm fork: crisis detection and self-redesign
+    crisis_report = None
+    fork_result = None
+    if use_paradigm_fork and identity is not None:
+        # Build anomaly_history from store (memories with good_enough=False)
+        anomaly_history = []
+        for mem in store.all():
+            mem_meta = mem.meta or {}
+            if not mem_meta.get("good_enough", True):
+                anomaly_history.append(mem_meta)
+        # Count theory failures from theory_registry
+        theory_failures = 0
+        for th in theory_registry.list_theories():
+            if th.prediction_count > 0 and th.predictive_value < 0.4:
+                theory_failures += 1
+        crisis_report = detect_crisis(anomaly_history, theory_failures, identity.drift_score)
+        if crisis_report["level"] == "crisis":
+            proposal = propose_fork(crisis_report, identity)
+            fork_result = execute_fork(proposal, identity, current_cycle=len(store.all()))
+            if fork_result.get("success") and fork_result.get("new_identity"):
+                identity = fork_result["new_identity"]
+
     # Theory leverage post-processing: update predictive value and check contradiction explanations
     if use_theory_leverage and active_theory and theory_prediction:
         # Determine if prediction was correct
@@ -350,4 +375,7 @@ def run_minimal_pipeline(
         "forgetting_report": forgetting_report,
         "alignment_report": alignment_report if use_identity_governance else None,
         "use_identity_governance": use_identity_governance,
+        "crisis_report": crisis_report,
+        "fork_result": fork_result,
+        "use_paradigm_fork": use_paradigm_fork,
     }

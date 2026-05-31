@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "feat",
   "description": "Implement Paradigm Forking / Self-Redesign - Crisis Detection and Paradigm Fork Protocol with safety guards, integrated with identity runtime",
-  "status": "pending",
+  "status": "in_progress",
   "steps": [
     "Create virtual_sia/runtime/identity_runtime/crisis_detector.py with detect_crisis(anomaly_history: List[Dict], theory_failures: int, drift_score: float) -> dict function. Returns CrisisReport dict with: level (str: 'normal'/'warning'/'crisis'), anomaly_count (int), theory_failure_count (int), drift_score (float), reasons (List[str]). Crisis conditions: warning when anomaly_count >= 3 OR drift_score > 0.5; crisis when anomaly_count >= 5 AND theory_failures >= 2 AND drift_score > 0.6.",
     "Create virtual_sia/runtime/identity_runtime/paradigm_fork.py with two functions: propose_fork(crisis_report: dict, identity: AgentIdentityObject) -> dict returns ForkProposal dict with: proposed_changes (list of commitment changes), preserved (list - lineage + successful concepts), discarded (list - failed theories, low-utility memories), justification (str), fork_id (str via make_id). execute_fork(proposal: dict, identity: AgentIdentityObject) -> dict returns ForkResult dict with: success (bool), new_identity (AgentIdentityObject with updated commitments + lineage appended), archived_policies (list), reset_drift_score (float=0.0).",
