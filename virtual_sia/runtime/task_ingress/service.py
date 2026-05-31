@@ -20,10 +20,31 @@ FAMILY_KEYWORDS = {
         "fact and inference", "blur fact and inference", "grounded summary", "write one concise", "لخص", "ادمج",
     ],
     "procedure": [
-        "extract", "format", "reformat", "classify", "parse", "checklist", "fields", "attributes", "structured",
+        "format", "reformat", "classify", "parse", "checklist", "fields", "attributes", "structured",
         "handoff", "layout", "operator", "labeled values", "field-oriented", "normalize", "نسق", "استخرج", "صنف",
     ],
+    "analysis": [
+        "root cause", "causal", "why did", "diagnose", "infer", "system failure", "contributing factor",
+        "mechanism", "explain why", "analyze", "investigate", "underlying", "تحليل", "سبب",
+    ],
+    "extraction": [
+        "extract structured", "pull out", "identify entities", "data points", "key information",
+        "parse fields", "slot fill", "tabulate", "extract all", "structured output", "استخراج", "بيانات",
+        "relevant fields", "structured fields", "structured data", "missing value", "entities",
+        "extract", "incident data",
+    ],
+    "planning": [
+        " plan", "steps to", "schedule", "sequence", "dependencies", "constraints", "milestones",
+        "prioritize", "timeline", "roadmap", "multi-step", "تخطيط", "خطوات",
+    ],
 }
+
+# Multi-word phrases that strongly indicate extraction over procedure.
+# Used for disambiguation when scores are tied or close.
+_EXTRACTION_PRIORITY_SIGNALS = [
+    "extract structured", "extract all", "parse fields", "structured output",
+    "identify entities", "pull out", "key information", "data points",
+]
 
 
 def ingest_task(raw_input: str | dict | object, optional_context: Optional[Dict] = None) -> TaskObject:
@@ -79,6 +100,21 @@ def classify_task_family(text: str) -> tuple[str, dict[str, int], bool, list[str
 
     best_family = ranked[0]
     best_score = scores[best_family]
+
+    # Disambiguation: when procedure wins or ties with extraction by a narrow
+    # margin, check for high-confidence extraction multi-word signals. If the
+    # text contains >= 2 such signals, extraction is the better classification.
+    if best_family == "procedure" and "extraction" in ranked:
+        ext_score = scores["extraction"]
+        if best_score - ext_score <= 1:
+            multi_word_hits = sum(1 for s in _EXTRACTION_PRIORITY_SIGNALS if s in text)
+            if multi_word_hits >= 2:
+                scores["extraction"] = ext_score  # preserve original score
+                ranked = [f for f in ranked if f != "extraction"]
+                ranked.insert(0, "extraction")
+                best_family = "extraction"
+                best_score = ext_score
+
     second_score = scores[ranked[1]] if len(ranked) > 1 else 0
     ambiguity = len(ranked) > 1 and second_score >= max(1, best_score - 1)
     return best_family, scores, ambiguity, ranked
@@ -102,6 +138,9 @@ def default_success_criteria(task_family: str) -> list[str]:
         "comparison": ["clear contrasts", "supported conclusion"],
         "synthesis": ["evidence coverage", "coherent merged answer"],
         "procedure": ["correct format", "rule compliance"],
+        "analysis": ["causal chain identified", "root cause supported by evidence"],
+        "extraction": ["all fields extracted", "structured output valid"],
+        "planning": ["steps sequenced correctly", "constraints satisfied"],
         "unknown": ["reasonable answer", "format validity"],
     }
     return family_map.get(task_family, family_map["unknown"])
