@@ -1,0 +1,29 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Implement Agent Identity Governance (H9) - Identity Object, Drift Detection, Commitment Ledger, and Identity-Aware Governance with pipeline integration, gated behind use_identity_governance=False",
+  "status": "completed",
+  "steps": [
+    "Create virtual_sia/core/objects/identity.py with AgentIdentityObject dataclass following the pattern in base.py. Fields: commitments (List[str]), self_model (Dict[str, Any]), lineage (List[str]), drift_score (float=0.0), accountability_log (List[Dict]), policy_signature (List[str]=[]). Include @classmethod create(commitments, self_model) factory.",
+    "Create directory virtual_sia/runtime/identity_runtime/ with __init__.py",
+    "Create virtual_sia/runtime/identity_runtime/drift_detector.py with measure_drift(current_behavior: List[str], commitments: List[str]) -> float function. Uses token overlap: tokenizes both behavior descriptions and commitment statements, measures overlap ratio. Returns 1.0 - (overlap_tokens / max(commitment_tokens, 1)). Range 0.0 (aligned) to 1.0 (drifted).",
+    "Create virtual_sia/runtime/identity_runtime/commitment_ledger.py with CommitmentLedger class. Tracks: active_commitments (list), violations (list of dicts with commitment, decision, timestamp), evolutions (list of dicts with old_commitment, new_commitment, reason, timestamp). Methods: add_commitment(text), record_violation(commitment, decision, reason), evolve_commitment(old, new, reason), get_active(), get_violations(), get_violation_count().",
+    "Create virtual_sia/runtime/identity_runtime/governance.py with check_identity_alignment(decision: str, identity: AgentIdentityObject) -> dict function. Returns AlignmentReport dict with: aligned (bool), drift_score (float), violated_commitments (list), recommendation (str). Uses measure_drift internally to compare decision text against commitments.",
+    "Wire into pipeline: Add use_identity_governance: bool = False parameter to run_minimal_pipeline. When enabled, after verification and before storing episode memory, call check_identity_alignment with the reasoning output and identity object. Store alignment report in result dict. Identity object is passed as optional parameter identity: AgentIdentityObject | None = None.",
+    "Ensure all existing 234 tests still pass with the new code (default off, no behavior change)."
+  ],
+  "acceptance_criteria": [
+    "AgentIdentityObject can be instantiated with commitments and self_model",
+    "measure_drift returns 0.0 for identical commitment/behavior and approaches 1.0 for completely different text",
+    "CommitmentLedger tracks additions, violations, and evolutions correctly",
+    "check_identity_alignment returns dict with aligned, drift_score, violated_commitments, recommendation",
+    "Pipeline runs unchanged when use_identity_governance=False (default)",
+    "Pipeline includes alignment_report in result when use_identity_governance=True and identity is provided",
+    "All 234 existing tests pass"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ --tb=short -q (all 234 existing + new identity tests pass)"
+  ],
+  "blocked_reason": null,
+  "findings": "All 264 tests pass (234 existing + 30 new). Identity governance gated behind use_identity_governance=False default. No breaking changes to existing pipeline behavior."
+}
