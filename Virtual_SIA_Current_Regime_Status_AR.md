@@ -396,6 +396,12 @@ The new mechanisms are **additive** - they layer on top when explicitly enabled,
 | Runtime | **theory-guided concept activation** | **boost + admission for theory-aligned concepts** | **New (gated)** |
 | Runtime | **theory predictive value** | **Laplace-smoothed accuracy (0.0-1.0)** | **New (gated)** |
 | Runtime | **theory-contradiction interaction** | **explanatory_power accumulation** | **New (gated)** |
+| Config | **use_identity_governance** | **False** | **Frozen (default OFF)** |
+| Config | **use_paradigm_fork** | **False** | **Frozen (default OFF)** |
+| Runtime | **identity drift detection** | **token overlap 0.0-1.0** | **New (gated)** |
+| Runtime | **commitment ledger** | **violations + evolutions tracking** | **New (gated)** |
+| Runtime | **crisis detection** | **3 levels: normal/warning/crisis** | **New (gated)** |
+| Runtime | **paradigm fork protocol** | **propose -> safety check -> execute** | **New (gated)** |
 | Thesis | Thesis 1 confidence | Moderate-to-high | Documented |
 | Thesis | Thesis 2 confidence | High | Documented |
 | Open | synthesis top-2 | Enabled (max_active=2), no second candidate yet | Monitor |
@@ -503,7 +509,7 @@ The mechanism is OFF by default to:
 - 5.44: Meta-Learning (Thrun 1998) -> حكم القابلية للنقل
 
 ### الحالة الحالية
-- إجمالي السرقات: 5.01 - 5.44
+- إجمالي السرقات: 5.01 - 5.62
 - إجمالي الاختبارات: 163
 - الدورات المكتملة: Stabilize, Eval Pressure, Anomaly Leverage, Theory Leverage, Broader Domain
 
@@ -540,6 +546,39 @@ The mechanism is OFF by default to:
 موثقة في `Virtual_SIA_Legitimate_Thefts_Wave3_AR.md`:
 - 5.45-5.49: مصادر Self-Benchmarking (FunSearch, AutoTTS, Novelty Search, Metamorphic Testing, Curriculum Self-Play)
 - 5.50-5.54: مصادر Productive Forgetting (Ebbinghaus, RIF, Reconsolidation, Desirable Difficulties, MemOS)
+
+---
+
+## 13. Wave 3b Capabilities (Not Yet Frozen)
+
+### 13.1 Agent Identity Governance (H9)
+
+**Status**: Implemented, gated behind `use_identity_governance: bool = False`
+
+الميزة تعطي الوكيل هوية صريحة قابلة للفحص عبر:
+- Identity Object مع commitments, self_model, lineage, drift_score, accountability_log
+- Drift Detection يقيس انحراف السلوك عن الالتزامات عبر token overlap
+- Commitment Ledger يتتبع الالتزامات النشطة والانتهاكات والتطورات
+- Identity-Aware Governance يفحص كل قرار مقابل الالتزامات قبل التنفيذ
+
+**Not frozen** لأن: لم تُجرَ بعد تجارب مقارنة مع/بدون identity governance على سلاسل قرارات طويلة.
+
+### 13.2 Paradigm Forking / Self-Redesign
+
+**Status**: Implemented, gated behind `use_paradigm_fork: bool = False`
+
+الميزة تعطي الوكيل القدرة على اكتشاف الأزمات البنيوية واعادة تصميم نفسه عبر:
+- Crisis Detection يراقب تراكم الشذوذات + فشل النظريات + انجراف الهوية
+- Paradigm Fork Protocol يقترح وينفذ تفريع عند الأزمة
+- Fork Safety: تبرير مطلوب، حد أدنى 10 دورات بين التفريعات، حفظ السلالة
+
+**Not frozen** لأن: لم تُجرَ بعد تجارب تحفيز أزمة حقيقية ومقارنة مسارات مع/بدون fork.
+
+### 13.3 Legitimate Thefts (5.55-5.62)
+
+موثقة في `Virtual_SIA_Legitimate_Thefts_Wave3b_AR.md`:
+- 5.55-5.58: مصادر Identity Governance (Personal Identity Philosophy, Organizational Governance, Version Control Systems, Constitutional AI)
+- 5.59-5.62: مصادر Paradigm Forking (Kuhn, Lakatos, Git Branching Model, Punctuated Equilibrium)
 
 ---
 
