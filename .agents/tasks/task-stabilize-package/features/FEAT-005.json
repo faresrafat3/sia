@@ -1,0 +1,24 @@
+{
+  "id": "FEAT-005",
+  "type": "fix",
+  "description": "Address 3 non-blocking improvements from v2 semantic review: fix doc-code drift for synthesis max_active, strengthen test assertion, add two tests for untested strategy branches.",
+  "status": "completed",
+  "steps": [
+    "Step 1: Update Virtual_SIA_Current_Regime_Status_AR.md to reflect synthesis max_active=2 (fix all instances)",
+    "Step 2: Strengthen test_select_applicable_concepts_respects_max_active to assert == 1 instead of <=",
+    "Step 3: Add test_semantic_balanced_secondary_admission test",
+    "Step 4: Add test_structural_only_high_threshold_fallback test"
+  ],
+  "acceptance_criteria": [
+    "Virtual_SIA_Current_Regime_Status_AR.md references synthesis max_active=2 consistently",
+    "test_select_applicable_concepts_respects_max_active asserts == 1",
+    "test_semantic_balanced_secondary_admission passes verifying len(selected) == 2",
+    "test_structural_only_high_threshold_fallback passes verifying len(selected) == 1",
+    "All tests pass"
+  ],
+  "verification": [
+    "~/.pyenv/versions/3.12.13/bin/python -m pytest tests/ -v"
+  ],
+  "blocked_reason": null,
+  "findings": "All 15 tests pass. Doc updated in 4 places (code block, rationale table, section 3.1, summary table). The strengthened assertion passes because both comparison concepts have enough token overlap (family_fit=2 + semantic_fit >= 5 = score >= 7) so at least one is always selected. The secondary admission test works because both synthesis concepts share many tokens with the task text. The high-threshold fallback test works because the procedure concept has ~10 shared tokens with the task text."
+}
