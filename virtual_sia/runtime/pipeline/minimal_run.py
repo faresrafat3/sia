@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from ...core.objects.ledger import LedgerEntry
+from ...core.objects.identity import AgentIdentityObject
 from ...core.objects.memory import MemoryUnit
 from ..anomaly_runtime.service import extract_anomaly_candidates, compute_anomaly_severity_score, matches_known_anomaly_pattern
 from ..blackboard_core.service import attach_context, close_blackboard, create_blackboard, snapshot_blackboard
@@ -16,6 +17,7 @@ from ..reasoning_runtime.service import run_reasoning
 from ..task_ingress.service import ingest_task
 from ..theory_runtime.registry import InMemoryTheoryRegistry
 from ..theory_runtime.apply import select_applicable_theories, get_theory_prediction_for_task, update_theory_predictive_value, check_theory_explains_contradiction
+from ..identity_runtime.governance import check_identity_alignment
 from ..verification_runtime.service import is_good_enough, verify_output, verify_output_anomaly_aware, verify_output_theory_guided
 
 
@@ -33,6 +35,8 @@ def run_minimal_pipeline(
     use_anomaly_leverage: bool = False,
     use_theory_leverage: bool = False,
     use_productive_forgetting: bool = False,
+    use_identity_governance: bool = False,
+    identity: AgentIdentityObject | None = None,
 ) -> dict:
     store = store or InMemoryMemoryStore()
     ledger_store = ledger_store or InMemoryLedgerStore()
@@ -275,6 +279,19 @@ def run_minimal_pipeline(
         for contradiction_dict in blackboard.contradictions:
             check_theory_explains_contradiction(active_theory, contradiction_dict)
 
+    # Identity governance check
+    alignment_report = None
+    if use_identity_governance and identity is not None:
+        alignment_report = check_identity_alignment(
+            blackboard.candidate_claims[0]["claim_text"], identity
+        )
+        if not alignment_report["aligned"]:
+            identity.accountability_log.append({
+                "decision": blackboard.candidate_claims[0]["claim_text"],
+                "drift_score": alignment_report["drift_score"],
+                "recommendation": alignment_report["recommendation"],
+            })
+
     episode_memory = MemoryUnit.create(
         summary=f"Task {task.task_family} finished with good_enough={verification['verification_summary']['good_enough']} on {final_tier}",
         memory_type="episodic",
@@ -331,4 +348,6 @@ def run_minimal_pipeline(
         "theory_prediction": theory_prediction,
         "theory_predictive_value": active_theory.predictive_value if active_theory else None,
         "forgetting_report": forgetting_report,
+        "alignment_report": alignment_report if use_identity_governance else None,
+        "use_identity_governance": use_identity_governance,
     }
