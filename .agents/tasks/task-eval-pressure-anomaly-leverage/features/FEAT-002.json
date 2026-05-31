@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "feat",
   "description": "Cycle 1 - Expand perturbation operators (C1+C2+C3+C4). Add 5 new perturbation operators to taskcase_variants.py, create v6 task set with new perturbations, add perturbation_resistance report module, create v6 eval runner, and generate anti-shortcut benchmark slice. Each new operator documents its Legitimate Theft source.",
-  "status": "pending",
+  "status": "completed",
   "steps": [
     "Step 1 - Add 5 new perturbation operators to virtual_sia/eval/perturbations/taskcase_variants.py following the existing pattern (take TaskCase, clone_case, modify, add tag+meta, return). New operators: support_removal (removes supporting evidence phrases from prompt_text), evidence_reordering (shuffles evidence presentation via sentence reordering), contrast_weakening (weakens distinguishing signals by replacing strong contrast words with weaker ones), structure_weakening (degrades procedural structure cues like removing numbered lists), stronger_shortcut_lures (adds multiple misleading shortcuts that make it easier to take forbidden paths). Each operator must set new_case.tags.append('perturb_<name>') and new_case.meta['perturbation_type'] = '<name>'.",
     "Step 2 - Update build_curriculum_levels() in taskcase_variants.py to add levels 4 and 5 using the new operators. Level 4 applies support_removal + contrast_weakening. Level 5 applies evidence_reordering + stronger_shortcut_lures + structure_weakening. Update build_curriculum_from_cases to accept limit_per_case=6.",
@@ -27,5 +27,5 @@
     "~/.pyenv/versions/3.12.13/bin/python -c \"from virtual_sia.eval.runners.run_local_eval_v6 import run_local_eval_v6; r = run_local_eval_v6(); print('v6 tasks:', r['task_count'])\""
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "All 7 steps implemented. 5 new operators (support_removal, evidence_reordering, contrast_weakening, structure_weakening, stronger_shortcut_lures) added with Legitimate Theft source comments. Curriculum extended to 6 levels (0-5). V6 task set has 18 cases producing 108 curriculum variants. V6 runner generates results including perturbation_resistance report. Anti-shortcut benchmark generates 9 cases (3 per family). All 61 tests pass. The evidence_reordering operator only modifies prompts with 3+ sentences (2-sentence prompts remain unchanged since there is no middle segment to reverse). The build_curriculum_from_cases default changed from 4 to 6."
 }
