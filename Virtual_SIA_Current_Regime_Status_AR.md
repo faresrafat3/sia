@@ -509,4 +509,38 @@ The mechanism is OFF by default to:
 
 ---
 
+## 12. Wave 3 Capabilities (Not Yet Frozen)
+
+### 12.1 Self-Benchmarking (H8)
+
+**Status**: Implemented, gated behind `use_self_benchmarking: bool = False`
+
+الميزة تحول اشارات الفشل (anomaly candidates) الى ضغط تقييمي جديد عبر:
+- توليد TaskCase تشخيصية من anomalies
+- اكتشاف المناطق العمياء (blind spots) في coverage matrix
+- قياس القيمة التشخيصية لكل اختبار عبر conditions
+- دورة تقييم ذاتي كاملة (run_self_benchmark_cycle)
+
+**Not frozen** لان: لم تُجرَ بعد تجارب مقارنة مع/بدون self-benchmarking على المنهج المحكم.
+
+### 12.2 Productive Forgetting (H3)
+
+**Status**: Implemented, gated behind `use_productive_forgetting: bool = False`
+
+الميزة تعطي نظام الذاكرة ادارة دورة حياة كاملة:
+- decay score يضعف الذكريات غير المستخدمة
+- عمليات صريحة: archive / deprecate / delete
+- utility scoring يقيم فائدة كل ذاكرة
+- forgetting policy تؤرشف/تُهمل الذكريات منخفضة الفائدة تلقائيا
+
+**Not frozen** لان: لم تُجرَ بعد تجارب مقارنة retention vs forgetting على مسار التحسن طويل الامد.
+
+### 12.3 Legitimate Thefts (5.45-5.54)
+
+موثقة في `Virtual_SIA_Legitimate_Thefts_Wave3_AR.md`:
+- 5.45-5.49: مصادر Self-Benchmarking (FunSearch, AutoTTS, Novelty Search, Metamorphic Testing, Curriculum Self-Play)
+- 5.50-5.54: مصادر Productive Forgetting (Ebbinghaus, RIF, Reconsolidation, Desirable Difficulties, MemOS)
+
+---
+
 *End of Current Regime Status*
