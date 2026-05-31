@@ -1,0 +1,23 @@
+{
+  "id": "FEAT-004",
+  "type": "docs",
+  "description": "Merge Strategy Document: Create Virtual_SIA_Merge_Strategy_AR.md documenting the merge order for all PRs (#2 through #8-production), squash-merge recommendation, final state of main after merges, and post-merge verification checklist. In Arabic.",
+  "status": "pending",
+  "steps": [
+    "Create Virtual_SIA_Merge_Strategy_AR.md at project root in Arabic. Include: (1) مقدمة - purpose of this document, (2) ترتيب الدمج - PR #2 (stabilize-and-package-v2) -> #3 (eval-pressure-anomaly-leverage) -> #4 (theory-leverage-cycle) -> #5 (wave3-self-benchmark-forgetting) -> #6 (broader-domain-cycle) -> #7 (wave3-identity-paradigm) -> #8 (production-integration, this PR). Explain linear chain with no conflicts expected. (3) استراتيجية الدمج - recommend squash-merge to keep main clean, each PR becomes one commit on main. (4) الحالة النهائية لـ main - document what main will contain after all merges: full runtime (pipeline + all governance mechanisms), evaluation framework (runners, reports, task_sets, perturbations, self-benchmarking), production API, documentation package (theory + evidence + thefts + research paper), 300+ tests. (5) قائمة التحقق بعد الدمج - post-merge verification checklist: run all tests, confirm import structure works, verify API starts in mock mode, confirm eval runners execute, check documentation completeness."
+  ],
+  "acceptance_criteria": [
+    "Document exists at Virtual_SIA_Merge_Strategy_AR.md",
+    "Contains merge order PR #2 through #8",
+    "Recommends squash-merge strategy",
+    "Documents final state of main after all merges",
+    "Includes post-merge verification checklist",
+    "Written entirely in Arabic"
+  ],
+  "verification": [
+    "Confirm file exists and has all 5 major sections",
+    "Confirm merge order lists all 7 PRs correctly"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
