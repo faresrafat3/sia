@@ -11,6 +11,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+import httpx
 import openai
 from tqdm.asyncio import tqdm as async_tqdm
 
@@ -31,7 +32,8 @@ def setup_openai() -> openai.OpenAI:
     if not api_key:
         raise SystemExit("Set OPENAI_API_KEY or LLM_API_KEY.")
     base_url = os.getenv("OPENAI_BASE_URL") or os.getenv("OPENAI_API_BASE") or "https://opengateway.gitlawb.com/v1"
-    return openai.OpenAI(api_key=api_key, base_url=base_url)
+    http_client = httpx.Client(headers={"Accept-Encoding": "identity"}, timeout=120.0)
+    return openai.OpenAI(api_key=api_key, base_url=base_url, http_client=http_client)
 
 
 # -----------------------------------------------------------------------------
