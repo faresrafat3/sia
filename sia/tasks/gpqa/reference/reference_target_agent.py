@@ -1,31 +1,9 @@
 #!/usr/bin/env python3
 """
-Gemini 3.1 Flash Lite on diamond_questions.json → generates submission JSON with model answers.
-
-This script:
-1. Loads questions from data/public/diamond_questions.json (pre-shuffled, no answers)
-2. Calls Gemini API to get model predictions (letters A-D)
-3. Saves answers to: results/{model}_{dataset}_{timestamp}.json
-
-Output format:
-{
-  "model": "model_name",
-  "dataset_config": "diamond_qna",
-  "total_questions": 198,
-  "timestamp": "ISO timestamp",
-  "total_input_tokens": 12345,
-  "total_output_tokens": 5678,
-  "total_cost_usd": 1.234,
-  "details": [
-    {"question_id": 1, "model_answer": "A", "input_tokens": 123, "cost_usd": 0.01},
-    ...
-  ]
-}
+OpenAI-compatible Agent on diamond_questions.json → generates submission JSON with model answers.
+Uses OpenAI compatible gateway (like openGateway).
 """
 
-# -----------------------------------------------------------------------------
-# Imports
-# -----------------------------------------------------------------------------
 import argparse
 import asyncio
 import json
@@ -33,39 +11,27 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from google import genai
-from pydantic import BaseModel, Field
+import openai
 from tqdm.asyncio import tqdm as async_tqdm
 
 
 # -----------------------------------------------------------------------------
-# Configuration — model, labels, concurrency, pricing
+# Configuration — model, labels, concurrency
 # -----------------------------------------------------------------------------
-MODEL_NAME = "models/gemini-3.1-flash-lite"
+MODEL_NAME = os.getenv("TASK_MODEL") or "mimo-v2.5-pro"
 DATASET_LABEL = "diamond_qna"
-CONCURRENCY = 1
-MODEL_PRICING = {"input": 0.075, "output": 0.30}
-
-
-# -----------------------------------------------------------------------------
-# Structured output — schema Gemini must return as JSON (`{"answer": "A"}`)
-# -----------------------------------------------------------------------------
-class Answer(BaseModel):
-    answer: str = Field(description="Letter A, B, C, or D")
+CONCURRENCY = 2
 
 
 # -----------------------------------------------------------------------------
 # Cost & API client
 # -----------------------------------------------------------------------------
-def calculate_cost(input_tokens: int, output_tokens: int, reasoning_tokens: int = 0) -> float:
-    return (input_tokens / 1e6) * MODEL_PRICING["input"] + ((output_tokens + reasoning_tokens) / 1e6) * MODEL_PRICING["output"]
-
-
-def setup_gemini() -> genai.Client:
-    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+def setup_openai() -> openai.OpenAI:
+    api_key = os.getenv("OPENAI_API_KEY") or os.getenv("LLM_API_KEY")
     if not api_key:
-        raise SystemExit("Set GEMINI_API_KEY or GOOGLE_API_KEY.")
-    return genai.Client(api_key=api_key)
+        raise SystemExit("Set OPENAI_API_KEY or LLM_API_KEY.")
+    base_url = os.getenv("OPENAI_BASE_URL") or os.getenv("OPENAI_API_BASE") or "https://opengateway.gitlawb.com/v1"
+    return openai.OpenAI(api_key=api_key, base_url=base_url)
 
 
 # -----------------------------------------------------------------------------
@@ -74,11 +40,6 @@ def setup_gemini() -> genai.Client:
 def format_question(example: dict) -> str:
     """
     Format a question with answer options.
-
-    The data already has pre-shuffled options (A, B, C, D).
-
-    Returns:
-        - prompt: Formatted question prompt with options A, B, C, D
     """
     question_text = example["Question"]
     options = example["options"]
@@ -92,31 +53,17 @@ def format_question(example: dict) -> str:
     return prompt
 
 
-def parse_answer_letter(model_answer_raw: str, parsed_response) -> str:
-    if parsed_response is not None and hasattr(parsed_response, "answer"):
-        answer = str(parsed_response.answer).strip().upper()
-    else:
-        try:
-            answer = str(json.loads(model_answer_raw).get("answer", "")).strip().upper()
-        except json.JSONDecodeError:
-            answer = model_answer_raw.strip().upper()
-    return answer if answer in "ABCD" else next((letter for letter in "ABCD" if letter in answer), "")
-
-
 # -----------------------------------------------------------------------------
-# Inference — one question (Gemini call + usage) and full run with concurrency
+# Inference — one question (OpenAI call) and full run with concurrency
 # -----------------------------------------------------------------------------
 async def get_answer_async(
     index: int,
     example: dict,
-    client: genai.Client,
-    generation_config: dict,
+    client: openai.OpenAI,
     semaphore: asyncio.Semaphore,
 ) -> dict:
     """
     Get model answer for a single question.
-
-    Returns dict with question_id, model_answer, tokens, and cost.
     """
     question_id = example.get("id", index)
     async with semaphore:
@@ -128,14 +75,27 @@ async def get_answer_async(
                     loop = asyncio.get_event_loop()
                     response = await loop.run_in_executor(
                         None,
-                        lambda: client.models.generate_content(
-                            model=MODEL_NAME, contents=prompt, config=generation_config
+                        lambda: client.chat.completions.create(
+                            model=MODEL_NAME,
+                            messages=[{"role": "user", "content": prompt}],
+                            temperature=0.0,
+                            response_format={"type": "json_object"}
                         ),
                     )
-                    model_answer_raw = (response.text or "").strip()
+                    model_answer_raw = (response.choices[0].message.content or "").strip()
                     if not model_answer_raw:
                         raise ValueError("empty model response")
-                    model_answer = parse_answer_letter(model_answer_raw, response.parsed)
+                    
+                    try:
+                        ans_dict = json.loads(model_answer_raw)
+                        model_answer = str(ans_dict.get("answer", "")).strip().upper()
+                    except json.JSONDecodeError:
+                        model_answer = ""
+
+                    if model_answer not in "ABCD":
+                        # Fallback parsing
+                        model_answer = next((letter for letter in "ABCD" if letter in model_answer_raw.upper()), "")
+
                     if model_answer not in "ABCD":
                         raise ValueError(f"answer must be A–D, got: {model_answer_raw[:120]!r}")
                     break
@@ -143,12 +103,10 @@ async def get_answer_async(
                     if attempt == 2:
                         raise
                     await asyncio.sleep(2**attempt)
-            usage = response.usage_metadata
-            input_tokens = getattr(usage, "prompt_token_count", None) or 0
-            output_tokens = getattr(usage, "candidates_token_count", None) or 0
-            reasoning_tokens = getattr(usage, "thoughts_token_count", None) or 0
-            if not output_tokens and usage and getattr(usage, "total_token_count", None):
-                output_tokens = usage.total_token_count - input_tokens - reasoning_tokens
+            
+            usage = response.usage
+            input_tokens = getattr(usage, "prompt_tokens", None) or 0
+            output_tokens = getattr(usage, "completion_tokens", None) or 0
             return {
                 "success": True,
                 "question_id": question_id,
@@ -156,20 +114,20 @@ async def get_answer_async(
                 "model_answer_raw": model_answer_raw,
                 "input_tokens": input_tokens,
                 "output_tokens": output_tokens,
-                "reasoning_tokens": reasoning_tokens,
-                "cost_usd": calculate_cost(input_tokens, output_tokens, reasoning_tokens),
+                "reasoning_tokens": 0,
+                "cost_usd": 0.0,
             }
         except Exception as exc:
             return {"success": False, "question_id": question_id, "error": str(exc)}
 
 
 async def get_all_answers_async(
-    questions: list, client: genai.Client, generation_config: dict, concurrency: int
+    questions: list, client: openai.OpenAI, concurrency: int
 ) -> list:
     """Run inference on all questions concurrently."""
     semaphore = asyncio.Semaphore(max(1, concurrency))
     tasks = [
-        get_answer_async(index, example, client, generation_config, semaphore)
+        get_answer_async(index, example, client, semaphore)
         for index, example in enumerate(questions)
     ]
     return await async_tqdm.gather(*tasks, desc="Getting answers")
@@ -179,13 +137,6 @@ async def get_all_answers_async(
 # Results — merge per-question rows into summary dict + write JSON
 # -----------------------------------------------------------------------------
 def build_results(questions: list, question_results: list) -> dict:
-    """
-    Build results JSON with model answers only (no evaluation).
-
-    Output format matches what evaluate.py expects:
-    - details: list of {question_id, model_answer, tokens, cost}
-    - Summary stats: total questions, tokens, cost
-    """
     results = {
         "model": MODEL_NAME,
         "dataset_config": DATASET_LABEL,
@@ -199,7 +150,6 @@ def build_results(questions: list, question_results: list) -> dict:
         "timestamp": datetime.now().isoformat(),
     }
 
-    # Fields to include in each detail entry (no evaluation fields)
     detail_keys = (
         "question_id",
         "model_answer",
@@ -227,17 +177,11 @@ def build_results(questions: list, question_results: list) -> dict:
     return results
 
 
-def save_results_json(results: dict, output_file: str) -> None:
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    with open(output_file, "w", encoding="utf-8") as output_handle:
-        json.dump(results, output_handle, indent=2)
-
-
 # -----------------------------------------------------------------------------
 # Entry — load data, get answers, persist, print summary
 # -----------------------------------------------------------------------------
 def main():
-    parser = argparse.ArgumentParser(description="GPQA Reference Agent - Generate model predictions")
+    parser = argparse.ArgumentParser(description="GPQA OpenAI Agent - Generate model predictions")
     parser.add_argument(
         "--dataset_dir",
         type=Path,
@@ -252,28 +196,18 @@ def main():
     )
     args = parser.parse_args()
 
-    # Construct paths from arguments
     data_file = args.dataset_dir / "diamond_questions.json"
     output_dir = args.working_dir / "results"
 
     if not data_file.is_file():
         raise SystemExit(f"Missing data file: {data_file}")
 
-    # Load questions
     questions = json.loads(data_file.read_text(encoding="utf-8"))
 
-    generation_config = {
-        "temperature": 0.0,
-        "max_output_tokens": 2000,
-        "response_mime_type": "application/json",
-        "response_schema": Answer,
-    }
-
-    client = setup_gemini()
-    question_results = asyncio.run(get_all_answers_async(questions, client, generation_config, CONCURRENCY))
+    client = setup_openai()
+    question_results = asyncio.run(get_all_answers_async(questions, client, CONCURRENCY))
     results = build_results(questions, question_results)
 
-    # Save results to working_dir/results/
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = output_dir / f"{MODEL_NAME.replace('/', '_')}_{DATASET_LABEL}_{timestamp}.json"
     os.makedirs(output_dir, exist_ok=True)

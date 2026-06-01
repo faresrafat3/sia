@@ -26,9 +26,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Tinker configuration (hardcoded)
-TINKER_BASE_URL = "https://tinker.thinkingmachines.dev/services/tinker-prod/oai/api/v1"
-TINKER_MODEL = "openai/gpt-oss-120b"
+# OpenAI API configuration
+OPENAI_BASE_URL = os.environ.get("OPENAI_BASE_URL") or os.environ.get("OPENAI_API_BASE") or "https://opengateway.gitlawb.com/v1"
+OPENAI_MODEL = os.environ.get("TASK_MODEL") or "mimo-v2.5-pro"
 
 
 def extract_charge(response_text: str, valid_classes: list) -> str:
@@ -71,22 +71,22 @@ def main():
     working_dir.mkdir(parents=True, exist_ok=True)
 
     # Get API key from environment
-    api_key = os.environ.get("TINKER_API_KEY")
+    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("LLM_API_KEY")
     if not api_key:
-        logger.error("❌ TINKER_API_KEY environment variable not set")
+        logger.error("❌ OPENAI_API_KEY or LLM_API_KEY environment variable not set")
         sys.exit(1)
 
     logger.info("=" * 70)
-    logger.info("LawBench Criminal Charge Prediction - GPT-OSS-120B Agent")
+    logger.info("LawBench Criminal Charge Prediction - OpenAI Gateway Agent")
     logger.info("=" * 70)
-    logger.info(f"Model: {TINKER_MODEL}")
+    logger.info(f"Model: {OPENAI_MODEL}")
     logger.info(f"Dataset directory: {dataset_dir}")
     logger.info(f"Working directory: {working_dir}")
 
-    # Initialize OpenAI client with Tinker
+    # Initialize OpenAI client
     client = OpenAI(
         api_key=api_key,
-        base_url=TINKER_BASE_URL,
+        base_url=OPENAI_BASE_URL,
     )
 
     # Track execution
@@ -178,7 +178,7 @@ def main():
 
                 # Make API call
                 response = client.chat.completions.create(
-                    model=TINKER_MODEL,
+                    model=OPENAI_MODEL,
                     messages=[
                         {"role": "user", "content": prompt}
                     ],
@@ -265,7 +265,7 @@ def main():
 
         summary_log = {
             "agent": "reference_target_agent_gpt_oss",
-            "model": TINKER_MODEL,
+            "model": OPENAI_MODEL,
             "task": "lawbench_charge_prediction",
             "execution_format": "multi-trajectory",
             "start_time": start_time.isoformat(),
@@ -307,7 +307,7 @@ def main():
 
         error_log = {
             "agent": "reference_target_agent_gpt_oss",
-            "model": TINKER_MODEL,
+            "model": OPENAI_MODEL,
             "task": "lawbench_charge_prediction",
             "execution_format": "multi-trajectory",
             "start_time": start_time.isoformat(),

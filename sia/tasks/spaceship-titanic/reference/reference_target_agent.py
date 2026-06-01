@@ -1,49 +1,62 @@
-import anthropic
+import openai
 import subprocess
 import json
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = anthropic.Anthropic()
-MODEL = "claude-haiku-4-5-20251001"
+client = openai.OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY") or os.environ.get("LLM_API_KEY"),
+    base_url=os.environ.get("OPENAI_BASE_URL") or os.environ.get("OPENAI_API_BASE") or "https://opengateway.gitlawb.com/v1"
+)
+MODEL = os.environ.get("TASK_MODEL") or "mimo-v2.5-pro"
 
 # ── Tool definitions ──────────────────────────────────────────────────────────
 
 TOOLS = [
     {
-        "name": "write_file",
-        "description": "Write (overwrite) a file with the given content.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "path":    {"type": "string", "description": "File path to write"},
-                "content": {"type": "string", "description": "Content to write"},
+        "type": "function",
+        "function": {
+            "name": "write_file",
+            "description": "Write (overwrite) a file with the given content.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path":    {"type": "string", "description": "File path to write"},
+                    "content": {"type": "string", "description": "Content to write"},
+                },
+                "required": ["path", "content"],
             },
-            "required": ["path", "content"],
-        },
+        }
     },
     {
-        "name": "read_file",
-        "description": "Read and return the contents of a file.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "File path to read"},
+        "type": "function",
+        "function": {
+            "name": "read_file",
+            "description": "Read and return the contents of a file.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string", "description": "File path to read"},
+                },
+                "required": ["path"],
             },
-            "required": ["path"],
-        },
+        }
     },
     {
-        "name": "bash",
-        "description": "Run a bash command and return stdout + stderr.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "command": {"type": "string", "description": "Shell command to execute"},
+        "type": "function",
+        "function": {
+            "name": "bash",
+            "description": "Run a bash command and return stdout + stderr.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "command": {"type": "string", "description": "Shell command to execute"},
+                },
+                "required": ["command"],
             },
-            "required": ["command"],
-        },
+        }
     },
 ]
 
@@ -107,44 +120,55 @@ def run_agent(task: str) -> None:
     messages = [{"role": "user", "content": task}]
 
     while True:
-        response = client.messages.create(
+        response = client.chat.completions.create(
             model=MODEL,
             max_tokens=4096,
             tools=TOOLS,
             messages=messages,
         )
 
-        # Collect any text the model emits this turn
-        for block in response.content:
-            if block.type == "text" and block.text.strip():
-                print(f"\nAssistant: {block.text}")
+        assistant_message = response.choices[0].message
+        # Add assistant message to history
+        messages.append({
+            "role": "assistant",
+            "content": assistant_message.content or "",
+            "tool_calls": [
+                {
+                    "id": tc.id,
+                    "type": "function",
+                    "function": {
+                        "name": tc.function.name,
+                        "arguments": tc.function.arguments
+                    }
+                } for tc in assistant_message.tool_calls
+            ] if assistant_message.tool_calls else None
+        })
 
-        # Done – no more tool calls
-        if response.stop_reason == "end_turn":
+        if assistant_message.content:
+            print(f"\nAssistant: {assistant_message.content}")
+
+        # Done – no tool calls
+        if not assistant_message.tool_calls:
             break
 
         # Handle tool calls
-        if response.stop_reason == "tool_use":
-            # Append assistant turn
-            messages.append({"role": "assistant", "content": response.content})
-
-            tool_results = []
-            for block in response.content:
-                if block.type == "tool_use":
-                    print(f"\n[Tool] {block.name}({json.dumps(block.input, ensure_ascii=False)})")
-                    result = dispatch_tool(block.name, block.input)
-                    print(f"[Result] {result[:200]}{'...' if len(result) > 200 else ''}")
-                    tool_results.append({
-                        "type": "tool_result",
-                        "tool_use_id": block.id,
-                        "content": result,
-                    })
-
-            messages.append({"role": "user", "content": tool_results})
-        else:
-            # Unexpected stop reason – bail out
-            print(f"Unexpected stop_reason: {response.stop_reason}")
-            break
+        for tool_call in assistant_message.tool_calls:
+            name = tool_call.function.name
+            try:
+                inputs = json.loads(tool_call.function.arguments)
+            except json.JSONDecodeError:
+                inputs = {}
+            print(f"\n[Tool] {name}({json.dumps(inputs, ensure_ascii=False)})")
+            result = dispatch_tool(name, inputs)
+            print(f"[Result] {result[:200]}{'...' if len(result) > 200 else ''}")
+            
+            # Append tool result to messages
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "name": name,
+                "content": result,
+            })
 
     print(f"\n{'='*60}\nDone.\n")
 

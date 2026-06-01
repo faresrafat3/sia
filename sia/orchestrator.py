@@ -322,8 +322,8 @@ def main():
         "--backend",
         type=str,
         default="claude",
-        choices=["claude", "openhands"],
-        help="Agent backend to use: claude (Claude Code SDK) or openhands (OpenHands SDK) (default: claude)",
+        choices=["claude", "openhands", "openai"],
+        help="Agent backend to use: claude (Claude Code SDK), openhands (OpenHands SDK), or openai (OpenAI-compatible, with compression fix) (default: claude)",
     )
     args = parser.parse_args()
 
@@ -337,6 +337,9 @@ def main():
         if backend == "openhands":
             meta_model = "gemini/gemini-3.1-pro-preview"
             logger.info("Using default OpenHands model: gemini/gemini-3.1-pro-preview")
+        elif backend == "openai":
+            meta_model = "openai/mimo-v2.5-pro"
+            logger.info("Using default OpenAI-compatible model: openai/mimo-v2.5-pro")
         else:
             meta_model = "haiku"
             logger.info("Using default Claude model: haiku")
