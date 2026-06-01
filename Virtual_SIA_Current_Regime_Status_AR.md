@@ -743,3 +743,48 @@ tests/               # 408 اختبار
 ---
 
 *End of Current Regime Status*
+
+
+
+---
+
+## 17) مزامنة مع قفل النظام الداخلي (Internal Regime Lock) — التحديث الأحدث
+
+> أُضيف هذا القسم لمزامنة STATUS مع `Virtual_SIA_Internal_Regime_Lock_AR.md` (المرجع البنيوي الأعلى)
+> و`virtual_sia/README.md`. عند أي تعارض: **القفل الداخلي ثم هذا المستند** هما المعتمدان.
+
+### 17.1 التصنيف الثلاثي المعتمد للطبقات
+- **الطبقة A — Core Epistemic Engine** 🔒 مقفولة: task framing, memory, concepts+selectivity,
+  economy routing, verification, blackboard, pipeline, evaluation regimes. مركز الثقل، لا تُلمَس إلا بمبرر تجريبي.
+- **الطبقة B — Governance Expansion** 🧪 مُقيَّدة وكلها **OFF افتراضيًا**: contradiction, anomaly,
+  theory, self-benchmarking, productive forgetting, identity governance, paradigm forking.
+- **الطبقة C — Interface/Infrastructure** 🔌 منفصلة ومُصنَّفة: API + LLM adapter + sessions
+  (production-facing)، SQLite persistence (production-facing)، broader-domain + real-LLM runners (research-only).
+
+> القاعدة الذهبية: الطبقة A لا تعتمد على B أو C — النواة تعمل وحدها.
+
+### 17.2 المسار المعتمد الحالي (Canonical Path)
+- **Runner واحد:** `python -m virtual_sia.eval.runners.run_local_eval_v3b_curriculum`
+- **Evidence path:** `prototype_v3b_curriculum` (أساسي) + `prototype_v4_cases` (تشخيصي) + v2/v3 (معايرة)
+- **أفضل condition:** `condition_c_combined` → success≈0.986، cost≈0.00068
+- **كل flags الطبقة B = OFF** في المسار المعتمد.
+
+### 17.3 التحقق الحقيقي مع LLM (أحدث دليل)
+- `run_adversarial_llm_eval` (openrouter/owl-alpha، 18 استدعاء): **أول نتيجة غير متشبّعة**
+  → A_raw=0% ← B_concept=50% ← C_concept_theory=50% (shortcut C=16.7% < B=33.3%، evidence C=66.7%).
+- المرجع: `Virtual_SIA_Adversarial_Validation_Memo_AR.md`.
+- النتيجة المتشبّعة السابقة (success=100% للجميع) موثّقة في `Virtual_SIA_Real_LLM_Broader_Results_AR.md`.
+
+### 17.4 الحالة النهائية للأرقام
+- 10 PRs مدفوعة · 424 اختبار · 93 سرقة شرعية موثّقة (5.1–5.83 + 6.1–6.13).
+- السرقات الجديدة لأداة الحوكمة نفسها: 5.81 Model Cards، 5.82 Golden Config/NIST، 5.83 SemVer.
+- السجل الموحّد: `Virtual_SIA_Legitimate_Thefts_MASTER_INDEX_AR.md`.
+
+### 17.5 قواعد منع التشعّب (Anti-Sprawl) — سارية الآن
+1. لا توسّع في الطبقة A إلا بمبرر تجريبي مقاس.
+2. أي flag في الطبقة B يبقى OFF حتى يُثبَت قيمته على الـ canonical evidence path.
+3. الطبقة C لا تدخل المسار المعتمد.
+4. كل توسّع جديد يُصنَّف فورًا (A/B/C) ويُسجَّل في القفل الداخلي.
+5. كل feature جديدة تتبع منهجية السرقة الشرعية.
+
+*نهاية قسم المزامنة — STATUS الآن متطابق مع ARCHITECTURE (القفل) و README.*
