@@ -141,9 +141,28 @@ class MultiTrajectoryLogger:
     def log_trajectory(self, trajectory_id: int, messages: list):
         filename = f"execution_q{trajectory_id}.json"
         filepath = os.path.join(self.execution_folder, filename)
+        
+        # Convert Pydantic objects and custom types to serializable dicts
+        serializable_messages = []
+        for msg in messages:
+            if isinstance(msg, dict):
+                msg_dict = dict(msg)
+                if "tool_calls" in msg_dict and msg_dict["tool_calls"] is not None:
+                    msg_dict["tool_calls"] = [
+                        (t.model_dump() if hasattr(t, "model_dump") else (t.__dict__ if hasattr(t, "__dict__") else t))
+                        for t in msg_dict["tool_calls"]
+                    ]
+                serializable_messages.append(msg_dict)
+            elif hasattr(msg, "model_dump"):
+                serializable_messages.append(msg.model_dump())
+            elif hasattr(msg, "__dict__"):
+                serializable_messages.append(msg.__dict__)
+            else:
+                serializable_messages.append(msg)
+
         try:
             with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(messages, f, indent=2, ensure_ascii=False)
+                json.dump(serializable_messages, f, indent=2, ensure_ascii=False)
             print(f"  ✓ Saved trajectory {trajectory_id} to {filename}")
         except Exception as e:
             print(f"  ✗ Error saving trajectory {trajectory_id}: {e}")
