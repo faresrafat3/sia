@@ -1,3 +1,25 @@
 *.pyc
 __pycache__/
 virtual_sia.egg-info/
+
+# Secrets — NEVER commit
+.env
+.env.*
+.pioneer_key
+.pioneer_env
+
+# Generated artifacts
+runs/
+research_memory.json
+sia_agent.egg-info/
+
+# Virtual environments
+.venv/
+
+# Local tool configs
+.agents/
+.antigravitycli/
+
+# Scratch files
+scratch_test_litellm.py
+run_expanded_eval.sh

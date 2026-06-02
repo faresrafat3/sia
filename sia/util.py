@@ -228,8 +228,9 @@ async def run_agent_openai(model_name, max_turns, prompt, agent_working_director
 
     client = _make_openai_client()
 
-    # Strip provider prefix if present (e.g. "openai/mimo-v2.5-pro" -> "mimo-v2.5-pro")
-    bare_model = model_name.split("/", 1)[-1] if "/" in model_name else model_name
+    # Keep the full model name — providers like Pioneer/OpenRouter need the org prefix
+    # (e.g. "deepseek-ai/DeepSeek-V4-Pro" stays as-is)
+    bare_model = model_name
 
     # Tool definitions: bash execution + file read/write
     tools = [
