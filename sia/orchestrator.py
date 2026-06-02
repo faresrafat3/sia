@@ -216,8 +216,9 @@ def run_evaluation(gen_directory, task_dir, venv_dir):
 
     # Run evaluate.py as subprocess with --gen-dir
     try:
-        python_exec = os.path.join(venv_dir, "bin", "python")
-        command = f"{python_exec} {evaluate_script} --gen-dir {gen_directory} 2>&1 | tee {eval_log_file}"
+        python_exec = sys.executable  # Use system Python (has project dependencies)
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        command = f"PYTHONPATH={project_root} {python_exec} {evaluate_script} --gen-dir {gen_directory} 2>&1 | tee {eval_log_file}"
 
         result = subprocess.run(command, shell=True, text=True, executable="/bin/bash")
 
@@ -435,163 +436,79 @@ def main():
     logger.info("  ✓ Context manager initialized")
 
     # ========================
+    # SECTION 2.5: Initialize Research Memory (Phase 4)
+    # ========================
+    logger.info("Loading research memory...")
+    research_memory = None
+    research_insights = ""
+    try:
+        from sia.research_memory import ResearchMemoryStore
+        research_memory = ResearchMemoryStore()
+        # Get insights from past runs
+        if TASK_MD:
+            research_insights = research_memory.get_insights_for_task(TASK_MD)
+        stats = research_memory.get_stats()
+        logger.info(f"  ✓ Research memory: {stats['total_experiments']} entries, {stats['success_rate']:.0%} success rate")
+    except Exception as e:
+        logger.info(f"  ⚠ Research memory unavailable: {e}")
+
+    # ========================
     # SECTION 3: Define Prompts
     # ========================
 
-    META_AGENT_PROMPT = f"""You are a meta-agent. Your task is to create a target agent which can execute a task. Go ahead and create a target_agent.py for the target agent, which in turn can solve the given task.
+    META_AGENT_PROMPT = f"""You are a meta-agent. Write target_agent.py NOW. Do NOT explore.
 
-Here is the FULL TASK SPECIFICATION that your target_agent.py will need to solve:
-{TASK_MD}
+TASK: Create a target_agent.py that uses Virtual-SIA's cognitive pipeline + LLM.
 
-Here are a couple of sample task descriptions which the target agent has to solve:
-{SAMPLE_TASK_DESCRIPTIONS}
+IMPORTS (copy exactly):
+```python
+from virtual_sia.runtime.pipeline.minimal_run import run_minimal_pipeline
+from virtual_sia.runtime.memory_os.store import InMemoryMemoryStore
+from virtual_sia.runtime.concept_engine.registry import InMemoryConceptRegistry
+from virtual_sia.runtime.theory_runtime.registry import InMemoryTheoryRegistry
+from virtual_sia.runtime.economy_control.ledger import InMemoryLedgerStore
+from virtual_sia.core.objects.memory import MemoryUnit
+```
 
-Here is a sample target_agent.py showing the complete implementation pattern (READ THE ENTIRE FILE):
-{REFERENCE_TARGET_AGENT_PY}
+Pipeline call:
+```python
+result = run_minimal_pipeline(task_text, store=store, concept_registry=concept_registry, theory_registry=theory_registry, ledger_store=ledger_store)
+# result has: task, memory_pack, concept_items, tier_decision, theory_prediction, verification
+```
 
-Here is a sample agent execution trajectory:
-{json.dumps(SAMPLE_AGENT_EXECUTION, indent=2)}
+LLM call:
+```python
+import openai, httpx
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL","https://api.pioneer.ai/v1"))
+resp = client.chat.completions.create(model="deepseek-ai/DeepSeek-V4-Flash", messages=[...])
+```
 
-CRITICAL RULES - FOLLOW EXACTLY:
+Memory storage:
+```python
+memory = MemoryUnit.create(summary=summary, memory_type="episodic" if success else "negative")
+store.store_memory(memory)
+```
 
-1. The current working directory is {META_AGENT_WORKING_DIRECTORY}. Create the target_agent.py in the current working directory itself.
-
-2. The target_agent.py MUST accept two command-line arguments:
-   - --dataset_dir: Absolute path to the dataset directory (READ-ONLY, provided at runtime)
-   - --working_dir: Absolute path to the working directory (READ-WRITE, provided at runtime)
-
-3. CRITICAL: The target_agent.py must INCLUDE these paths in the prompt it sends to {task_model}. {task_model} MUST be explicitly told:
-   - Where the dataset directory is located (the exact path from --dataset_dir)
-   - Where the working directory is located (the exact path from --working_dir)
-   - That it can ONLY READ from the dataset directory
-   - That it can READ from and WRITE to the working directory
-
-   DO NOT let {task_model} search for data in random locations. The prompt must say: "The dataset is at: <actual_dataset_dir_path>"
-
-4. The target agent can ONLY read from the dataset directory provided via --dataset_dir, and can ONLY write to the working directory specified by --working_dir. It must NOT access any other directories on the filesystem.
-
-5. EXECUTION LOGGING - CRITICAL:
-
-   The target_agent.py must log its execution trajectory properly. The format depends on the task type:
-
-   **FOR TASKS WITH MULTIPLE INDEPENDENT SAMPLES** (e.g., GPQA with 198 questions, multiple test cases):
-   - Create a folder: agent_execution/ in the working directory
-   - Save each sample separately: execution_q0.json, execution_q1.json, execution_q2.json, etc.
-   - Each file contains the complete trajectory for that ONE sample only
-   - Files must be named sequentially: execution_q0.json, execution_q1.json, ...
-
-   **FOR TASKS WITH SINGLE EXECUTION** (e.g., building one ML model, analyzing one dataset):
-   - Save to a single file: agent_execution.json in the working directory
-   - File contains the complete execution trajectory
-
-   **HOW TO DETERMINE WHICH FORMAT**:
-   - Read the task description carefully
-   - If it mentions "independent items", "dataset with multiple records to process separately"
-     → Use multi-trajectory (folder with multiple files)
-   - If it's about "build a model", "analyze the dataset", "create one solution", "optimize one system"
-     → Use single-trajectory (one JSON file)
-
-   **FORMAT REQUIREMENTS** (both formats):
-   - Use the same format as the sample agent execution trajectory provided above
-   - Include all messages, tool calls, and their results
-   - Ensure valid JSON (properly close all arrays/objects)
-   - Make sure to properly close the JSON file(s) to avoid corruption
-
-6. Do NOT attempt to write to or modify files inside the dataset directory. It is READ-ONLY.
-7. The target_agent.py should use only the "{task_model}" model when invoking the language model (do not use any other model).
-8. DO NOT hardcode any specific dataset paths in the target_agent.py code. The paths will be provided at runtime via command-line arguments and MUST be passed to {task_model} in the prompt.
-
-Example invocation (paths will vary at runtime):
-    python target_agent.py --dataset_dir /path/to/dataset --working_dir /path/to/working
+Write ONE file to {META_AGENT_WORKING_DIRECTORY}/target_agent.py using write_file.
+Verify: bash("python3 -c 'compile(open(\"target_agent.py\").read(),\"target_agent.py\",\"exec\"); print(\"OK\")'")
+Do NOT read files. JUST WRITE THE CODE.
 """
 
-    FEEDBACK_AGENT_PROMPT = """You are an expert AI Engineer analyzing agent scaffolds for iterative improvement.
+    FEEDBACK_AGENT_PROMPT = """Fix target_agent.py based on execution report. JUST WRITE CODE, NO EXPLORATION.
 
-**GENERATION CONTEXT**:
-- Current generation: {CURRENT_GEN}
-- Previous generations: {PREVIOUS_GENS}
-- Evolution history: {CONTEXT_MD_PATH}
+EXECUTION REPORT (gen {CURRENT_GEN}):
+{EXECUTION_STATUS}
+{EXECUTION_SECTION}
+{SPIN_SECTION}
 
-**BEFORE ANALYZING - READ THE FULL HISTORY**:
-1. Read {CONTEXT_MD_PATH} to understand:
-   - What improvements were tried in each previous generation
-   - Performance trends across generations
-   - What worked and what didn't work
-2. Review previous improvement.md files from earlier generations if helpful
-3. Don't repeat failed approaches from earlier generations
-4. Build upon successful patterns that improved performance
-
----
-
-**SAMPLE TASK DESCRIPTIONS**:
-```
-{SAMPLE_TASK_DESCRIPTIONS}
-```
-
-**CURRENT TARGET AGENT** (Generation {CURRENT_GEN}):
+CURRENT CODE:
 ```python
 {AGENT_PY}
 ```
 
-**TASK WORKED ON**:
-```
-{TASK}
-```
-
-**EXECUTION STATUS**:
-```
-{EXECUTION_STATUS}
-```
-
-**EXECUTION LOGS**:
-{EXECUTION_SECTION}
-
----
-
-**YOUR TASK**:
-
-You must create exactly TWO files in {IMPROVEMENT_DIR}/:
-1. improvement.md - Analysis and improvement plan
-2. target_agent.py - The improved agent implementation
-
-Follow these steps:
-
-**STEP 1: Analyze the execution**:
-   - For multi-trajectory: Look for patterns across all trajectories
-   - For single-trajectory: Analyze the full execution flow
-   - Identify what worked well and what failed
-   - Check for consistency and robustness
-
-**STEP 2: Review evolution history**:
-   - Read context.md to see the full evolution
-   - Understand what was tried in previous generations
-   - Build upon successful patterns
-   - Avoid repeating failed approaches
-
-**STEP 3: Write improvement.md**:
-   - MUST save to: {IMPROVEMENT_DIR}/improvement.md
-   - Document your analysis and planned improvements
-   - Focus on structural improvements to the agent scaffold
-   - Make the agent more robust and generalizable
-   - Don't optimize for this specific task
-   - Reference insights from previous generations if applicable
-
-**STEP 4: Create improved target_agent.py**:
-   - MUST save to: {IMPROVEMENT_DIR}/target_agent.py
-   - Implement the improvements documented in improvement.md
-   - Apply all the planned improvements from step 3
-   - Do not create or modify any other files besides these two
-
-**RULES**:
-- Focus on agent structure, not task-specific optimizations
-- Make the agent work well across diverse task types (see sample task descriptions)
-- If execution failed, fix the root cause
-- If multi-trajectory: ensure each trajectory is properly isolated and logged
-- Consider error handling, logging mechanisms, and robustness
-- Build upon successful patterns from previous generations (check context.md)
-- If execution log shows errors or is incomplete, suggest improvements to ensure proper logging
-
-NOTE: The agent execution log may be incomplete or contain errors if the target agent crashed. If you see an "error" field, focus on making the agent more robust to prevent such failures.
+Write IMPROVED code to: {IMPROVEMENT_DIR}/target_agent.py using write_file.
+Verify syntax: bash("python3 -c 'compile(open(\"target_agent.py\").read(),\"target_agent.py\",\"exec\"); print(\"OK\")'")
+STOP after writing. NO FILE READING.
 """
 
     # ========================
@@ -660,8 +577,9 @@ NOTE: The agent execution log may be incomplete or contain errors if the target 
         try:
             # Build command with tee for real-time display and logging
             # Use PIPEFAIL to catch failures in the python command, not just tee
-            python_exec = os.path.join(venv_dir, "bin", "python")
-            command = f"set -o pipefail; {python_exec} -u {target_agent_path} --dataset_dir {ABS_DATASET_DIRECTORY} --working_dir {current_gen_directory} 2>&1 | tee {stdout_log_file}"
+            python_exec = sys.executable  # Use system python (has virtual_sia accessible)
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            command = f"set -o pipefail; PYTHONPATH={project_root} {python_exec} -u {target_agent_path} --dataset_dir {ABS_DATASET_DIRECTORY} --working_dir {current_gen_directory} 2>&1 | tee {stdout_log_file}"
 
             # Run with shell=True and bash to enable pipefail
             result = subprocess.run(
@@ -718,6 +636,43 @@ NOTE: The agent execution log may be incomplete or contain errors if the target 
         logger.info("=" * 60)
         logger.info("Running evaluation (if available)...")
         run_evaluation(current_gen_directory, task_dir, venv_dir)
+        logger.info("=" * 60)
+
+        # ========================
+        # SECTION 5a.2: Constitutional Self-Play Evaluation (Phase 2)
+        # ========================
+
+        logger.info("=" * 60)
+        logger.info("Running constitutional evaluation...")
+        try:
+            from sia.constitutional_evaluator import evaluate_constitutional
+
+            # Read the agent code
+            if os.path.exists(target_agent_path):
+                with open(target_agent_path, encoding="utf-8") as f:
+                    agent_code = f.read()
+
+                report = evaluate_constitutional(
+                    agent_code=agent_code,
+                    gen_dir=current_gen_directory,
+                    llm_evaluation=False,
+                )
+
+                # Save constitutional report
+                constitutional_path = os.path.join(current_gen_directory, "constitutional_report.json")
+                with open(constitutional_path, "w", encoding="utf-8") as f:
+                    json.dump(report.to_dict(), f, indent=2)
+
+                if report.passed:
+                    logger.info(f"  ✅ Constitutional check PASSED (score: {report.total_score}/{report.max_allowed_score})")
+                else:
+                    logger.warning(f"  ❌ Constitutional check FAILED (score: {report.total_score}/{report.max_allowed_score})")
+                    for v in report.violations:
+                        logger.warning(f"     ⚠ {v.rule_name}: {v.description}")
+            else:
+                logger.warning("  ⚠ No target_agent.py found — skipping constitutional check")
+        except Exception as e:
+            logger.warning(f"  ⚠ Constitutional evaluation failed: {e}")
         logger.info("=" * 60)
 
         # Check if improvement.md exists in current gen directory (created by previous feedback agent)
@@ -831,6 +786,27 @@ NOTE: If you see an "error" field in the above JSON, it means the execution log 
                     "\n**EVALUATION RESULTS**: No results.json found (evaluation may not have run or may have failed)\n"
                 )
 
+            # Load constitutional report if available
+            constitutional_section = ""
+            constitutional_path = os.path.join(current_gen_directory, "constitutional_report.json")
+            if os.path.exists(constitutional_path):
+                try:
+                    with open(constitutional_path, encoding="utf-8") as f:
+                        const_data = json.load(f)
+                    passed_str = "✅ PASSED" if const_data.get("passed") else "❌ FAILED"
+                    const_lines = [f"Constitutional check: {passed_str} (Score: {const_data.get('total_score', '?')}/{const_data.get('max_allowed_score','?')})"]
+                    const_lines.append(f"Rule results:")
+                    for rule_id, ok in const_data.get("rule_results", {}).items():
+                        icon = "✅" if ok else "❌"
+                        const_lines.append(f"  {icon} {rule_id}")
+                    if const_data.get("violations"):
+                        const_lines.append(f"Violations to fix:")
+                        for v in const_data["violations"]:
+                            const_lines.append(f"  ❌ {v['rule_name']}: {v['description']}")
+                    constitutional_section = "\n".join(const_lines)
+                except Exception as e:
+                    constitutional_section = f"(Error reading constitutional report: {e})"
+
             # Prepare execution status for feedback agent
             if target_agent_success:
                 # Get last 10 lines of stdout for quick preview
@@ -839,6 +815,11 @@ NOTE: If you see an "error" field in the above JSON, it means the execution log 
 
                 execution_status = f"""SUCCESS: Target agent completed execution successfully.
 {eval_results_section}
+
+**CONSTITUTIONAL EVALUATION**:
+The following constitutional rules were checked. VIOLATIONS MUST BE FIXED in the next generation:
+
+{constitutional_section}
 
 **Last 10 lines of output**:
 ```
@@ -854,6 +835,11 @@ Full logs available at: {stdout_log_file}
 
                 execution_status = f"""FAILED: {target_agent_error_msg}
 {eval_results_section}
+
+**CONSTITUTIONAL EVALUATION**:
+The following constitutional rules were checked. VIOLATIONS MUST BE FIXED:
+
+{constitutional_section}
 
 **Last 10 lines of output**:
 ```
@@ -874,16 +860,43 @@ STDERR:
             previous_gens_list = list(range(1, current_gen)) if current_gen > 1 else []
             previous_gens_text = ", ".join(map(str, previous_gens_list)) if previous_gens_list else "None"
 
+            # ========================
+            # SPIN Semantic Gap Analysis (Phase 3)
+            # ========================
+            spin_section = ""
+            try:
+                from sia.spin_feedback import compute_semantic_gap, generate_spin_feedback
+
+                # Compare the generated agent against the reference agent for semantic gap
+                if os.path.exists(target_agent_path):
+                    # Read reference agent for comparison
+                    reference_path = os.path.join(task_dir, "reference", "reference_target_agent.py")
+                    if os.path.exists(reference_path):
+                        with open(reference_path, encoding="utf-8") as f:
+                            reference_code = f.read()
+                        # Use code as "strong" output (reference), current as "weak" output
+                        gap = compute_semantic_gap(
+                            task_text=TASK[:500] if TASK else "No task",
+                            strong_output=reference_code[:3000],
+                            weak_output=AGENT_PY[:3000],
+                        )
+                        spin_section = f"""**SPIN SEMANTIC GAP ANALYSIS**:
+Semantic distance from reference: {gap.cosine_distance:.3f} ({gap.gap_category})
+Improvement priority: {gap.improvement_priority:.2f}
+{'- Large gap → significant room for improvement' if gap.gap_category == 'large' else '- Moderate gap → refine existing patterns' if gap.gap_category == 'medium' else '- Small gap → agent is close to optimal'}
+"""
+                        logger.info(f"  SPIN gap: {gap.cosine_distance:.3f} ({gap.gap_category})")
+            except Exception as e:
+                logger.debug(f"  SPIN analysis skipped: {e}")
+
             # Call feedback agent with full context
             feedback_agent_prompt_prepared = FEEDBACK_AGENT_PROMPT.format(
                 CURRENT_GEN=current_gen,
-                PREVIOUS_GENS=previous_gens_text,
-                CONTEXT_MD_PATH=os.path.join(RUN_DIRECTORY, "context.md"),
-                SAMPLE_TASK_DESCRIPTIONS=SAMPLE_TASK_DESCRIPTIONS,
                 AGENT_PY=AGENT_PY,
                 TASK=TASK,
                 EXECUTION_STATUS=execution_status,
                 EXECUTION_SECTION=execution_section,
+                SPIN_SECTION=spin_section,
                 IMPROVEMENT_DIR=next_gen_directory,
             )
 
@@ -897,7 +910,7 @@ STDERR:
             asyncio.run(
                 run_agent(
                     model_name=meta_model,
-                    max_turns="20",
+                    max_turns="20",  # Feedback agent needs more turns for DeepSeek reasoning
                     prompt=feedback_agent_prompt_prepared,
                     agent_working_directory=next_gen_directory,
                     backend=backend,
@@ -917,6 +930,36 @@ STDERR:
     logger.info(f"Results saved in: {RUN_DIRECTORY}")
     logger.info(f"Context summary: {os.path.join(RUN_DIRECTORY, 'context.md')}")
     logger.info("=" * 80)
+
+    # ========================
+    # SECTION 7: Record in Research Memory (Phase 4)
+    # ========================
+    if research_memory:
+        try:
+            # Calculate best score from all generations
+            best_score = 0.0
+            improvements = []
+            for gen in range(1, max_gen + 1):
+                const_path = os.path.join(RUN_DIRECTORY, f"gen_{gen}", "constitutional_report.json")
+                eval_path = os.path.join(RUN_DIRECTORY, f"gen_{gen}", "evaluation_results.json")
+                
+                if os.path.exists(eval_path):
+                    with open(eval_path) as f:
+                        edata = json.load(f)
+                    score = edata.get("overall_score", 0)
+                    if score > best_score:
+                        best_score = score
+                    improvements.append(f"Gen {gen}: score {score:.1%}")
+            
+            research_memory.record_run_completion(
+                run_id=os.path.basename(RUN_DIRECTORY),
+                total_generations=max_gen,
+                best_score=best_score,
+                improvements=improvements,
+            )
+            logger.info("  ✓ Run recorded in research memory")
+        except Exception as e:
+            logger.debug(f"  ⚠ Research memory record failed: {e}")
 
 
 if __name__ == "__main__":

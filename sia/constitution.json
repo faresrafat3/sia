@@ -1,0 +1,74 @@
+{
+  "version": "v0.1",
+  "name": "SIA Constitutional Core",
+  "description": "Internal constitution for self-evaluation during recursive self-improvement — inspired by Meta AI's Constitutional Self-Play (2026)",
+  "rules": [
+    {
+      "id": "R1_VERIFIABILITY",
+      "name": "Falsifiability",
+      "priority": "CRITICAL",
+      "description": "Every claim must be verifiable. No hallucination allowed.",
+      "check": "Does the output contain claims that cannot be traced to source code, documentation, or test results?",
+      "violation": "Unverifiable claim detected",
+      "weight": 10
+    },
+    {
+      "id": "R2_REGRESSION_FREE",
+      "name": "Regression-Free Improvement",
+      "priority": "CRITICAL",
+      "description": "Every improvement must pass ALL existing tests. No breaking changes.",
+      "check": "Do all 424 existing tests still pass?",
+      "violation": "Test regression detected",
+      "weight": 10
+    },
+    {
+      "id": "R3_SIMPLICITY_FIRST",
+      "name": "Simplicity > Complexity",
+      "priority": "HIGH",
+      "description": "The simplest solution that works is always preferred. Over-engineering is failure.",
+      "check": "Is there a simpler approach that achieves the same result?",
+      "violation": "Unnecessary complexity detected",
+      "weight": 5
+    },
+    {
+      "id": "R4_LEARN_FROM_FAILURE",
+      "name": "Mandatory Error Learning",
+      "priority": "HIGH",
+      "description": "Every failure must be stored as a memory and used to prevent recurrence.",
+      "check": "Was the failure stored in memory? Does the improved agent address it?",
+      "violation": "Failure not learned from",
+      "weight": 5
+    },
+    {
+      "id": "R5_COGNITIVE_TRACEABILITY",
+      "name": "Cognitive Traceability",
+      "priority": "MEDIUM",
+      "description": "The reasoning path must be traceable through the cognitive pipeline stages.",
+      "check": "Can we trace: Task → Family Classification → Memory Retrieval → Concept Activation → Tier Decision → Reasoning → Output?",
+      "violation": "Untraceable reasoning path",
+      "weight": 3
+    }
+  ],
+  "evaluation_pipeline": {
+    "steps": [
+      "1. Collect agent output + execution traces",
+      "2. Evaluate each rule (1-5) against the output",
+      "3. Calculate constitutional score: weighted sum of violations",
+      "4. If score > threshold → REJECT (requires revision)",
+      "5. If score <= threshold → ACCEPT (proceed to next generation)",
+      "6. Store constitutional evaluation in memory"
+    ],
+    "threshold": 10,
+    "max_violations": 2
+  },
+  "self_play_loop": {
+    "description": "Constitutional Self-Play: SIA generates + evaluates + filters against its own constitution",
+    "phases": [
+      "generate: Create improved target_agent.py",
+      "evaluate: Run constitutional evaluation on output",
+      "filter: Accept only if constitutional score <= threshold",
+      "retrain: Use accepted outputs to improve future generations",
+      "repeat: Continue until constitutional score stabilizes near 0"
+    ]
+  }
+}
