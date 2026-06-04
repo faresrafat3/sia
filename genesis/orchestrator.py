@@ -1240,6 +1240,12 @@ Improvement priority: {gap.improvement_priority:.2f}
             )
 
             logger.info(f"Feedback agent completed. Created improved agent for generation {next_gen}")
+
+            # Robustness fix for cases where feedback LLM does not write the target_agent.py (seen in run_48 Gen2)
+            next_target_path = os.path.join(next_gen_directory, "target_agent.py")
+            if not os.path.exists(next_target_path):
+                logger.warning(f"  ⚠ Feedback agent did not produce target_agent.py in {next_gen_directory}. Falling back to previous generation's agent to keep the evolutionary loop alive.")
+                shutil.copy(target_agent_path, next_target_path)
         else:
             logger.info(f"Generation {current_gen} is the final generation. Skipping feedback agent.")
 
