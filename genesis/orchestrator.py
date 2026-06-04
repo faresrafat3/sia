@@ -780,6 +780,19 @@ General principles for any task:
 - Use try/except around data handling and model calls.
 - Log clearly.
 
+**DEDICATED GUIDANCE FOR Q&A / MULTIPLE-CHOICE / GRADUATE REASONING TASKS (GPQA, lawbench, longcot-chess style — GENERAL, NO hardcoding question IDs or domains):**
+- Look for JSON files containing questions (e.g. diamond_questions.json, questions.json, *.json in DATASET_DIR or data/public).
+- Load them with json.load (handle list of dicts or dict with 'questions' key).
+- For each question: 
+  - Extract the question text, options (A/B/C/D or similar), and any context.
+  - Call the pipeline with raw_task = the full question + options for cognitive guidance (tier, theory, memory).
+  - Then use the OpenAI client (MODEL) to do step-by-step reasoning and select the best letter (A, B, C, or D). Be explicit in the prompt to the client: "Think step by step. The answer must be exactly one letter: A, B, C or D."
+- Collect answers in a list or dict (e.g. [{"question_id": ..., "answer": "B"}, ...] or simple list of letters).
+- Write the answers to a file the evaluate.py can use (often answers.json, submission.json, or the agent_execution.json if that's what it reads). If unsure, write both a clean answers file and the execution log.
+- Use try/except around each question so one bad question doesn't kill the whole run.
+- Always print progress: "Processing question X/Y", "Chose answer: B for question X".
+- If no JSON found, fall back gracefully but still try to produce some output.
+
 - Always: use the cognitive result (tier, verification, etc.) to guide decisions (avoid shortcuts per theory).
 - If needed, make LLM calls for final answer using the client + MODEL above.
 - Handle errors gracefully with try/except per section. Make the code maintainable and general.
@@ -850,8 +863,9 @@ CURRENT CODE:
 
 CRITICAL INSTRUCTIONS FOR FIX:
 - If you see "Failed to write execution log: cannot access local variable 'json'" or similar scope/import error, ensure imports are at VERY TOP (os, sys, json, datetime, pandas, numpy, openai, virtual_genesis imports), and include the EXACT ROBUST EXECUTION LOGGING block from the meta prompt at the end (before final print).
+- For gpqa-like QA tasks: if the agent says "No recognizable data files", add proper JSON loading for questions (diamond_questions.json etc.), per-question pipeline call + client reasoning to choose A/B/C/D, and write answers in the format evaluate.py expects.
 - If data shape is wrong (e.g. (870, 2) instead of full ~ (8693,14) for titanic-like), fix data loading to use full pd.read_csv for train.csv + test.csv, print full shapes, detect target generally.
-- Always keep the code GENERAL (no hardcodes to specific columns like 'Mars').
+- Always keep the code GENERAL (no hardcodes to specific columns like 'Mars' or question formats).
 - Fix any accuracy faking: compute only on val split if possible.
 - You MUST use the write_file tool to write the FULL improved target_agent.py to {IMPROVEMENT_DIR}/target_agent.py as your very last action. Do not stop or say you are done until you have successfully called write_file for target_agent.py and verified it with the bash syntax check. This is mandatory.
 
