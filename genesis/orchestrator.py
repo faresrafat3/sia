@@ -507,15 +507,15 @@ def main():
     parser.add_argument(
         "--task_model",
         type=str,
-        default="claude-haiku-4-5-20251001",
-        help="Model to use for target agent (default: claude-haiku-4-5-20251001)",
+        default="openai/gpt-oss-120b:free",
+        help="Model to use for target agent (default: openai/gpt-oss-120b:free for OpenRouter)",
     )
     parser.add_argument(
         "--backend",
         type=str,
         default="claude",
         choices=["claude", "openhands", "openai"],
-        help="Agent backend to use: claude (Claude Code SDK), openhands (OpenHands SDK), or openai (OpenAI-compatible, with compression fix) (default: claude)",
+        help="Agent backend to use: claude (Claude Code SDK), openhands (OpenHands SDK), or openai (OpenAI-compatible, with compression fix) (default: claude). For OpenRouter: use --backend openai and set OPENAI_BASE_URL=https://openrouter.ai/api/v1 + OPENAI_API_KEY=sk-or-...",
     )
     args = parser.parse_args()
 
@@ -530,8 +530,8 @@ def main():
             meta_model = "gemini/gemini-3.1-pro-preview"
             logger.info("Using default OpenHands model: gemini/gemini-3.1-pro-preview")
         elif backend == "openai":
-            meta_model = "openai/mimo-v2.5-pro"
-            logger.info("Using default OpenAI-compatible model: openai/mimo-v2.5-pro")
+            meta_model = "openai/gpt-oss-120b:free"
+            logger.info("Using default OpenAI-compatible model: openai/gpt-oss-120b:free (OpenRouter free tier recommended)")
         else:
             meta_model = "haiku"
             logger.info("Using default Claude model: haiku")

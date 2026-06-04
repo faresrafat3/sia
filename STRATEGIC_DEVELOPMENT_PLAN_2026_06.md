@@ -256,7 +256,25 @@
 - الوثيقة: `GENESIS_DeepMind_Aletheia_Theft_AR.md` (كاملة)
 - الاعتمادات: يعتمد على الـ Bridge + Task 6 (evolutionary candidates) + Task 7 (collaborative critique) + GRASP gating + existing verification/theory/blackboard
 
+### Task 9: Real OpenRouter Benchmark with gpt-oss-120b:free (Post-Implementation Validation)
+**الأولوية:** 🔴 حرجة (بعد Tasks 6-8 implementation)
+**المهمة:** Run the full GENESIS orchestrator (with evolutionary discovery) on OpenRouter using "openai/gpt-oss-120b:free" for all LLM calls, on bundled benchmarks (e.g. spaceship-titanic, gpqa), and measure impact.
+**التفاصيل:**
+- Set OPENAI_BASE_URL=https://openrouter.ai/api/v1 + OPENAI_API_KEY=your-key
+- Command: python run_openrouter_benchmark.py --task spaceship-titanic --max_gen 3 --use_evolutionary_discovery (or direct orchestrator with --backend openai --meta_model "openai/gpt-oss-120b:free")
+- Enable --use_evolutionary_discovery to trigger AlphaEvolve engine (population, pipeline evaluator, best variant application)
+- Capture: baseline vs evo (success rate, discovery_rate, transfer, cost, robustness)
+- Compare to original 98.6% keyword baseline + prior thefts impact
+- Run on multiple tasks, log evolutionary_discovery.json, evolved_target_agent.py, ablation reports
+- Success: measurable lift from evolutionary search (e.g. +X% genuine reasoning vs keyword)
+- Script: `run_openrouter_benchmark.py` (created for easy one-command run)
+- الوثيقة: هذا الملف + GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md + new results in results/
+
+**الاعتمادات:** يعتمد على Task 6 (evo engine) + existing real LLM eval + OpenRouter support
+
 ---
+
+
 
 ## 5. 📊 المتوقع
 
@@ -289,4 +307,4 @@
 ---
 
 *آخر تحديث: 2026-06-04*
-*الحالة: جاهز للتنفيذ (مع Task 6 AlphaEvolve + Task 7 Co-Scientist + Task 8 Aletheia من DeepMind thefts)*
+*الحالة: جاهز للتنفيذ (مع Tasks 6-8 + Task 9 Real OpenRouter Benchmark with gpt-oss-120b:free + runner script)*
