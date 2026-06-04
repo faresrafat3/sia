@@ -666,7 +666,6 @@ import argparse
 import asyncio
 import httpx
 import openai
-from dotenv import load_dotenv
 
 from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
 from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
@@ -685,7 +684,7 @@ args = parser.parse_args()
 DATASET_DIR = args.dataset_dir
 WORKING_DIR = args.working_dir
 os.makedirs(WORKING_DIR, exist_ok=True)
-load_dotenv()
+# Environment variables (OPENAI_API_KEY, OPENAI_BASE_URL, etc.) are inherited from parent process - no need for dotenv
 ```
 
 MUST setup client (use the model exactly as shown; env vars are set for OpenRouter):
@@ -851,9 +850,10 @@ STOP after writing. NO FILE READING.
         try:
             # Build command with tee for real-time display and logging
             # Use PIPEFAIL to catch failures in the python command, not just tee
-            python_exec = sys.executable  # Use system python (has virtual_genesis accessible)
+            # Use the per-run venv python so that packages installed for the run (pandas, python-dotenv, etc.) are available to the target_agent
+            venv_python = os.path.join(venv_dir, "bin", "python")
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            command = f"set -o pipefail; PYTHONPATH={project_root} {python_exec} -u {target_agent_path} --dataset_dir {ABS_DATASET_DIRECTORY} --working_dir {current_gen_directory} 2>&1 | tee {stdout_log_file}"
+            command = f"set -o pipefail; PYTHONPATH={project_root} {venv_python} -u {target_agent_path} --dataset_dir {ABS_DATASET_DIRECTORY} --working_dir {current_gen_directory} 2>&1 | tee {stdout_log_file}"
 
             # Run with shell=True and bash to enable pipefail
             result = subprocess.run(
