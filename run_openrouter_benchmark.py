@@ -34,18 +34,56 @@ import subprocess
 import sys
 from pathlib import Path
 
+# Recommended free/cheap models on OpenRouter (general, not GENESIS-specific)
+# يمكن إضافة/إزالة أي نموذج يدعم OpenAI-compatible API
+RECOMMENDED_MODELS = {
+    # OpenAI's open weights — strong on GPQA (80.1% high), 131K context
+    "gpt-oss-120b-free":      "openai/gpt-oss-120b:free",
+    "gpt-oss-120b":           "openai/gpt-oss-120b",
+    # NVIDIA Nemotron 3 (released Jun 4, 2026) — strong on agent orchestration (91% PinchBench, 82% IFBench), 1M context
+    "nemotron-3-ultra-free":  "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nemotron-3-ultra":       "nvidia/nemotron-3-ultra-550b-a55b",
+    "nemotron-3-super-free":  "nvidia/nemotron-3-super-120b-a12b:free",
+    "nemotron-3-nano-free":   "nvidia/nemotron-3-nano-30b-a3b:free",
+    # Others (for comparison only)
+    "deepseek-v4-flash-free": "deepseek/deepseek-v4-flash:free",
+}
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Run GENESIS benchmark on OpenRouter with gpt-oss-120b:free + evo")
-    parser.add_argument("--task", type=str, default="spaceship-titanic", help="Bundled task (options: spaceship-titanic, gpqa, lawbench, longcot-chess) or 'swe_bench' for serious software engineering benchmark (SWE-bench style)")
+    parser = argparse.ArgumentParser(description="Run GENESIS benchmark on OpenRouter + AlphaEvolve")
+    parser.add_argument("--task", type=str, default="spaceship-titanic",
+                        help="Bundled task (spaceship-titanic, gpqa, lawbench, longcot-chess) or 'swe_bench'")
     parser.add_argument("--max_gen", type=int, default=3)
     parser.add_argument("--run_id", type=int, default=1)
-    parser.add_argument("--use_evolutionary_discovery", action="store_true", help="Enable AlphaEvolve engine")
+    parser.add_argument("--use_evolutionary_discovery", action="store_true",
+                        help="Enable AlphaEvolve evolutionary engine")
+    # NEW: explicit model selection (defaults preserve old behavior)
+    parser.add_argument("--meta_model", type=str, default="openai/gpt-oss-120b:free",
+                        help=f"Meta-agent model id. Shortcuts: {list(RECOMMENDED_MODELS.keys())}")
+    parser.add_argument("--task_model", type=str, default="openai/gpt-oss-120b:free",
+                        help="Target/task-agent model id. Same shortcuts as --meta_model.")
+    parser.add_argument("--list_models", action="store_true",
+                        help="Print recommended OpenRouter model shortcuts and exit")
     args = parser.parse_args()
 
-    # Force OpenRouter + free model
+    if args.list_models:
+        print("Recommended OpenRouter model shortcuts (use full id or shortcut):")
+        for k, v in RECOMMENDED_MODELS.items():
+            print(f"  {k:30s} -> {v}")
+        print("\nExample:")
+        print('  python run_openrouter_benchmark.py --task gpqa --meta_model nemotron-3-ultra-free \\')
+        print('      --task_model nemotron-3-ultra-free --use_evolutionary_discovery')
+        sys.exit(0)
+
+    # Resolve shortcuts -> full ids
+    meta_model = RECOMMENDED_MODELS.get(args.meta_model, args.meta_model)
+    task_model = RECOMMENDED_MODELS.get(args.task_model, args.task_model)
+
+    # Force OpenRouter base url
     os.environ.setdefault("OPENAI_BASE_URL", "https://openrouter.ai/api/v1")
     if not os.getenv("OPENAI_API_KEY"):
-        print("ERROR: Set OPENAI_API_KEY to your OpenRouter key")
+        print("ERROR: Set OPENAI_API_KEY to your OpenRouter key (sk-or-...)")
         sys.exit(1)
 
     cmd = [
@@ -54,8 +92,8 @@ def main():
         "--max_gen", str(args.max_gen),
         "--run_id", str(args.run_id),
         "--backend", "openai",
-        "--meta_model", "openai/gpt-oss-120b:free",
-        "--task_model", "openai/gpt-oss-120b:free",
+        "--meta_model", meta_model,
+        "--task_model", task_model,
     ]
     if args.use_evolutionary_discovery:
         cmd.append("--use_evolutionary_discovery")
@@ -75,8 +113,10 @@ def main():
 
     print("Running GENESIS benchmark on OpenRouter...")
     print("Command:", " ".join(cmd))
-    print("Model: openai/gpt-oss-120b:free (free tier)")
-    print("This will exercise the new Evolutionary Discovery Engine (Task 6).")
+    print(f"Meta model: {meta_model}")
+    print(f"Task model: {task_model}")
+    if args.use_evolutionary_discovery:
+        print("Evolutionary Discovery (AlphaEvolve): ENABLED")
 
     result = subprocess.run(cmd, check=False)
 
