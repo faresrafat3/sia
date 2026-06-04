@@ -424,6 +424,7 @@ def get_default_pool(
     base_url: str = "https://openrouter.ai/api/v1",
     rate_limit_cooldown: float = 60.0,
     stats_file: Optional[str | Path] = "logs/api_key_pool_stats.json",
+    verbose: bool = True,
 ) -> APIKeyPool:
     """
     Pool افتراضي يجمع المفاتيح من:
@@ -434,11 +435,20 @@ def get_default_pool(
     لازم يكون فيه مفتاح واحد على الأقل، وإلا يرفع ValueError.
     """
     # حاول تحمل .env تلقائياً لو dotenv موجود
+    dotenv_loaded = False
     try:
         from dotenv import load_dotenv  # type: ignore
-        load_dotenv()
+        # نحاول كل المسارات المحتملة
+        for env_path in (".env", ".env.local", ".env.keys"):
+            if Path(env_path).exists():
+                load_dotenv(env_path, override=False)
+                dotenv_loaded = True
+                if verbose:
+                    print(f"  (info) loaded env vars from {env_path}")
     except ImportError:
-        pass
+        if verbose:
+            print("  (warn) python-dotenv not installed; .env file will NOT be auto-loaded.")
+            print("        install it: pip install python-dotenv")
 
     keys: dict[str, str] = {}
     keys.update(load_keys_from_env())
@@ -451,7 +461,8 @@ def get_default_pool(
             if Path(fallback).exists():
                 keys.update(load_keys_from_file(fallback))
                 if keys:
-                    print(f"  (info) loaded {len(keys)} keys from {fallback}")
+                    if verbose:
+                        print(f"  (info) loaded {len(keys)} keys from {fallback}")
                     break
 
     if not keys:
@@ -461,13 +472,31 @@ def get_default_pool(
             "See .env.example for template."
         )
 
+    # تشخيص: لو لقى مفتاح واحد بس، نقول للمستخدم ليه
+    if verbose and len(keys) == 1:
+        keyname = list(keys.keys())[0]
+        if keyname in ("default", "legacy"):
+            print(f"  ⚠️  Only 1 key found (label='{keyname}'). To use multiple keys:")
+            print(f"      Edit .env to use OPENROUTER_API_KEY_AHMED=..., OPENROUTER_API_KEY_FARES1=... etc.")
+            print(f"      The pool needs the OPENROUTER_API_KEY_<NAME> pattern, not just OPENROUTER_API_KEY.")
+            # نتحقق هل في الـ env فعلاً مفاتيح إضافية ما اتقروش
+            import os as _os
+            extras = [n for n in _os.environ if n.startswith("OPENROUTER_API_KEY_")]
+            if extras:
+                print(f"      Found {len(extras)} env vars matching the pattern but they may be empty:")
+                for n in extras:
+                    val = _os.environ.get(n, "")
+                    state = "EMPTY" if not val.strip() else f"set ({len(val)} chars)"
+                    print(f"        {n}: {state}")
+
     pool = APIKeyPool(
         keys=keys,
         base_url=base_url,
         rate_limit_cooldown=rate_limit_cooldown,
         stats_file=Path(stats_file) if stats_file else None,
     )
-    print(f"  ✓ APIKeyPool ready with {len(keys)} keys: {list(keys.keys())}")
+    if verbose:
+        print(f"  ✓ APIKeyPool ready with {len(keys)} keys: {list(keys.keys())}")
     return pool
 
 

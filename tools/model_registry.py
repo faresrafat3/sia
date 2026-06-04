@@ -412,9 +412,26 @@ if __name__ == "__main__":
 
     if args.for_task:
         print(f"=== Recommended for: {args.for_task} ===")
+        # الـ benchmarks المرتبطة بكل task
+        task_benches = {
+            "gpqa": "gpqa_diamond",
+            "knowledge": "gpqa_diamond",
+            "reasoning": "gpqa_diamond",
+            "swe_bench": "swe_bench_verified",
+            "coding": "swe_bench_verified",
+            "swe": "swe_bench_verified",
+            "agent": "pinchbench_agent_productivity",
+            "orchestration": "pinchbench_agent_productivity",
+        }
+        relevant_bench = task_benches.get(args.for_task.lower())
         for m in recommended_for(args.for_task):
-            top_bench = max(m.benchmarks.items(), key=lambda x: x[1], default=("-", 0))
-            print(f"  {m.shortcut:30s} {m.description}  [{top_bench[0]}={top_bench[1]}]")
+            if relevant_bench and m.benchmarks.get(relevant_bench):
+                score = m.benchmarks[relevant_bench]
+                marker = f"{relevant_bench}={score}"
+            else:
+                top_bench = max(m.benchmarks.items(), key=lambda x: x[1], default=("-", 0))
+                marker = f"{top_bench[0]}={top_bench[1]}"
+            print(f"  {m.shortcut:30s} {m.description}  [{marker}]")
     elif args.bench:
         print(f"=== Sorted by: {args.bench} ===")
         for m in list_by_benchmark(args.bench):

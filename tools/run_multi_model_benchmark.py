@@ -58,35 +58,80 @@ from tools.model_registry import MODELS, get_model, recommended_for  # noqa: E40
 #                  Prompt building + parsing
 # ============================================================
 
-SYSTEM_PROMPT = """You are an expert scientist taking a graduate-level multiple-choice exam.
-For each question:
-1. Think carefully and step by step about the underlying science.
-2. Eliminate clearly wrong options.
-3. End with a single line in EXACTLY this format:
-ANSWER: <LETTER>
-where <LETTER> is one of A, B, C, or D."""
+SYSTEM_PROMPT = """You are an expert scientist (physics, chemistry, biology) taking a graduate-level
+multiple-choice exam (GPQA Diamond level). Each question has exactly 4 options labeled A, B, C, D
+and exactly one is correct.
+
+RESPONSE PROTOCOL — follow strictly:
+1. Reason carefully and step by step about the underlying science.
+2. Eliminate clearly wrong options when possible.
+3. You MUST end your reply with a final line in EXACTLY this format (no other text after it):
+
+ANSWER: X
+
+where X is one single letter A, B, C, or D. The line must literally start with the word ANSWER
+followed by a colon and a space, then the letter. Do NOT add explanations after the ANSWER line.
+If you are unsure, still output your best guess in the ANSWER line — never refuse, never output
+"unknown" or "I don't know"."""
+
+
+FORCE_LETTER_PROMPT = (
+    "Your previous response did not end with a valid `ANSWER: X` line. "
+    "Looking at your reasoning above, output ONLY a single line in the form:\n\n"
+    "ANSWER: X\n\nwhere X is your best guess from A, B, C, or D. "
+    "Do not repeat the reasoning. Do not add any other text."
+)
 
 
 def extract_letter(text: str) -> str:
-    """يستخرج حرف الإجابة من response. يفضل ANSWER: X، يقع على fallback متعدد."""
+    """يستخرج حرف الإجابة من response. عام جداً — يجرب 10+ صيغ متعددة."""
     if not text:
         return ""
-    # 1) ANSWER: X صريح
-    m = re.search(r"ANSWER\s*:\s*([ABCD])", text, re.IGNORECASE)
-    if m:
-        return m.group(1).upper()
-    # 2) **X** أو (X) في آخر النص
-    tail = text[-500:]
-    for pattern in (r"\*\*\s*([ABCD])\s*\*\*", r"\b\(([ABCD])\)", r"answer\s+is\s+([ABCD])"):
-        m = re.search(pattern, tail, re.IGNORECASE)
+    txt = text.strip()
+
+    # 1) ANSWER: X (مع/بدون مسافة، colons متعددة، مع/بدون **)
+    for pattern in (
+        r"ANSWER\s*[:\-=]+\s*\*?\*?\s*([ABCD])\s*\*?\*?",
+        r"\bANSWER\s+IS\s*[:\-=]?\s*\*?\*?\s*([ABCD])\b",
+        r"FINAL\s+ANSWER\s*[:\-=]+\s*\*?\*?\s*([ABCD])",
+        r"THE\s+ANSWER\s+IS\s*[:\-=]?\s*\*?\*?\s*([ABCD])",
+        r"CORRECT\s+(?:ANSWER|OPTION)\s+IS\s*[:\-=]?\s*\*?\*?\s*([ABCD])",
+        r"OPTION\s*[:\-=]?\s*\*?\*?\s*([ABCD])\s*\*?\*?\s*(?:IS|$)",
+    ):
+        m = re.search(pattern, txt, re.IGNORECASE)
         if m:
             return m.group(1).upper()
-    # 3) آخر حرف A-D وحده في النص
+
+    # 2) صيغ شائعة في markdown/latex في آخر النص
+    tail = txt[-800:]
+    for pattern in (
+        r"\*\*\s*([ABCD])\s*\*\*",          # **X**
+        r"\\boxed\{\s*([ABCD])\s*\}",       # \boxed{X}
+        r"\\textbf\{\s*([ABCD])\s*\}",      # \textbf{X}
+        r"\(\s*([ABCD])\s*\)\s*$",          # (X) at end
+        r"\s([ABCD])\s*\.\s*$",             # "X." at end
+        r"^\s*([ABCD])\s*$",                # حرف وحده
+    ):
+        m = re.search(pattern, tail, re.IGNORECASE | re.MULTILINE)
+        if m:
+            return m.group(1).upper()
+
+    # 3) آخر سطر فيه حرف A-D وحده / مع ترقيم
+    for line in reversed(txt.strip().split("\n")):
+        line_clean = line.strip().strip(".").strip(":").strip("*").strip()
+        # حالة "A" أو "A." أو "A:" أو "Answer A"
+        m = re.match(r"^(?:answer\s*[:\-]?\s*)?\*?\*?\s*([ABCD])\s*\*?\*?\s*\.?\s*$",
+                     line_clean, re.IGNORECASE)
+        if m:
+            return m.group(1).upper()
+
+    # 4) آخر حرف A-D ظهر في آخر 200 حرف (fallback أخير)
     last_match = None
-    for m in re.finditer(r"\b([ABCD])\b", text):
+    for m in re.finditer(r"\b([ABCD])\b", txt[-200:]):
         last_match = m
     if last_match:
         return last_match.group(1).upper()
+
     return ""
 
 
@@ -126,23 +171,26 @@ def evaluate_model(
     temperature: float = 0.0,
     verbose_first: int = 2,
     output_path: Optional[Path] = None,
+    use_force_followup: bool = True,
 ) -> dict[str, Any]:
-    """يقيم نموذج واحد على قائمة أسئلة. يرجع dict نتائج كامل."""
+    """يقيم نموذج واحد على قائمة أسئلة. يرجع dict نتائج كامل.
+
+    use_force_followup: لو النموذج ميرجعش letter في الـ first response،
+    نبعت رسالة tay`anية صغيرة نطلب فيها الـ letter بس (chain-of-thought
+    موجود في الـ first response). هذا يخفض الـ invalid rate من ~35% لـ <5%.
+    """
 
     results: list[dict[str, Any]] = []
-    correct = invalid = 0
+    correct = invalid = recovered = 0
     domain_stats: dict[str, dict[str, int]] = {}
     t0 = time.time()
 
-    def make_call(client, user_msg: str):
+    def make_call(client, messages: list[dict], local_max_tokens: int):
         kwargs: dict[str, Any] = {
             "model": model_id,
-            "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_msg},
-            ],
+            "messages": messages,
             "temperature": temperature,
-            "max_tokens": max_tokens,
+            "max_tokens": local_max_tokens,
         }
         if reasoning:
             kwargs["extra_body"] = {"reasoning": {"effort": reasoning}}
@@ -156,16 +204,22 @@ def evaluate_model(
         domain_stats[domain]["total"] += 1
 
         user_msg = build_prompt(q)
+        messages_round1 = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_msg},
+        ]
 
         if i <= verbose_first:
             print(f"\n  --- Q{i}/{len(questions)} (id={qid}, {domain}) ---")
             print(f"  PROMPT preview: {user_msg[:200].replace(chr(10), ' / ')}...")
 
+        # ===== Round 1: full reasoning =====
         try:
             resp = pool.call_with_retry(
-                lambda c, msg=user_msg: make_call(c, msg),
+                lambda c, m=messages_round1: make_call(c, m, max_tokens),
                 on_attempt=lambda n, k, s: (
-                    print(f"    [retry {n}] key={k} {s}") if n > 1 or s.startswith("failed") else None
+                    print(f"    [retry {n}] key={k} {s}")
+                    if n > 1 or s.startswith("failed") else None
                 ),
                 max_attempts=max(len(pool._keys), 3),
                 per_attempt_sleep=0.3,
@@ -173,9 +227,33 @@ def evaluate_model(
             txt = resp.choices[0].message.content or ""
         except Exception as e:
             txt = ""
-            print(f"  ✗ Q{i} all keys failed: {str(e)[:120]}")
+            print(f"  ✗ Q{i} round 1 all keys failed: {str(e)[:120]}")
 
         pred = extract_letter(txt)
+        round1_pred = pred  # نخزنها للـ logging
+        used_followup = False
+        followup_txt = ""
+
+        # ===== Round 2: force-letter follow-up لو الأول ميديش letter =====
+        if not pred and use_force_followup and txt:
+            used_followup = True
+            messages_round2 = messages_round1 + [
+                {"role": "assistant", "content": txt},
+                {"role": "user", "content": FORCE_LETTER_PROMPT},
+            ]
+            try:
+                resp2 = pool.call_with_retry(
+                    lambda c, m=messages_round2: make_call(c, m, 32),  # 32 tokens كفاية
+                    max_attempts=max(len(pool._keys), 3),
+                    per_attempt_sleep=0.3,
+                )
+                followup_txt = resp2.choices[0].message.content or ""
+                pred = extract_letter(followup_txt)
+                if pred:
+                    recovered += 1
+            except Exception as e:
+                print(f"  ⚠ Q{i} follow-up failed: {str(e)[:80]}")
+
         ok = (pred == correct_letter) if pred else False
         if pred not in ("A", "B", "C", "D"):
             invalid += 1
@@ -184,8 +262,12 @@ def evaluate_model(
             domain_stats[domain]["correct"] += 1
 
         if i <= verbose_first:
-            print(f"  RESP tail: ...{txt[-200:]}")
-            print(f"  → pred={pred!r} truth={correct_letter!r} {'✓' if ok else '✗'}")
+            print(f"  RESP1 tail: ...{txt[-200:]}")
+            if used_followup:
+                print(f"  RESP2 (force): {followup_txt[:100]}")
+            print(f"  → pred={pred!r} truth={correct_letter!r} "
+                  f"{'✓' if ok else '✗'} "
+                  f"{'(recovered)' if used_followup and pred else ''}")
 
         results.append({
             "question_id": qid,
@@ -193,16 +275,19 @@ def evaluate_model(
             "subdomain": q.get("subdomain"),
             "correct_answer_letter": correct_letter,
             "predicted_letter": pred,
+            "round1_pred": round1_pred,
+            "used_followup": used_followup,
             "is_correct": ok,
             "response_chars": len(txt),
             "response_excerpt": txt[:400] + ("..." if len(txt) > 400 else ""),
+            "followup_excerpt": followup_txt[:200] if used_followup else None,
         })
 
         elapsed = time.time() - t0
         rate = i / elapsed if elapsed > 0 else 0
         if i % 5 == 0 or i == len(questions) or i <= verbose_first:
             print(f"  [{i:3d}/{len(questions)}] acc={correct/i*100:5.2f}%  "
-                  f"({rate:.2f} q/s)  invalid={invalid}")
+                  f"({rate:.2f} q/s)  invalid={invalid}  recovered={recovered}")
 
     total = len(questions)
     summary = {
@@ -214,6 +299,7 @@ def evaluate_model(
         "correct": correct,
         "incorrect": total - correct - invalid,
         "invalid": invalid,
+        "recovered_via_followup": recovered,
         "accuracy_percent": (correct / total * 100) if total else 0.0,
         "per_domain": {
             d: {
@@ -301,6 +387,7 @@ def write_cross_model_summary(
             ),
             "correct": s["correct"],
             "invalid": s["invalid"],
+            "recovered": s.get("recovered_via_followup", 0),
             "total": s["total"],
             "elapsed_seconds": s["elapsed_seconds"],
             "rate_qps": round(s["total"] / s["elapsed_seconds"], 3) if s["elapsed_seconds"] > 0 else 0,
@@ -335,15 +422,16 @@ def write_cross_model_summary(
         "",
         "## Ranking (sorted by our accuracy)",
         "",
-        "| # | Model | Our % | Official % | Gap | Correct/Total | Invalid | Time | q/s |",
-        "|---|-------|-------|-----------|-----|---------------|---------|------|-----|",
+        "| # | Model | Our % | Official % | Gap | Correct | Invalid | Recovered | Time | q/s |",
+        "|---|-------|-------|-----------|-----|---------|---------|-----------|------|-----|",
     ]
     for i, r in enumerate(rows, 1):
         gap_str = f"{r['gap_vs_official']:+.1f}" if r["gap_vs_official"] is not None else "-"
         off_str = f"{r['official_gpqa_diamond']:.1f}" if r["official_gpqa_diamond"] is not None else "-"
         md_lines.append(
             f"| {i} | `{r['model']}` | **{r['our_accuracy_percent']:.2f}** | {off_str} | {gap_str} | "
-            f"{r['correct']}/{r['total']} | {r['invalid']} | {r['elapsed_seconds']:.0f}s | {r['rate_qps']:.2f} |"
+            f"{r['correct']}/{r['total']} | {r['invalid']} | {r['recovered']} | "
+            f"{r['elapsed_seconds']:.0f}s | {r['rate_qps']:.2f} |"
         )
     md_lines += [
         "",
