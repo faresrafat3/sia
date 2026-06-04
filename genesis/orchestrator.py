@@ -58,6 +58,15 @@ from datetime import datetime
 from importlib.resources import files as resource_files
 from pathlib import Path
 
+# Robust import for development: allow running as `python genesis/orchestrator.py`
+# or `python -m genesis.orchestrator` even if not installed (adds root to path so "genesis" package is found).
+# This prevents ModuleNotFoundError "genesis" after git pull / fresh clones.
+# For production: `pip install -e .` is still recommended (and required for package data/resources).
+if __name__ == "__main__" or "genesis" not in sys.modules:
+    root = Path(__file__).resolve().parent.parent
+    if str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+
 from genesis import __version__
 from genesis.context_manager import ContextManager
 from genesis.util import run_agent
