@@ -787,9 +787,11 @@ CURRENT CODE:
 {AGENT_PY}
 ```
 
+CRITICAL: You MUST use the write_file tool to write the FULL improved target_agent.py to {IMPROVEMENT_DIR}/target_agent.py as your very last action. Do not stop or say you are done until you have successfully called write_file for target_agent.py and verified it with the bash syntax check. This is mandatory.
+
 Write IMPROVED code to: {IMPROVEMENT_DIR}/target_agent.py using write_file.
 Verify syntax: bash("python3 -c 'compile(open(\"target_agent.py\").read(),\"target_agent.py\",\"exec\"); print(\"OK\")'")
-STOP after writing. NO FILE READING.
+STOP after writing the file. NO FILE READING.
 """
 
     # ========================
