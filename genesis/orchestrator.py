@@ -746,7 +746,7 @@ Then, implement TASK-SPECIFIC logic (use the packages in the venv: pandas, numpy
   - Basic cleaning: fillna for numerics/categoricals, pd.get_dummies for HomePlanet, Destination, etc. (avoid string-to-float errors on 'Mars', 'Europa')
   - Call pipeline on a row summary or full task_text for reasoning/guidance
   - Use simple sklearn model (LogisticRegression or RandomForest) or LLM calls on features + pipeline result to predict 'Transported' (True/False)
-  - Create submission = pd.DataFrame({'PassengerId': test['PassengerId'], 'Transported': predictions})
+  - Create submission = pd.DataFrame({{'PassengerId': test['PassengerId'], 'Transported': predictions}})
   - submission.to_csv(os.path.join(WORKING_DIR, 'submission.csv'), index=False)
 - For gpqa / Q&A: load questions, for each use pipeline + LLM to answer, save trajectories.
 - Always: use the cognitive result (tier, verification, etc.) to guide decisions (avoid shortcuts per theory).
