@@ -36,7 +36,7 @@ from pathlib import Path
 
 def main():
     parser = argparse.ArgumentParser(description="Run GENESIS benchmark on OpenRouter with gpt-oss-120b:free + evo")
-    parser.add_argument("--task", type=str, default="spaceship-titanic", help="Bundled task (options: spaceship-titanic, gpqa, lawbench, longcot-chess)")
+    parser.add_argument("--task", type=str, default="spaceship-titanic", help="Bundled task (options: spaceship-titanic, gpqa, lawbench, longcot-chess) or 'swe_bench' for serious software engineering benchmark (SWE-bench style)")
     parser.add_argument("--max_gen", type=int, default=3)
     parser.add_argument("--run_id", type=int, default=1)
     parser.add_argument("--use_evolutionary_discovery", action="store_true", help="Enable AlphaEvolve engine")
@@ -59,6 +59,19 @@ def main():
     ]
     if args.use_evolutionary_discovery:
         cmd.append("--use_evolutionary_discovery")
+
+    if args.task == "swe_bench":
+        print("\n=== SERIOUS BENCHMARK MODE: SWE-bench (for paper/project level) ===")
+        print("SWE-bench is the standard for agentic software engineering: real GitHub issues, edit code to fix bugs and pass tests.")
+        print("To run properly:")
+        print("1. Set up a SWE-bench task_dir (see https://github.com/princeton-nlp/SWE-bench for data).")
+        print("2. Use --task_dir pointing to a SWE-bench formatted task (or use the real_llm_eval for patches).")
+        print("3. The evolutionary engine will evolve better target_agent.py that uses GENESIS pipeline for reasoning on the issue.")
+        print("4. Then evaluate the generated patches on SWE-bench harness.")
+        print("Example command for external task:")
+        print("python -m genesis.orchestrator --task_dir /path/to/swe_bench_task --backend openai --meta_model openai/gpt-oss-120b:free --task_model openai/gpt-oss-120b:free --use_evolutionary_discovery")
+        print("This is for real paper-level evaluation (see Task 9).")
+        sys.exit(0)  # For now, print instructions; full integration would load SWE-bench tasks
 
     print("Running GENESIS benchmark on OpenRouter...")
     print("Command:", " ".join(cmd))

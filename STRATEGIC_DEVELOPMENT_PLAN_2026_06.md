@@ -265,12 +265,14 @@
 - Enable --use_evolutionary_discovery to trigger AlphaEvolve engine (population, pipeline evaluator, best variant application)
 - Capture: baseline vs evo (success rate, discovery_rate, transfer, cost, robustness)
 - Compare to original 98.6% keyword baseline + prior thefts impact
-- Run on key benchmarks:
-  - spaceship-titanic (fast tabular, good for quick validation of agent improvement)
-  - gpqa (hard reasoning benchmark, ideal to measure genuine reasoning lift from evolutionary search vs original 98.6% keyword baseline)
-  - Optionally lawbench or longcot-chess for variety
-- Run each with and without --use_evolutionary_discovery to isolate impact of AlphaEvolve theft + prior ones (GRASP, ExpGraph, etc.)
-- log evolutionary_discovery.json, evolved_target_agent.py, ablation reports
+- Run on key benchmarks for serious evaluation (paper/project level):
+  - **SWE-bench** (Jimenez et al. 2024): The gold standard for LLM agents in software engineering. Real GitHub issues from popular repos; agent must produce patches that fix the bug and pass tests. Perfect to demonstrate self-improving evolutionary agent generation on real-world coding tasks (stolen in 5.73).
+  - spaceship-titanic (fast tabular baseline)
+  - gpqa (hard reasoning to test genuine vs keyword)
+- Use the runner with --task swe_bench for instructions, or --task_dir for full SWE-bench task setup.
+- Run with/without evo to isolate the AlphaEvolve effect + prior thefts.
+- Metrics: % resolved issues (SWE-bench pass rate), patch quality, evo metrics, cost, transfer to other agentic tasks.
+- Compare to baselines like original 98.6%, non-evo runs, and published SWE-bench numbers for similar models.
 - Success: measurable lift from evolutionary search (e.g. +X% genuine reasoning vs keyword)
 - Script: `run_openrouter_benchmark.py` (created for easy one-command run)
 - الوثيقة: هذا الملف + GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md + new results in results/
