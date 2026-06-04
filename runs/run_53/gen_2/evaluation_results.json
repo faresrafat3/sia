@@ -1,0 +1,1794 @@
+{
+  "total_questions": 198,
+  "correct": 64,
+  "incorrect": 134,
+  "missing": 0,
+  "invalid": 0,
+  "accuracy": 0.32323232323232326,
+  "accuracy_percent": 32.323232323232325,
+  "details": [
+    {
+      "question_id": 1,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 2,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 3,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 4,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Electromagnetism and Photonics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 5,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 6,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 7,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 8,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Biology",
+      "subdomain": "Genetics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 9,
+      "correct_answer": "C",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 10,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 11,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 12,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 13,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 14,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 15,
+      "correct_answer": "C",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 16,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 17,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 18,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 19,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 20,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 21,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 22,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 23,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 24,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 25,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 26,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 27,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 28,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 29,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Biology",
+      "subdomain": "Genetics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 30,
+      "correct_answer": "D",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 31,
+      "correct_answer": "B",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 32,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 33,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 34,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 35,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 36,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 37,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 38,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 39,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 40,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 41,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Relativistic Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 42,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 43,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 44,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 45,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 46,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 47,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 48,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 49,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 50,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 51,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Electromagnetism and Photonics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 52,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 53,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 54,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 55,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 56,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 57,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 58,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 59,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 60,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Relativistic Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 61,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 62,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 63,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 64,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Inorganic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 65,
+      "correct_answer": "B",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 66,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 67,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 68,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 69,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 70,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 71,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 72,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 73,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Relativistic Mechanics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 74,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 75,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 76,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 77,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 78,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Electromagnetism and Photonics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 79,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 80,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 81,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 82,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 83,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 84,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 85,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 86,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 87,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 88,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 89,
+      "correct_answer": "C",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 90,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 91,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 92,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 93,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 94,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 95,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 96,
+      "correct_answer": "C",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 97,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 98,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 99,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 100,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 101,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 102,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 103,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 104,
+      "correct_answer": "B",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 105,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 106,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 107,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 108,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 109,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 110,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 111,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 112,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 113,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 114,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 115,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 116,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 117,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 118,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 119,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 120,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 121,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 122,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 123,
+      "correct_answer": "C",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Relativistic Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 124,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Relativistic Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 125,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 126,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 127,
+      "correct_answer": "D",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 128,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 129,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 130,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 131,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 132,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 133,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 134,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 135,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 136,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Electromagnetism and Photonics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 137,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 138,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 139,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 140,
+      "correct_answer": "B",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 141,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 142,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 143,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 144,
+      "correct_answer": "B",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 145,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 146,
+      "correct_answer": "C",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 147,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 148,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 149,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 150,
+      "correct_answer": "B",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 151,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 152,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 153,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 154,
+      "correct_answer": "D",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 155,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 156,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 157,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Biology",
+      "subdomain": "Molecular Biology",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 158,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Biology",
+      "subdomain": "Genetics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 159,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 160,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Optics and Acoustics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 161,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Relativistic Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 162,
+      "correct_answer": "B",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Relativistic Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 163,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 164,
+      "correct_answer": "A",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 165,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 166,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 167,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 168,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Biology",
+      "subdomain": "Genetics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 169,
+      "correct_answer": "C",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 170,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 171,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 172,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 173,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 174,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 175,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Electromagnetism and Photonics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 176,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 177,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 178,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 179,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 180,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 181,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 182,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Condensed Matter Physics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 183,
+      "correct_answer": "B",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 184,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 185,
+      "correct_answer": "B",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Quantum Mechanics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 186,
+      "correct_answer": "C",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 187,
+      "correct_answer": "D",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 188,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 189,
+      "correct_answer": "D",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "High-energy particle physics",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 190,
+      "correct_answer": "B",
+      "model_answer": "D",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 191,
+      "correct_answer": "A",
+      "model_answer": "A",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 192,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Electromagnetism and Photonics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 193,
+      "correct_answer": "D",
+      "model_answer": "D",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 194,
+      "correct_answer": "D",
+      "model_answer": "A",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 195,
+      "correct_answer": "B",
+      "model_answer": "B",
+      "domain": "Physics",
+      "subdomain": "Astrophysics",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 196,
+      "correct_answer": "C",
+      "model_answer": "C",
+      "domain": "Physics",
+      "subdomain": "Physics (general)",
+      "status": "correct",
+      "is_correct": true
+    },
+    {
+      "question_id": 197,
+      "correct_answer": "A",
+      "model_answer": "B",
+      "domain": "Chemistry",
+      "subdomain": "Organic Chemistry",
+      "status": "incorrect",
+      "is_correct": false
+    },
+    {
+      "question_id": 198,
+      "correct_answer": "A",
+      "model_answer": "C",
+      "domain": "Chemistry",
+      "subdomain": "Chemistry (general)",
+      "status": "incorrect",
+      "is_correct": false
+    }
+  ],
+  "timestamp": "2026-06-04T09:49:55.488415"
+}

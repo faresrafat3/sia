@@ -1,0 +1,202 @@
+You are a meta-agent. Write a COMPLETE, runnable target_agent.py NOW. Do NOT explore, do NOT use read_file tool on existing code, do NOT ask questions. Generate the FULL file from the spec below + your knowledge of GENESIS pipeline. The file must be self-contained and run without errors when invoked with --dataset_dir and --working_dir.
+
+TASK: Create target_agent.py that:
+- Uses Virtual-GENESIS cognitive pipeline for structured reasoning/memory/concept/theory.
+- Handles the specific task (e.g. classification, Q&A) by loading data from dataset_dir if needed (csv, json, task.md).
+- Produces required outputs in working_dir (e.g. submission.csv, answers, logs).
+- Logs execution for feedback: prefer multi-trajectory to agent_execution/ folder if multiple samples, else agent_execution.json.
+
+MUST include EXACT imports at top (VERY FIRST LINES of the file, before ANY other code or functions. Do NOT put imports inside functions, try blocks, or after any executable code. This prevents scope errors like "cannot access local variable 'json'"):
+```python
+import os
+import sys
+import json
+import argparse
+import asyncio
+import datetime
+import httpx
+import openai
+import pandas as pd
+import numpy as np
+
+from virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline
+from virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore
+from virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry
+from virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry
+from virtual_genesis.runtime.economy_control.ledger import InMemoryLedgerStore
+from virtual_genesis.core.objects.memory import MemoryUnit
+```
+
+MUST parse args (copy this):
+```python
+parser = argparse.ArgumentParser()
+parser.add_argument("--dataset_dir", required=True)
+parser.add_argument("--working_dir", required=True)
+args = parser.parse_args()
+DATASET_DIR = args.dataset_dir
+WORKING_DIR = args.working_dir
+os.makedirs(WORKING_DIR, exist_ok=True)
+# Environment variables (OPENAI_API_KEY, OPENAI_BASE_URL, etc.) are inherited from parent process - no need for dotenv
+```
+
+MUST setup client (use the model exactly as shown; env vars are set for OpenRouter):
+```python
+MODEL = "openai/gpt-oss-120b:free"
+client = openai.OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    base_url=os.getenv("OPENAI_BASE_URL", "https://openrouter.ai/api/v1")
+)
+```
+
+MUST create stores:
+```python
+store = InMemoryMemoryStore()
+concept_registry = InMemoryConceptRegistry()
+theory_registry = InMemoryTheoryRegistry()
+ledger_store = InMemoryLedgerStore()
+```
+
+MUST load task:
+```python
+task_md_path = os.path.join(DATASET_DIR, "task.md")
+if os.path.exists(task_md_path):
+    with open(task_md_path, encoding="utf-8") as f:
+        task_text = f.read()
+else:
+    task_text = "Solve the task using data in " + DATASET_DIR
+print(f"Task loaded: {task_text[:200]}...")
+```
+
+Pipeline call (CORRECT - result is DICT, not object. Use .get() or [] for safety):
+```python
+result = run_minimal_pipeline(
+    raw_task=task_text,
+    store=store,
+    concept_registry=concept_registry,
+    theory_registry=theory_registry,
+    ledger_store=ledger_store,
+    use_memory=True,
+    use_economy=True,
+    use_concepts=False,  # enable if needed
+)
+print("Pipeline result keys:", list(result.keys()) if isinstance(result, dict) else type(result))
+
+# Safe access (dict, not attributes!):
+task_info = result.get("task", {}) if isinstance(result, dict) else {}
+blackboard = result.get("blackboard", {}) if isinstance(result, dict) else {}
+tier_decision = result.get("tier_decision", {}) if isinstance(result, dict) else {}
+theory_pred = result.get("theory_prediction") if isinstance(result, dict) else None
+verification = blackboard.get("verification_state", {}) if isinstance(result, dict) else {}
+print(f"Tier: {tier_decision.get('chosen_tier', 'unknown')}, Verification good_enough: {verification.get('verification_summary', {}).get('good_enough', False)}")
+```
+
+Then, implement TASK-SPECIFIC logic in a GENERAL and ROBUST way (use the packages in the venv: pandas, numpy, scikit-learn when appropriate for the task type). 
+IMPORTANT: Always produce clean, error-handling, production-quality code. Use the GENESIS pipeline result for cognitive guidance on ANY task. Never hardcode task-specific strings if possible; detect the task type from the data or task.md.
+
+**CRITICAL GENERAL DATA HANDLING (applies to ANY tabular/data task — NO overfitting to specific columns like 'Mars', 'HomePlanet', 'Transported' etc. Use detection + try/except always):**
+- Always load full data (never partial like 2 columns):
+  ```python
+  try:
+      train_df = pd.read_csv(os.path.join(DATASET_DIR, "train.csv"))
+      test_df = pd.read_csv(os.path.join(DATASET_DIR, "test.csv"))
+      print(f"Full train shape: {train_df.shape}")
+      print(f"Full test shape: {test_df.shape}")
+      print(f"Train columns sample: {list(train_df.columns)[:5]}...")
+  except Exception as load_e:
+      print(f"Data load error: {load_e}")
+      train_df, test_df = None, None
+  ```
+- Detect task type and target column GENERALLY (from task_text or data, no hardcodes):
+  target_col = None
+  if "train_df" in locals() and train_df is not None:
+      for col in ["Transported", "target", "label", "y", "class", "Survived"]:  # common but fallback
+          if col in train_df.columns:
+              target_col = col
+              break
+      if not target_col:
+          target_col = train_df.columns[-1]  # last col fallback
+- For submission: always produce ID col (e.g. PassengerId) + predictions from test_df.
+- Compute accuracy ONLY on a held-out val split from train (NEVER report train accuracy as final; if no labels on test, use placeholder 0.0 or skip).
+- Handle types robustly to avoid "could not convert string to float": use pd.to_numeric(..., errors='coerce').fillna(0), pd.get_dummies for categoricals generally, etc.
+- Print shapes, columns, dtypes for debugging always.
+
+General principles for any task:
+- Load data from DATASET_DIR as needed (csv, json, etc.).
+- Call the pipeline early for reasoning, tier decision, verification.
+- For data/tabular tasks: use pandas for loading/cleaning (handle categoricals properly with get_dummies or encoding to avoid type errors), use sklearn or simple logic/LLM for prediction.
+- For Q&A/reasoning tasks (like gpqa): process each item, use pipeline + LLM.
+- Always produce the expected output files (submission.csv, answers, etc.) in WORKING_DIR.
+- Use try/except around data handling and model calls.
+- Log clearly.
+
+**DEDICATED GUIDANCE FOR Q&A / MULTIPLE-CHOICE / GRADUATE REASONING TASKS (GPQA, lawbench, longcot-chess style — GENERAL, NO hardcoding question IDs or domains):**
+- Look for JSON files containing questions (e.g. diamond_questions.json, questions.json, *.json in DATASET_DIR or data/public).
+- Load them with json.load (handle list of dicts or dict with 'questions' key).
+- For each question: 
+  - Extract the question text, options (A/B/C/D or similar), and any context.
+  - Call the pipeline with raw_task = the full question + options for cognitive guidance (tier, theory, memory).
+  - Then use the OpenAI client (MODEL) to do step-by-step reasoning and select the best letter (A, B, C, or D ONLY). Be explicit in the prompt to the client: "Think step by step. The answer must be exactly one letter from A, B, C or D. Output ONLY the letter, no other text in the final answer."
+- Collect answers as a list of dicts in this EXACT format for compatibility with evaluate.py:
+  answers_list = [{"question_id": qid, "model_answer": letter} for each question]
+- Save as JSON to BOTH answers.json AND submission.json (copy the same content to both) in the gen dir using:
+  with open(os.path.join(WORKING_DIR, "answers.json"), "w") as f:
+      json.dump({"details": answers_list}, f, indent=2)
+  with open(os.path.join(WORKING_DIR, "submission.json"), "w") as f:
+      json.dump({"details": answers_list}, f, indent=2)
+- This matches the "details" format that evaluate_submission supports (question_id and model_answer).
+- Also save the full execution log as before.
+- IMPORTANT: Always use the real question_id from the loaded questions data (not just sequential numbers if ids are present).
+- Use try/except around each question so one bad question doesn't kill the whole run.
+- Always print progress: "Processing question X/Y", "Chose answer: B for question X".
+- If no JSON found, fall back gracefully but still try to produce some output.
+- CRITICAL: The final answer for EACH question MUST be exactly one of A, B, C, or D (uppercase letter only). NEVER output "I", "unknown", explanations in the model_answer field, or anything else. If unsure, pick the best letter anyway. The client prompt to LLM must enforce: "Output ONLY the single letter A/B/C/D, nothing else." 
+
+- Always: use the cognitive result (tier, verification, etc.) to guide decisions (avoid shortcuts per theory).
+- If needed, make LLM calls for final answer using the client + MODEL above.
+- Handle errors gracefully with try/except per section. Make the code maintainable and general.
+
+**MUST log execution ROBUSTLY (include this EXACT pattern or very close equivalent at the END of your logic, before final print. This prevents json scope errors like "cannot access local variable 'json'" and ensures feedback agent gets usable log):**
+```python
+# === ROBUST EXECUTION LOGGING (MANDATORY - put this before the final success print) ===
+try:
+    execution_log = {
+        "timestamp": datetime.datetime.now().isoformat(),
+        "task_preview": task_text[:300] if "task_text" in locals() else "unknown task",
+        "pipeline_result_keys": list(result.keys()) if isinstance(result, dict) else str(type(result)),
+        "tier": tier_decision.get("chosen_tier", "unknown") if isinstance(tier_decision, dict) else "unknown",
+        "verification_good_enough": verification.get("verification_summary", {}).get("good_enough", False) if isinstance(verification, dict) else False,
+        "detected_task_type": "classification" if "train_df" in locals() and train_df is not None else "unknown",
+        "loaded_data_shape": str({train_df}.shape) if "train_df" in locals() and train_df is not None else "N/A",
+        "accuracy": 0.0,  # compute real val accuracy here if possible; 0.0 if no labels
+        "submission_path": os.path.join(WORKING_DIR, "submission.csv"),
+        "messages": [  # minimal trajectory for feedback; expand if multi-turn
+            {"role": "system", "content": "Target agent executed with GENESIS pipeline + task logic."},
+            {"role": "user", "content": task_text[:200] if "task_text" in locals() else ""},
+            {"role": "assistant", "content": "Completed task with accuracy reported above."}
+        ]
+    }
+    log_path = os.path.join(WORKING_DIR, "agent_execution.json")
+    with open(log_path, "w", encoding="utf-8") as f:
+        json.dump(execution_log, f, indent=2, ensure_ascii=False)
+    print(f"Execution log saved to {log_path}")
+except Exception as log_err:
+    print(f"Failed to write execution log: {log_err}")
+    # Fallback: write a minimal log even on error
+    try:
+        with open(os.path.join(WORKING_DIR, "agent_execution.json"), "w", encoding="utf-8") as f:
+            json.dump({"error": str(log_err), "timestamp": datetime.datetime.now().isoformat()}, f)
+    except:
+        pass
+```
+
+At very end:
+```python
+print("Target agent completed successfully for task.")
+# Optionally write results.json or other artifacts
+```
+
+Write the FULL code to /home/fares/GENESIS/runs/run_53/gen_1/target_agent.py using the write_file tool.
+Verify syntax with bash tool: python3 -c 'compile(open("target_agent.py").read(), "target_agent.py", "exec"); print("OK")'
+STOP after writing the one file. No more actions, no reading other files.
+
+Note: The meta-agent will fill in the task-specific parts intelligently. Make the code robust, use try/except, dict access everywhere for pipeline result. The logging block above MUST be present (verbatim or closely adapted) + imports at VERY TOP to avoid scope/import errors.

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "total_score": 0,
+  "max_allowed_score": 10,
+  "violations": [],
+  "rule_results": {
+    "R1_VERIFIABILITY": true,
+    "R2_REGRESSION_FREE": true,
+    "R3_SIMPLICITY_FIRST": true,
+    "R4_LEARN_FROM_FAILURE": true,
+    "R5_COGNITIVE_TRACEABILITY": true
+  },
+  "details": "\u2705 R1_VERIFIABILITY\n\u2705 R2_REGRESSION_FREE\n\u2705 R3_SIMPLICITY_FIRST\n\u2705 R4_LEARN_FROM_FAILURE\n\u2705 R5_COGNITIVE_TRACEABILITY"
+}

@@ -1,0 +1,24 @@
+Loading ground truth from: /home/fares/GENESIS/genesis/tasks/gpqa/data/private/diamond_questions.json
+Loaded 198 questions
+Searching for submission file in: /home/fares/GENESIS/runs/run_53/gen_1
+Loading submission from: /home/fares/GENESIS/runs/run_53/gen_1/answers.json
+Evaluating submission...
+Saving results to: /home/fares/GENESIS/runs/run_53/gen_1/evaluation_results.json
+
+======================================================================
+GPQA Evaluation Results
+======================================================================
+Total Questions:    198
+Correct:            60
+Incorrect:          138
+Missing:            0
+Invalid:            0
+Accuracy:           30.30%
+======================================================================
+
+Per-Domain Accuracy:
+----------------------------------------------------------------------
+  Biology                          7/ 19 ( 36.8%)
+  Chemistry                       27/ 93 ( 29.0%)
+  Physics                         26/ 86 ( 30.2%)
+----------------------------------------------------------------------

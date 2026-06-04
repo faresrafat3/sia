@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-06-04T09:37:32.141104",
+  "task_preview": "# GPQA-style benchmark (`diamond_questions.json`)\n\nYou are evaluated on **how many questions you answer correctly** on a fixed set of **graduate-level** multiple-choice items in the spirit of [GPQA](https://arxiv.org/abs/2311.12022): biology, chemistry, physics, and related domains at expert difficu",
+  "pipeline_result_keys": [
+    "task",
+    "blackboard",
+    "snapshot",
+    "tier_decision",
+    "escalation",
+    "ledger",
+    "stored_memory",
+    "concept_count",
+    "used_concepts_count",
+    "anomaly_candidates",
+    "used_theories_count",
+    "anomaly_severity",
+    "use_anomaly_leverage",
+    "use_theory_leverage",
+    "theory_prediction",
+    "theory_predictive_value",
+    "forgetting_report",
+    "alignment_report",
+    "use_identity_governance",
+    "crisis_report",
+    "fork_result",
+    "use_paradigm_fork"
+  ],
+  "tier": "tier_2",
+  "verification_good_enough": true,
+  "detected_task_type": "qa",
+  "loaded_data_shape": "N/A",
+  "accuracy": 0.0,
+  "submission_path": "/home/fares/GENESIS/runs/run_53/gen_1/submission.csv",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Target agent executed with GENESIS pipeline + task logic."
+    },
+    {
+      "role": "user",
+      "content": "# GPQA-style benchmark (`diamond_questions.json`)\n\nYou are evaluated on **how many questions you answer correctly** on a fixed set of **graduate-level** multiple-choice items in the spirit of [GPQA](h"
+    },
+    {
+      "role": "assistant",
+      "content": "Completed task with accuracy reported above."
+    }
+  ]
+}

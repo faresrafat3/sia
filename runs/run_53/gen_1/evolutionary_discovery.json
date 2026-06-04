@@ -1,0 +1,155 @@
+{
+  "best_variant": {
+    "id": "variant_4_g1",
+    "code": "# Evo-mutated in gen 1\nimport os\nimport sys\nimport json\nimport argparse\nimport asyncio\nimport datetime\nimport httpx\nimport openai\nimport pandas as pd\nimport numpy as np\n\nfrom virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline\nfrom virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore\nfrom virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry\nfrom virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry\nfrom virtual_genesis.runtime.economy_control.ledger import InMemoryLedgerStore\nfrom virtual_genesis.core.objects.memory import MemoryUnit\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--dataset_dir\", required=True)\nparser.add_argument(\"--working_dir\", required=True)\nargs = parser.parse_args()\nDATASET_DIR = args.dataset_dir\n",
+    "fitness": 0.8,
+    "score": 0.76,
+    "parent": "variant_0",
+    "eval_details": {
+      "fitness": 0.8,
+      "cost": 0.06858333333333333,
+      "robustness": 0.8,
+      "diversity_score": 0.5,
+      "details": "GENESIS harness + pipeline evaluator - from constitutional_report (passed=True) + real pipeline call (ties to theft + Bridge)"
+    },
+    "final_score": 0.88
+  },
+  "population": [
+    {
+      "id": "variant_4_g1",
+      "code": "# Evo-mutated in gen 1\nimport os\nimport sys\nimport json\nimport argparse\nimport asyncio\nimport datetime\nimport httpx\nimport openai\nimport pandas as pd\nimport numpy as np\n\nfrom virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline\nfrom virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore\nfrom virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry\nfrom virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry\nfrom virtual_genesis.runtime.economy_control.ledger import InMemoryLedgerStore\nfrom virtual_genesis.core.objects.memory import MemoryUnit\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--dataset_dir\", required=True)\nparser.add_argument(\"--working_dir\", required=True)\nargs = parser.parse_args()\nDATASET_DIR = args.dataset_dir\n",
+      "fitness": 0.8,
+      "score": 0.76,
+      "parent": "variant_0",
+      "eval_details": {
+        "fitness": 0.8,
+        "cost": 0.06858333333333333,
+        "robustness": 0.8,
+        "diversity_score": 0.5,
+        "details": "GENESIS harness + pipeline evaluator - from constitutional_report (passed=True) + real pipeline call (ties to theft + Bridge)"
+      },
+      "final_score": 0.88
+    },
+    {
+      "id": "variant_5_g1",
+      "code": "# Evo-mutated in gen 1\nimport os\nimport sys\nimport json\nimport argparse\nimport asyncio\nimport datetime\nimport httpx\nimport openai\nimport pandas as pd\nimport numpy as np\n\nfrom virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline\nfrom virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore\nfrom virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry\nfrom virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry\nfrom virtual_genesis.runtime.economy_control.ledger import InMemoryLedgerStore\nfrom virtual_genesis.core.objects.memory import MemoryUnit\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--dataset_dir\", required=True)\nparser.add_argument(\"--working_dir\", required=True)\nargs = parser.parse_args()\nDATASET_DIR = args.dataset_dir\n",
+      "fitness": 0.8,
+      "score": 0.76,
+      "parent": "variant_0",
+      "eval_details": {
+        "fitness": 0.8,
+        "cost": 0.06858333333333333,
+        "robustness": 0.8,
+        "diversity_score": 0.5,
+        "details": "GENESIS harness + pipeline evaluator - from constitutional_report (passed=True) + real pipeline call (ties to theft + Bridge)"
+      },
+      "final_score": 0.88
+    },
+    {
+      "id": "variant_0",
+      "code": "import os\nimport sys\nimport json\nimport argparse\nimport asyncio\nimport datetime\nimport httpx\nimport openai\nimport pandas as pd\nimport numpy as np\n\nfrom virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline\nfrom virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore\nfrom virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry\nfrom virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry\nfrom virtual_genesis.runtime.economy_control.ledger import InMemoryLedgerStore\nfrom virtual_genesis.core.objects.memory import MemoryUnit\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--dataset_dir\", required=True)\nparser.add_argument(\"--working_dir\", required=True)\nargs = parser.parse_args()\nDATASET_DIR = args.dataset_dir\nWORKING_DIR = args.working_dir\nos.makedirs(WORKING_DIR, exist_ok=True)\n\nMODEL = \"openai/gpt-oss-120b:free\"\nclient = openai.OpenAI(\n    api_key=os.getenv(\"OPENAI_API_KEY\"),\n    base_url=os.getenv(\"OPENAI_BASE_URL\", \"https://openrouter.ai/api/v1\")\n)\n\nstore = InMemoryMemoryStore()\nconcept_registry = InMemoryConceptRegistry()\ntheory_registry = InMemoryTheoryRegistry()\nledger_store = InMemoryLedgerStore()\n\ntask_md_path = os.path.join(DATASET_DIR, \"task.md\")\nif os.path.exists(task_md_path):\n    with open(task_md_path, encoding=\"utf-8\") as f:\n        task_text = f.read()\nelse:\n    task_text = \"Solve the task using data in \" + DATASET_DIR\nprint(f\"Task loaded: {task_text[:200]}...\")\n\nresult = run_minimal_pipeline(\n    raw_task=task_text,\n    store=store,\n    concept_registry=concept_registry,\n    theory_registry=theory_registry,\n    ledger_store=ledger_store,\n    use_memory=True,\n    use_economy=True,\n    use_concepts=False,\n)\nprint(\"Pipeline result keys:\", list(result.keys()) if isinstance(result, dict) else type(result))\n\ntask_info = result.get(\"task\", {}) if isinstance(result, dict) else {}\nblackboard = result.get(\"blackboard\", {}) if isinstance(result, dict) else {}\ntier_decision = resu...",
+      "fitness": 0.8,
+      "cost": 0.8405833333333333,
+      "robustness": 0.8,
+      "score": 0.6359416666666666,
+      "parent": "seed",
+      "eval_details": {
+        "fitness": 0.8,
+        "cost": 0.8405833333333333,
+        "robustness": 0.8,
+        "diversity_score": 0.5,
+        "details": "GENESIS harness + pipeline evaluator - from constitutional_report (passed=True) + real pipeline call (ties to theft + Bridge)"
+      },
+      "final_score": 0.7559416666666666
+    },
+    {
+      "id": "variant_0",
+      "code": "import os\nimport sys\nimport json\nimport argparse\nimport asyncio\nimport datetime\nimport httpx\nimport openai\nimport pandas as pd\nimport numpy as np\n\nfrom virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline\nfrom virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore\nfrom virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry\nfrom virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry\nfrom virtual_genesis.runtime.economy_control.ledger import InMemoryLedgerStore\nfrom virtual_genesis.core.objects.memory import MemoryUnit\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--dataset_dir\", required=True)\nparser.add_argument(\"--working_dir\", required=True)\nargs = parser.parse_args()\nDATASET_DIR = args.dataset_dir\nWORKING_DIR = args.working_dir\nos.makedirs(WORKING_DIR, exist_ok=True)\n\nMODEL = \"openai/gpt-oss-120b:free\"\nclient = openai.OpenAI(\n    api_key=os.getenv(\"OPENAI_API_KEY\"),\n    base_url=os.getenv(\"OPENAI_BASE_URL\", \"https://openrouter.ai/api/v1\")\n)\n\nstore = InMemoryMemoryStore()\nconcept_registry = InMemoryConceptRegistry()\ntheory_registry = InMemoryTheoryRegistry()\nledger_store = InMemoryLedgerStore()\n\ntask_md_path = os.path.join(DATASET_DIR, \"task.md\")\nif os.path.exists(task_md_path):\n    with open(task_md_path, encoding=\"utf-8\") as f:\n        task_text = f.read()\nelse:\n    task_text = \"Solve the task using data in \" + DATASET_DIR\nprint(f\"Task loaded: {task_text[:200]}...\")\n\nresult = run_minimal_pipeline(\n    raw_task=task_text,\n    store=store,\n    concept_registry=concept_registry,\n    theory_registry=theory_registry,\n    ledger_store=ledger_store,\n    use_memory=True,\n    use_economy=True,\n    use_concepts=False,\n)\nprint(\"Pipeline result keys:\", list(result.keys()) if isinstance(result, dict) else type(result))\n\ntask_info = result.get(\"task\", {}) if isinstance(result, dict) else {}\nblackboard = result.get(\"blackboard\", {}) if isinstance(result, dict) else {}\ntier_decision = resu...",
+      "fitness": 0.8,
+      "cost": 0.8405833333333333,
+      "robustness": 0.8,
+      "score": 0.6359416666666666,
+      "parent": "seed",
+      "eval_details": {
+        "fitness": 0.8,
+        "cost": 0.8405833333333333,
+        "robustness": 0.8,
+        "diversity_score": 0.5,
+        "details": "GENESIS harness + pipeline evaluator - from constitutional_report (passed=True) + real pipeline call (ties to theft + Bridge)"
+      },
+      "final_score": 0.7559416666666666
+    },
+    {
+      "id": "variant_1",
+      "code": "# Evo variant 1: added robustness comment + minor edit\nimport os\nimport sys\nimport json\nimport argparse\nimport asyncio\nimport datetime\nimport httpx\nimport openai\nimport pandas as pd\nimport numpy as np\n\nfrom virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline\nfrom virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore\nfrom virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry\nfrom virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry\nfrom virtual_genesis.runtime.economy\n# [evolved section]\n_control.ledger import InMemoryLedgerStore\nfrom virtual_genesis.core.objects.memory import MemoryUnit\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--dataset_dir\", required=True)\nparser.add_argument(\"--working_dir\", required=True)\nargs = parser.parse_args()\nDATASET_DIR = args.dataset_dir\nWORKING_DIR = args.working_dir\nos.makedirs(WORKING_DIR, exist_ok=True)\n\nMODEL = \"openai/gpt-oss-120b:free\"\nclient = openai.OpenAI(\n    api_key=os.getenv(\"OPENAI_API_KEY\"),\n    base_url=os.getenv(\"OPENAI_BASE_URL\", \"https://openrouter.ai/api/v1\")\n)\n\nstore = InMemoryMemoryStore()\nconcept_registry = InMemoryConceptRegistry()\ntheory_registry = InMemoryTheoryRegistry()\nledger_store = InMemoryLedgerStore()\n\ntask_md_path = os.path.join(DATASET_DIR, \"task.md\")\nif os.path.exists(task_md_path):\n    with open(task_md_path, encoding=\"utf-8\") as f:\n        task_text = f.read()\nelse:\n    task_text = \"Solve the task using data in \" + DATASET_DIR\nprint(f\"Task loaded: {task_text[:200]}...\")\n\nresult = run_minimal_pipeline(\n    raw_task=task_text,\n    store=store,\n    concept_registry=concept_registry,\n    theory_registry=theory_registry,\n    ledger_store=ledger_store,\n    use_memory=True,\n    use_economy=True,\n    use_concepts=False,\n)\nprint(\"Pipeline result keys:\", list(result.keys()) if isinstance(result, dict) else type(result))\n\ntask_info = result.get(\"task\", {}) if isinstance(result, dict) else {}\nblackboard = result.ge...",
+      "fitness": 0.8,
+      "cost": 0.8469166666666667,
+      "robustness": 0.8,
+      "score": 0.6353083333333334,
+      "parent": "seed",
+      "eval_details": {
+        "fitness": 0.8,
+        "cost": 0.8469166666666667,
+        "robustness": 0.8,
+        "diversity_score": 0.5,
+        "details": "GENESIS harness + pipeline evaluator - from constitutional_report (passed=True) + real pipeline call (ties to theft + Bridge)"
+      },
+      "final_score": 0.7553083333333334
+    },
+    {
+      "id": "variant_2",
+      "code": "# Evo variant 2: added robustness comment + minor edit\nimport os\nimport sys\nimport json\nimport argparse\nimport asyncio\nimport datetime\nimport httpx\nimport openai\nimport pandas as pd\nimport numpy as np\n\nfrom virtual_genesis.runtime.pipeline.minimal_run import run_minimal_pipeline\nfrom virtual_genesis.runtime.memory_os.store import InMemoryMemoryStore\nfrom virtual_genesis.runtime.concept_engine.registry import InMemoryConceptRegistry\nfrom virtual_genesis.runtime.theory_runtime.registry import InMemoryTheoryRegistry\nfrom virtual_genesis.runtime.economy\n# [evolved section]\n_control.ledger import InMemoryLedgerStore\nfrom virtual_genesis.core.objects.memory import MemoryUnit\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--dataset_dir\", required=True)\nparser.add_argument(\"--working_dir\", required=True)\nargs = parser.parse_args()\nDATASET_DIR = args.dataset_dir\nWORKING_DIR = args.working_dir\nos.makedirs(WORKING_DIR, exist_ok=True)\n\nMODEL = \"openai/gpt-oss-120b:free\"\nclient = openai.OpenAI(\n    api_key=os.getenv(\"OPENAI_API_KEY\"),\n    base_url=os.getenv(\"OPENAI_BASE_URL\", \"https://openrouter.ai/api/v1\")\n)\n\nstore = InMemoryMemoryStore()\nconcept_registry = InMemoryConceptRegistry()\ntheory_registry = InMemoryTheoryRegistry()\nledger_store = InMemoryLedgerStore()\n\ntask_md_path = os.path.join(DATASET_DIR, \"task.md\")\nif os.path.exists(task_md_path):\n    with open(task_md_path, encoding=\"utf-8\") as f:\n        task_text = f.read()\nelse:\n    task_text = \"Solve the task using data in \" + DATASET_DIR\nprint(f\"Task loaded: {task_text[:200]}...\")\n\nresult = run_minimal_pipeline(\n    raw_task=task_text,\n    store=store,\n    concept_registry=concept_registry,\n    theory_registry=theory_registry,\n    ledger_store=ledger_store,\n    use_memory=True,\n    use_economy=True,\n    use_concepts=False,\n)\nprint(\"Pipeline result keys:\", list(result.keys()) if isinstance(result, dict) else type(result))\n\ntask_info = result.get(\"task\", {}) if isinstance(result, dict) else {}\nblackboard = result.ge...",
+      "fitness": 0.8,
+      "cost": 0.8469166666666667,
+      "robustness": 0.8,
+      "score": 0.6353083333333334,
+      "parent": "seed",
+      "eval_details": {
+        "fitness": 0.8,
+        "cost": 0.8469166666666667,
+        "robustness": 0.8,
+        "diversity_score": 0.5,
+        "details": "GENESIS harness + pipeline evaluator - from constitutional_report (passed=True) + real pipeline call (ties to theft + Bridge)"
+      },
+      "final_score": 0.7553083333333334
+    }
+  ],
+  "lineage": [
+    {
+      "child": "variant_0",
+      "parent": "seed",
+      "score": 0.6359416666666666
+    },
+    {
+      "child": "variant_1",
+      "parent": "seed",
+      "score": 0.6353083333333334
+    },
+    {
+      "child": "variant_2",
+      "parent": "seed",
+      "score": 0.6353083333333334
+    },
+    {
+      "child": "variant_3",
+      "parent": "variant_2",
+      "score": 0.6353083333333334
+    },
+    {
+      "child": "variant_4",
+      "parent": "variant_3",
+      "score": 0.6353083333333334
+    },
+    {
+      "child": "variant_5",
+      "parent": "variant_4",
+      "score": 0.6353083333333334
+    }
+  ],
+  "metrics": {
+    "avg_fitness": 0.8000000000000002,
+    "best_fitness": 0.8,
+    "diversity": 2
+  },
+  "note": "Skeleton implementation from AlphaEvolve theft. Full version will use LLM for true mutation/crossover + real pipeline calls + GRASP gating."
+}
