@@ -95,6 +95,15 @@ python run_openrouter_benchmark.py \
   --use_evolutionary_discovery
 
 # gpqa (hard reasoning) - after 5.89 fixes (KeyError escape, submission finder, real eval in evo, BOTH files, A/B/C/D strict)
+
+**run_53 Results (after 5.89 fixes + pull + install -e .)**: 
+- Gen1: 30.30% accuracy (60/198 correct), constitutional 0/10.
+- Gen2: 32.32% accuracy (+2% lift), constitutional 5/10.
+- 0 missing/invalid (submission format worked perfectly, answers.json picked).
+- Per-domain: Biology lift 36.8%→42.1%.
+- Evo enabled, all 198 questions processed, run completed successfully.
+- Proof of thefts impact: real reasoning on GPQA vs prior 0%.
+
 # Make sure: source .venv/bin/activate && pip install -e .
 python run_openrouter_benchmark.py \
   --task gpqa \

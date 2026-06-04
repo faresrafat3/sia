@@ -14,7 +14,7 @@
 - ✅ 98.6% success على v3b_curriculum (72 مهمة)
 - ✅ بنية معرفية متقدمة (3 طبقات A/B/C)
 - ✅ منهجية ablation علمية (Cycle 5.1)
-- ✅ 101 "سرقة مشروعة" موثقة من العلوم المعرفية (بما فيها 5.84 AlphaEvolve + 5.85 Co-Scientist + 5.86 Aletheia + 5.87 Robust Evo Code Gen + 5.88 GPQA QA Guidance + 5.89 Submission/Eval Robustness من DeepMind runs + bug fixes)
+- ✅ 102 "سرقة مشروعة" موثقة من العلوم المعرفية (بما فيها 5.84 AlphaEvolve + 5.85 Co-Scientist + 5.86 Aletheia + 5.87 Robust Evo Code Gen + 5.88 GPQA QA Guidance + 5.89 Submission/Eval Robustness + 5.90 Real GPQA 30-32% Results من DeepMind runs + bug fixes)
 
 ### المشاكل الحرجة
 - ❌ **انقطاع كامل** بين Orchestrator و GENESIS
@@ -231,7 +231,7 @@
 - يربط بالـ GRASP gating و ExpGraph graph memory
 - النجاح: تحسن في الـ transfer و الـ discovery rate على broader domain slices
 - الوثيقة: `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md` (كاملة)
-- Evidence من run_49 (titanic) + run_50/52 (gpqa): no prompt crash (KeyError fixed in 5.89), evo x2, constitutional lift 0→5/10 on Gen2, evaluate.py ran on 198 questions (evaluation_results.json), execution logs + answers.json written. لكن 0% بسبب format mismatch (evaluator حمل agent_execution.json بدل answers.json) + بعض "I" invalid. الـ fixes الجديدة (5.87 robust logging + 5.88 QA + 5.89 submission discovery + escaping + BOTH files + strict A/B/C/D + evo real accuracy + evaluate.py finder update) هتظبط. run_53+ جاهز. الـ evo fitness هيبقى real (accuracy_percent) بدل proxy. Next: user run بعد git pull.
+- Evidence من run_49-53: run_53 نجح كامل (بعد الـ fixes). Gen1 30.30% accuracy (60/198 correct, per-domain Biology 36.8%/Chemistry 29%/Physics 30.2%), Gen2 32.32% (64/198, +2% lift). 0 missing/invalid (answers.json picked correctly by finder). Constitutional 0/10 → 5/10. All 198 processed. Evo x2 (fitness 0.800 proxy). LLM summary: refactoring + _get helper + better data loading. الـ 5.89 fixes (escaping + submission + evo + packaging) عملت. أول real lift من الـ thefts على hard benchmark. Next: more gens, no-evo comparison, SWE-bench.
 
 ### Task 7: Co-Scientist Scientific Discovery Layer
 **الأولوية:** 🔴 حرجة (بعد/مع الـ Bridge + AlphaEvolve)
