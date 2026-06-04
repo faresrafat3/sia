@@ -750,11 +750,11 @@ IMPORTANT: Always produce clean, error-handling, production-quality code. Use th
   try:
       train_df = pd.read_csv(os.path.join(DATASET_DIR, "train.csv"))
       test_df = pd.read_csv(os.path.join(DATASET_DIR, "test.csv"))
-      print(f"Full train shape: {train_df.shape}")
-      print(f"Full test shape: {test_df.shape}")
-      print(f"Train columns sample: {list(train_df.columns)[:5]}...")
+      print(f"Full train shape: {{train_df.shape}}")
+      print(f"Full test shape: {{test_df.shape}}")
+      print(f"Train columns sample: {{list(train_df.columns)[:5]}}...")
   except Exception as load_e:
-      print(f"Data load error: {load_e}")
+      print(f"Data load error: {{load_e}}")
       train_df, test_df = None, None
   ```
 - Detect task type and target column GENERALLY (from task_text or data, no hardcodes):
@@ -788,32 +788,32 @@ General principles for any task:
 ```python
 # === ROBUST EXECUTION LOGGING (MANDATORY - put this before the final success print) ===
 try:
-    execution_log = {
+    execution_log = {{
         "timestamp": datetime.datetime.now().isoformat(),
         "task_preview": task_text[:300] if "task_text" in locals() else "unknown task",
         "pipeline_result_keys": list(result.keys()) if isinstance(result, dict) else str(type(result)),
         "tier": tier_decision.get("chosen_tier", "unknown") if isinstance(tier_decision, dict) else "unknown",
-        "verification_good_enough": verification.get("verification_summary", {}).get("good_enough", False) if isinstance(verification, dict) else False,
+        "verification_good_enough": verification.get("verification_summary", {{}}).get("good_enough", False) if isinstance(verification, dict) else False,
         "detected_task_type": "classification" if "train_df" in locals() and train_df is not None else "unknown",
-        "loaded_data_shape": str(train_df.shape) if "train_df" in locals() and train_df is not None else "N/A",
+        "loaded_data_shape": str({{train_df}}.shape) if "train_df" in locals() and train_df is not None else "N/A",
         "accuracy": 0.0,  # compute real val accuracy here if possible; 0.0 if no labels
         "submission_path": os.path.join(WORKING_DIR, "submission.csv"),
         "messages": [  # minimal trajectory for feedback; expand if multi-turn
-            {"role": "system", "content": "Target agent executed with GENESIS pipeline + task logic."},
-            {"role": "user", "content": task_text[:200] if "task_text" in locals() else ""},
-            {"role": "assistant", "content": "Completed task with accuracy reported above."}
+            {{"role": "system", "content": "Target agent executed with GENESIS pipeline + task logic."}},
+            {{"role": "user", "content": task_text[:200] if "task_text" in locals() else ""}},
+            {{"role": "assistant", "content": "Completed task with accuracy reported above."}}
         ]
-    }
+    }}
     log_path = os.path.join(WORKING_DIR, "agent_execution.json")
     with open(log_path, "w", encoding="utf-8") as f:
         json.dump(execution_log, f, indent=2, ensure_ascii=False)
-    print(f"Execution log saved to {log_path}")
+    print(f"Execution log saved to {{log_path}}")
 except Exception as log_err:
-    print(f"Failed to write execution log: {log_err}")
+    print(f"Failed to write execution log: {{log_err}}")
     # Fallback: write a minimal log even on error
     try:
         with open(os.path.join(WORKING_DIR, "agent_execution.json"), "w", encoding="utf-8") as f:
-            json.dump({"error": str(log_err), "timestamp": datetime.datetime.now().isoformat()}, f)
+            json.dump({{"error": str(log_err), "timestamp": datetime.datetime.now().isoformat()}}, f)
     except:
         pass
 ```
