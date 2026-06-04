@@ -738,20 +738,21 @@ verification = blackboard.get("verification_state", {{}}) if isinstance(result, 
 print(f"Tier: {{tier_decision.get('chosen_tier', 'unknown')}}, Verification good_enough: {{verification.get('verification_summary', {{}}).get('good_enough', False)}}")
 ```
 
-Then, implement TASK-SPECIFIC logic (use the packages in the venv: pandas, numpy, scikit-learn):
-- For spaceship-titanic (tabular binary classification on Kaggle-style data):
-  - import pandas as pd
-  - train = pd.read_csv(os.path.join(DATASET_DIR, 'train.csv'))
-  - test = pd.read_csv(os.path.join(DATASET_DIR, 'test.csv'))
-  - Basic cleaning: fillna for numerics/categoricals, pd.get_dummies for HomePlanet, Destination, etc. (avoid string-to-float errors on 'Mars', 'Europa')
-  - Call pipeline on a row summary or full task_text for reasoning/guidance
-  - Use simple sklearn model (LogisticRegression or RandomForest) or LLM calls on features + pipeline result to predict 'Transported' (True/False)
-  - Create submission = pd.DataFrame({{'PassengerId': test['PassengerId'], 'Transported': predictions}})
-  - submission.to_csv(os.path.join(WORKING_DIR, 'submission.csv'), index=False)
-- For gpqa / Q&A: load questions, for each use pipeline + LLM to answer, save trajectories.
+Then, implement TASK-SPECIFIC logic in a GENERAL and ROBUST way (use the packages in the venv: pandas, numpy, scikit-learn when appropriate for the task type). 
+IMPORTANT: Always produce clean, error-handling, production-quality code. Use the GENESIS pipeline result for cognitive guidance on ANY task. Never hardcode task-specific strings if possible; detect the task type from the data or task.md.
+
+General principles for any task:
+- Load data from DATASET_DIR as needed (csv, json, etc.).
+- Call the pipeline early for reasoning, tier decision, verification.
+- For data/tabular tasks: use pandas for loading/cleaning (handle categoricals properly with get_dummies or encoding to avoid type errors), use sklearn or simple logic/LLM for prediction.
+- For Q&A/reasoning tasks (like gpqa): process each item, use pipeline + LLM.
+- Always produce the expected output files (submission.csv, answers, etc.) in WORKING_DIR.
+- Use try/except around data handling and model calls.
+- Log clearly.
+
 - Always: use the cognitive result (tier, verification, etc.) to guide decisions (avoid shortcuts per theory).
 - If needed, make LLM calls for final answer using the client + MODEL above.
-- Handle errors gracefully with try/except per section.
+- Handle errors gracefully with try/except per section. Make the code maintainable and general.
 
 MUST log execution:
 - Use MultiTrajectoryLogger (define the class if multiple items) or save agent_execution.json with messages list.
