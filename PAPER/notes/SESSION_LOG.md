@@ -128,6 +128,6 @@
 
 ### الـ Open Threads:
 - ⏭ Why is GENESIS still −10 points below pure baseline?
-- ⏭ Ablation study
+- ⏭ Run the ablations already designed in `tab13_ablation_matrix.md`
 - ⏭ Cross-model same-subset comparison (Gemini / GPT-5 / Gemma)
 - ⏭ Paper updates with run_57 results

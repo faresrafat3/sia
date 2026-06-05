@@ -41,7 +41,9 @@
 
 ## 🎯 Next: Actual next step
 1. **Ablation study** — أين يضيع الـ 10 points؟
-2. Compare `run_57` answers vs `pure_final` question-by-question
-3. Try stronger base model on same subset (Gemma / Gemini / GPT-5)
-4. Update PAPER figures/tables to reflect run_57 formally
-5. Only after competitiveness, scale to full 198 questions
+   - question-level delta analysis ✅ مكتمل
+   - ablation matrix ✅ مكتمل
+   - decision tree ✅ مكتمل
+2. Try stronger base model on same subset (Gemini / GPT-5 / Gemma)
+3. Run the first 2–3 highest-value ablations from `tab13_ablation_matrix.md`
+4. Only after competitiveness, scale to full 198 questions

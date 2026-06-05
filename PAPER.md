@@ -627,7 +627,7 @@ The most likely sources of residual loss are:
 
 ### Short-Term (Within 1-2 Weeks)
 
-4. **Ablation Study:** Systematically disable GENESIS components (pipeline, memory, theory, evolution, feedback) to measure individual contributions.
+4. **Ablation Study:** Systematically disable or narrow GENESIS components (pipeline leverage, feedback loop, constitutional pressure, evolutionary discovery) to measure individual contributions. See `PAPER/tables/tab13_ablation_matrix.md` and `PAPER/figures/fig10_ablation_decision_tree.md`.
 
 5. **Controlled Reasoning Token Experiment:** Vary max_tokens systematically to test the reasoning saturation hypothesis.
 
