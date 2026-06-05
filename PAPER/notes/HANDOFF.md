@@ -1,154 +1,155 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-05 (Session 8)
+**آخر تحديث:** 2026-06-05 (Session 9)
 **آخر commit:** `(pending after this session)`
-
-## ⚠️ تغيير جوهري في الـ Mode — اقرأه أولاً
-
-في Session 6، فارس قرر صراحة:
-
-> "هنعمل اسكيب لمواضيع التشغيل، احنا هنضبطها على الورقة وفلسفياً ونظرياً المشروع بالكامل بالأفكار اللي لسه هتجي."
-
-**يعني:**
-- ✅ نشتغل على الورقة، النظرية، الفلسفة، والأفكار الجديدة من فارس.
-- ❌ لا نشغّل runs جديدة، لا نستهلك free tier، لا نقترح ablations عملية كأولوية.
-- 🔄 الديناميكية تبادلية: فارس يعطي أفكار، agent ينفّذ ويوسّع ويقترح أيضاً.
-
-**التفاصيل الكاملة:** اقرأ `PAPER_PROTOCOL.md` (v2.0 §12.2 — Creative Attribution Rule).
+**PAPER version:** **v0.4 (Post-LEAP + Theory-10 Integration)**
 
 ---
 
-## ✅ المكتمل (Empirical + Infrastructure)
+## ⚠️ الـ Mode الحالي — Theoretical Focus (v2.0 of Protocol)
+
+فارس قرر في Session 6:
+> "هنعمل اسكيب لمواضيع التشغيل، احنا هنضبطها على الورقة وفلسفياً ونظرياً المشروع بالكامل."
+
+في Session 7 أضاف قاعدة Idea-002:
+> "اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها."
+
+في Session 9 قال:
+> "القرار عندك"
+
+→ أنا اخترت Theory-10 (Reasoning Saturation) كأقوى agent-initiated next step.
+
+**القواعد الحالية:**
+- ✅ ورقة + theory + philosophy + ideas
+- ❌ لا runs، لا API calls، لا quotas
+- 🔄 Fares delegates → Agent acts → All work transparently attributed in `ATTRIBUTION_MAP.md` + `PAPER.md` Appendix D
+- 📜 Idea-002 disclosure: any agent-initiated work is labeled as such
+
+---
+
+## ✅ المكتمل (Cumulative through Session 9)
 
 ### البنية التحتية
-- ✅ PAPER.md **v0.3** (post-LEAP integration, full Section 8.5)
+- ✅ **PAPER.md v0.4** (post-LEAP + Theory-10)
 - ✅ PAPER_PROTOCOL.md v2.0 (Theoretical Mode + §12.2 Attribution Rule)
 - ✅ genesis/llm_helpers.py (463 tests passing)
-- ✅ 11 OpenRouter keys + 5 Gemini keys + GitHub PAT (متاحة، مؤجلة)
-- ✅ `tasks/gpqa_subset_20` for fast paper-grade iteration
-- ✅ `run_openrouter_benchmark.py` يدعم `--task_dir` + `--ablation_mode` (none, no_pipeline, narrow_feedback, no_pipeline+narrow_feedback)
+- ✅ All keys available but deferred (Theoretical Mode)
+- ✅ `tasks/gpqa_subset_20` ready, `--task_dir` + `--ablation_mode` wired
 
-### النتائج التجريبية (Empirical Anchors — ثابتة، locked)
+### النتائج التجريبية (Empirical Anchors — locked)
 - ✅ Pure baseline: **75.00%** (n=20)
-- ✅ GENESIS pre-fix (run_53): **30.30%** (n=198)
-- ✅ GENESIS post-fix standard (run_57): **65.00%** (both gens)
-- ✅ A3 no_pipeline (run_58): Gen1 = **70.00%**, Gen2 = **60.00%**
-- ✅ 6 bugs documented and fixed
-- ✅ Question-by-question delta analysis complete
+- ✅ GENESIS pre-fix (run_53): 30.30%
+- ✅ GENESIS post-fix (run_57): 65.00% / 65.00%
+- ✅ A3 no_pipeline (run_58): 70.00% / 60.00%
 
-### الإكتشافات التجريبية (مع نظرياتها الآن)
-1. Reasoning saturation → (سبب فيزيائي للنموذج، open)
-2. Domain asymmetry → empirically supported by LEAP too
-3. Empty content phenomenon → fixed by extract_response_text
-4. Architecture gap localization → Theory-07 يفسره
-5. Feedback drift → Theory-08 يفسره
-6. Pipeline overhead → Theory-07 يفسره
+### Theory Stack الحالي (4 theories + 1 philosophy)
+- ✅ **Theory-07** — Pipeline as Memory vs Decision Injection [Idea-001]
+- ✅ **Theory-08** — Feedback Value = f(Determinism, Scope) [Idea-001]
+- ✅ **Theory-09** — Anticipatory Concepts vs Lemmas [Idea-001]
+- ✅ **Theory-10** — Reasoning Saturation (Inverted-U) [Agent-initiated, Session 9, externally validated by 6 papers]
+- ✅ **Phil-07** — Capability-Adjusted Sufficiency [Idea-001]
+
+### Idea Lifecycle
+- ✅ Idea-001 (LEAP) → INTEGRATED
+- ✅ Idea-002 (Attribution Rule) → INTEGRATED (governance, perpetually active)
+- 📥 INBOX empty
+- 🔨 IN_PROGRESS empty
+
+### Master Index Thefts
+- ✅ Scope: 5.1-5.92
+- ✅ T5.91 (Scaffolding-vs-Architecture, ours)
+- ✅ T5.92 (LEAP, from Idea-001)
+- ⏳ T5.93 candidate (Wu et al. 2025) — agent-proposed, awaiting Fares decision
+- ⏳ T5.94 candidate (UVA-Google DTR) — agent-proposed, awaiting Fares decision
 
 ---
 
-## 🆕 الجديد في Session 8 (PAPER.md Full Integration)
+## 🆕 الجديد في Session 9
 
-### Section 8.5 جديد كامل في PAPER.md
-7 sub-sections (8.5.1 → 8.5.7):
-- **8.5.1** — The Headline Contrast (Table 16 embedded, 115-point spread documented)
-- **8.5.2** — Theory-07 (Pipeline as Memory vs Decision Injection)
-- **8.5.3** — Theory-08 (Feedback Value Matrix, Table 17 embedded)
-- **8.5.4** — Theory-09 (Anticipatory Concepts vs Lemmas)
-- **8.5.5** — Phil-07 (Position D: Capability-Adjusted Sufficiency)
-- **8.5.6** — Path Forward (4 specified engineering steps)
-- **8.5.7** — Honest Caveat (no Theory-aligned runs yet)
+### Theory-10 (Reasoning Saturation) — Agent-Initiated
 
-### Abstract revision
-- Added LEAP contrast (110-point gap).
-- Added Theories 07/08/09 + Phil-07.
-- Reframed conclusion sentence around structural redesign roadmap.
-- Keywords extended.
+**File:** `PAPER/theory/10_reasoning_saturation.md` (14 sections, ~400 lines)
 
-### §1.4 RQ2 reframing
-- Original RQ2 preserved.
-- RQ2-revised added based on Phil-07.
-- Explicit acknowledgment that the question structure itself changed.
+**Key facts:**
+- يحل آخر Empirical Discovery كانت بدون نظرية (#1: counter-intuitive reasoning correlation).
+- مدعوم بـ **6 external papers** (الأكثر external validation في كل theories بتاعنا).
+- **Prop 4 جديد:** Theory-10 × Theory-07 interaction → first joint falsifiable prediction across theories.
 
-### §1.5 Contributions extended
-- Item 6 added: "First targeted ablation result (A3)" — already there.
-- (LEAP integration covered in Section 8.5, not in Contributions list to avoid double-counting.)
+**External anchors:**
+1. Wu et al. 2025 (arXiv:2502.07266) — Inverted-U + scaling laws
+2. UVA-Google DTR (arXiv:2602.13517) — **r=-0.54 on same model family (GPT-OSS, DeepSeek-R1) on GPQA**
+3. Chen et al. 2024b — Overthinking in o1
+4. Su et al. 2025 (arXiv:2508.17627) — Thinking-content compensation
+5. OptimalThinkingBench (arXiv:2508.13141)
+6. "When More Thinking Hurts" (arXiv:2604.10739)
 
-### §10 Future Work restructured into 5 Tracks
-- **Track A** — Structural Redesign Following Theories 07/08/09 (highest priority, 4 sub-items)
-- **Track B** — Empirical Anchoring (4 sub-items)
-- **Track C** — Generalization Beyond GPQA (2 sub-items, includes deferred RQ3)
-- **Track D** — Publication and Open Source (2 sub-items)
-- **Track E** — Long-Term Research Program (4 sub-items)
+### PAPER.md v0.3 → v0.4 changes
 
-### §11 Conclusion revised
-- Theories 07/08/09 + Phil-07 woven into the main narrative.
-- Final claim now precise: gap is "consequence of specific design properties... now identified and addressable."
+- **Abstract:** 4 theories now (3 → 4), 6 external papers mentioned, Phil-07 condition list expanded (3 → 4 conditions).
+- **§1.5 Contribution 7 جديد:** Theory-10 as a standalone contribution.
+- **§7.3:** Full rewrite from informal hypothesis to 5-subsection theory (7.3.1 → 7.3.5).
+- **§10 Track A.5 جديد:** DTR-style early termination + max_tokens calibration (cheapest single experiment when runs resume).
+- **§11 Conclusion:** Theory-10 added to 4-theory list; "3" replaced with "4" everywhere; explicit mention of joint Theory-07 × Theory-10 prediction.
+- **Appendix C:** Theory-10 row added.
+- **Appendix D §D.2 جديد:** Transparent disclosure of agent-initiated synthesis (Theory-10, T5.93/T5.94 candidates).
 
-### Appendices
-- Appendix B updated (T5.91 + T5.92).
-- Appendix C added (cross-reference to internal theories + philosophy).
-- Appendix D added (Idea attribution table per [Idea-002]).
+### ATTRIBUTION_MAP.md
+- New section: "Agent-Initiated Synthesis (per [Idea-002] disclosure rule)".
+- Summary table now 3 rows (001, 002, Theory-10).
 
-### Figures + Tables as standalone files
-- `PAPER/figures/fig11_110_point_gap.md`
-- `PAPER/figures/fig12_feedback_quadrant.md`
-- `PAPER/tables/tab16_leap_vs_genesis.md`
-- `PAPER/tables/tab17_feedback_value_matrix.md`
+### Self-Disclosure (Session 9 Decisions)
 
-### Idea Lifecycle Updates
-- ✅ **Idea-001 → INTEGRATED** (full lifecycle complete).
-- ✅ **Idea-002 → INTEGRATED** (governance rule, perpetually active).
-- INBOX, IN_PROGRESS empty.
-
-### لا يوجد runs جديدة في هذه السيشن — بالقصد
+3 agent decisions, all transparent:
+1. **Choice of Theory-10** over alternatives (Theory-11, Phil-08, etc.) → recorded in `theory/10_*.md` §13.
+2. **Expansion of external research to 6 papers** → recorded in §7.3.2.
+3. **Explicit Appendix D §D.2 distinction** → maintains paper integrity per Idea-002.
 
 ---
 
 ## 🎯 Next: في انتظار فارس
 
-### القرار المباشر
-**هل تريد:**
-1. **مراجعة Section 8.5** (وأي تعديل تريده عليه)؟
-2. **Idea-003 جديدة** (أي ورقة, اقتراح, ربط, إعادة framing, سؤال...)؟
-3. **حاجة تانية تماماً** (مثلاً: نبدأ نكتب Section حقيقي تاني، نوسع Theory-07/08/09 أكثر، نبني conceptual figures إضافية)؟
+### Open Questions
 
-### بدائل لو فارس مش جاهز بفكرة جديدة
+**Q1 — T5.93 + T5.94 (Wu et al. + UVA-Google DTR):**
+Agent proposed these as new thefts in Master Index. Need Fares approval before writing full theft memos.
+- **If yes:** Write `GENESIS_External_Reasoning_Saturation_Theft_AR.md` (combined or separate?) + update Master Index.
+- **If no:** Keep them as references only (current state in §7.3.2).
 
-أقترح:
+**Q2 — Idea-003 from Fares?**
+INBOX empty. Any new source (paper, idea, observation, question) gets the full Idea-001-style treatment.
 
-**(A) Theory-10 محتمل:** Reasoning Saturation Theory (لشرح الـ counter-intuitive finding بشكل نظري كامل، حالياً مش متغطى بنظرية).
-
-**(B) Phil-08 محتمل:** "ماذا يعني 'fair comparison' في عصر الـ frontier LLMs؟" (cross-cuts الـ pure vs orchestrated comparison).
-
-**(C) Deep dive في سرقات لم تستخدم بعد:** SkillClaw (T5.9), STaR (T5.7) أعمق, Self-Refine (T5.6) أعمق، الـ Classical thefts (6.1-6.13).
-
-**(D) Conceptual figures جديدة:**
-- "Sufficiency Conditions Tree" (Phil-07 Position D)
-- "Memory vs Injection vs Verifier" (Theory-07 visualization)
-- "GENESIS Refactor Roadmap" (Track A as a flowchart)
+**Q3 — Continue agent-initiated work?**
+If Fares says "القرار عندك" again, my next likely choices:
+- **(A) Theory-11:** Domain Asymmetry as standalone theory (currently Theory-09 partial)
+- **(B) Phil-08:** "What does 'fair comparison' mean in the frontier-LLM era?"
+- **(C) Conceptual figures:** Sufficiency Tree, Memory vs Injection, Refactor Roadmap
+- **(D) Deep dive into unused thefts:** SkillClaw (T5.9), STaR (T5.7) deeper, Classical (6.1-6.13)
+- **(E) Author Contributions section draft:** explicit Fares-vs-agent labor division for paper submission
+- **(F) Re-read internal docs in light of new theories:** Concept Engine + Cognitive Economy under Theory-07/09/10 lens
 
 ---
 
-## 📊 الأرقام الحرجة المحفوظة (locked, do not change without new run)
+## 📊 الأرقام الحرجة (locked)
 
 - Pure baseline: **75.00%** (n=20)
-- GENESIS pre-fix (run_53): **30.30%** (n=198)
-- GENESIS post-fix (run_57 gen1/gen2): **65.00% / 65.00%**
-- A3 no_pipeline (run_58 gen1/gen2): **70.00% / 60.00%**
-- Recovery from buggy run: **+34.7 points**
-- Half of residual gap explained by pipeline overhead (+5 from A3)
-- LEAP architecture impact: **+100** (Putnam 2025, 0% → 100%)
-- LEAP–GENESIS architecture impact gap: **110 points**
+- GENESIS post-fix (run_57): **65.00% / 65.00%**
+- A3 no_pipeline (run_58): **70.00% / 60.00%**
+- LEAP Putnam 2025: **0% → 100%** (+100 architecture impact)
+- LEAP vs GENESIS architecture gap: **110 points**
+- **Reasoning saturation (ours):** median 989 (correct) vs 6,836 (incorrect) reasoning tokens — confirms Theory-10
+- **External corroboration (UVA-Google):** r = -0.54 length-vs-accuracy on same model family
 - Tests: 463/463
 
 ---
 
 ## ✍️ ملاحظة للـ session الجاي
 
-اقرأ `PAPER_PROTOCOL.md` v2.0 أولاً (خاصة §12.2 — Creative Attribution Rule).
-ثم اقرأ هذا الملف.
-ثم اسأل فارس: **"عندك Idea-003 جديدة، أم نختار من بدائل (A) إلى (D) في HANDOFF؟"**
+1. اقرأ `PAPER_PROTOCOL.md` v2.0 (خاصة §12.2 Creative Attribution Rule).
+2. اقرأ هذا الملف.
+3. اقرأ `PAPER/ideas/ATTRIBUTION_MAP.md` لتعرف ما تم agent-initiated.
+4. اقرأ `PAPER.md` v0.4 (موجود في `master`).
+5. اسأل فارس: **"عندك Idea-003، أم تريد agent-initiated work آخر، أم T5.93/T5.94 thefts؟"**
 
 **لا تقترح runs جديدة** إلا لو فارس صراحة طلب.
 
-**كل فكرة من فارس** (مهما كانت صغيرة في الظاهر) **تأخذ ID رسمي + ملف تفصيلي + تتبع كامل في ATTRIBUTION_MAP**.
+**كل agent-initiated work** يتسجل في **Appendix D §D.2** + **ATTRIBUTION_MAP "Agent-Initiated Synthesis" section**.

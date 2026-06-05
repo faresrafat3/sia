@@ -90,12 +90,30 @@
 
 ---
 
+## Agent-Initiated Synthesis (per [Idea-002] disclosure rule)
+
+> **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
+
+### Session 9 agent-initiated work
+
+| Item | Triggering context | Paper impact | Status |
+|---|---|---|---|
+| **Theory-10 (Reasoning Saturation)** | Fares delegation ("القرار عندك") + last untheorized Empirical Discovery (#1) | `PAPER/theory/10_*.md` (full theory, 14 sections); Section 7.3 expanded from placeholder to full theory; §1.5 Contributions item 7 added; §11 Conclusion mention; Appendix C row; Track A.5 added to Future Work | ✅ Integrated |
+| **Literature anchor: Wu et al. 2025** | Search to support Theory-10 | Cited in §7.3.2, Theory-10 Axiom 1 & 4, Future Work | ✅ Cited (no theft memo yet) |
+| **Literature anchor: UVA-Google DTR** | Search to support Theory-10 | Cited in §7.3.2 (r=-0.54 on same model family); Track A.5 DTR-style termination | ✅ Cited (no theft memo yet) |
+| **Literature anchor: 4 more papers** | Search to support Theory-10 | Chen 2024b, Su 2025, OptimalThinkingBench, "When More Thinking Hurts" all cited in §7.3.2 | ✅ Cited |
+| **Candidate Theft T5.93 (Wu et al.)** | Agent recommendation | Master Index entry pending Fares approval | ⏳ Proposed, awaiting decision |
+| **Candidate Theft T5.94 (UVA-Google DTR)** | Agent recommendation | Master Index entry pending Fares approval | ⏳ Proposed, awaiting decision |
+
+---
+
 ## ملخص
 
-| ID | عنوان مختصر | حجم التأثير | ملفات منفّذة | ملفات مخططة |
+| ID | عنوان مختصر | مصدر | حجم التأثير | ملفات منفّذة |
 |---|---|---|---|---|
-| 001 | LEAP integration | CORE | 5 (theft + 3 theories + 1 philosophy + index update) | 5 (Section 8.5 + 2 figures + 2 tables + future work) |
-| 002 | Creative Attribution Rule | META-CORE | 3 (protocol + map + proof) | 2 (acknowledgments + contributions) |
+| 001 | LEAP integration | Fares (Session 6) | CORE | 10+ (theft + 3 theories + 1 philosophy + index + Section 8.5 + 2 figures + 2 tables + future work + appendices) |
+| 002 | Creative Attribution Rule | Fares (Session 7) | META-CORE | 5 (protocol §12.2 + map + proof + Appendix D + agent-initiated disclosure) |
+| Theory-10 | Reasoning Saturation | Agent-initiated (Session 9, Fares-authorized) | MAJOR | 3 (full theory file + Section 7.3 expansion + Appendix C/D rows + 6 external citations) |
 
 ---
 

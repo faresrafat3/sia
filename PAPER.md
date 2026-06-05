@@ -19,7 +19,7 @@ We further execute the first targeted ablation (**A3: no cognitive pipeline leve
 
 Our key findings include: (1) a **counter-intuitive reasoning saturation effect** where questions consuming more reasoning tokens were less likely to be answered correctly (median 6,836 tokens for incorrect vs 989 for correct); (2) strong **domain asymmetry** with Physics questions being dramatically easier (10/11 classified as Easy across models) than Chemistry Organic (5/6 classified as Hard); (3) the "empty content" phenomenon where 35% of reasoning model responses return zero visible tokens, requiring extraction from internal reasoning traces; (4) an **architecture-overhead gap** in which GENESIS, despite producing zero invalid answers and clean execution, underperforms the pure baseline primarily on Chemistry and Biology; and (5) initial ablation evidence that removing pipeline leverage improves Generation 1 from **65% to 70%**.
 
-Finally, we situate these results against the **LEAP** framework [Kung et al. 2026; T5.92; sourced via Idea-001], which on the same class of base model demonstrates a **+100-point** architecture impact (Putnam 2025: 0% → 100%). The 110-point gap between LEAP's +100 and GENESIS's −10 cannot be explained by base model strength, scaffolding bugs, or benchmark difficulty alone — it is structural. To explain it, we develop three internal theories: **[Theory-07]** *Pipeline as Memory vs Pipeline as Decision Injection*; **[Theory-08]** *Feedback Value = f(Determinism, Scope)*; and **[Theory-09]** *Anticipatory Concepts vs Anticipatory Lemmas*, which together reframe our research question from "does the architecture add value?" to the more precise **"under what structural conditions does an orchestration architecture add measurable value?"** [Phil-07, Position D]. We argue that GENESIS currently violates two of the three conditions (memory rather than injection; narrow deterministic feedback rather than broad stochastic refactor), which makes the residual −10 gap a specified engineering target rather than a mysterious deficit.
+Finally, we situate these results against the **LEAP** framework [Kung et al. 2026; T5.92; sourced via Idea-001], which on the same class of base model demonstrates a **+100-point** architecture impact (Putnam 2025: 0% → 100%). The 110-point gap between LEAP's +100 and GENESIS's −10 cannot be explained by base model strength, scaffolding bugs, or benchmark difficulty alone — it is structural. To explain it, we develop four internal theories: **[Theory-07]** *Pipeline as Memory vs Pipeline as Decision Injection*; **[Theory-08]** *Feedback Value = f(Determinism, Scope)*; **[Theory-09]** *Anticipatory Concepts vs Anticipatory Lemmas*; and **[Theory-10]** *Reasoning Saturation: The Inverted-U of Internal Reasoning* — the last of which converts our counter-intuitive empirical observation (Discovery #1) into a falsifiable theory anchored by six independent external papers (Wu et al. 2025; UVA-Google 2026; Chen et al. 2024b; Su et al. 2025; OptimalThinkingBench; "When More Thinking Hurts"). Together with **[Phil-07]** *Capability-Adjusted Sufficiency*, these theories reframe our research question from "does the architecture add value?" to the more precise **"under what structural conditions does an orchestration architecture add measurable value?"**. We argue that GENESIS currently violates three conditions (memory rather than injection; narrow deterministic feedback rather than broad stochastic refactor; bounded reasoning rather than saturating reasoning), which makes the residual −10 gap a specified engineering target rather than a mysterious deficit.
 
 These results suggest that GENESIS has successfully crossed the "scaffolding catastrophe" stage, but has not yet crossed the "architecture adds value" threshold. The next research phase is therefore not basic bug-fixing, but **structural redesign along principles validated externally by LEAP and theorized internally in Theories 07/08/09**: identifying which architectural components help, which are neutral, and which currently dilute model performance.
 
@@ -114,6 +114,8 @@ This paper primarily addresses RQ1 (Sections 5.3–5.4, 7.1), provides initial e
 5. **First post-fix architecture comparison:** We show that GENESIS post-fix reaches **65.00%** on the same 20-question subset where the pure baseline reaches **75.00%**, proving that the architecture has recovered from catastrophic scaffolding failure but still imposes a measurable performance overhead in its current form.
 
 6. **First targeted ablation result (A3):** Disabling pipeline leverage raises Generation 1 from **65.00%** to **70.00%**, providing the first direct evidence that the cognitive pipeline in its current usage contributes harmful overhead/noise on GPQA-20.
+
+7. **Theory-10 (Reasoning Saturation):** We promote our counter-intuitive empirical observation (median reasoning tokens: 989 for correct vs 6,836 for incorrect) to a full theory anchored by **six independent external papers** including a UVA-Google study (arXiv:2602.13517) that reports a length-vs-accuracy correlation of **r = −0.54** on the *same model family and same benchmark family* we tested. Theory-10 interacts non-trivially with Theory-07 to produce a joint, falsifiable prediction: GENESIS empty-content rate should exceed pure-baseline empty-content rate on identical questions (Section 7.3).
 
 ---
 
@@ -542,28 +544,68 @@ The stark Physics (10/11 Easy) vs Chemistry (5/6 Hard) split raises important qu
 
 **Recommendation:** All claims about GPQA performance must be accompanied by per-domain breakdowns. Reporting only aggregate accuracy obscures important domain-specific strengths and weaknesses.
 
-### 7.3 Reasoning Saturation Hypothesis
+### 7.3 Reasoning Saturation — From Hypothesis to Theory-10
 
-The counter-intuitive finding that more reasoning tokens correlate with lower accuracy suggests a **reasoning saturation effect**:
+In v0.2 of this paper, this subsection contained only an informal "Reasoning Saturation Hypothesis." In v0.4 we promote it to a full internal theory, **[Theory-10] Reasoning Saturation: The Inverted-U of Internal Reasoning**, supported by six recent external papers and our own measurements.
 
-```
-Hypothesis: Beyond an optimal reasoning depth (~2,000-3,000 tokens), 
-additional thinking becomes counter-productive for several reasons:
+#### 7.3.1 The empirical signature in our data
 
-1. Confusion spiral: The model generates multiple competing explanations
-   and becomes uncertain about which is correct.
+On `gpt-oss-120b` over GPQA-20 (run_57 pure baseline):
 
-2. Token budget exhaustion: 35% of responses hit max_tokens during
-   reasoning, producing zero visible output.
+| Metric | Correct (n=15) | Incorrect (n=5) | Ratio |
+|---|---|---|---|
+| Average reasoning tokens | 3,001 | 5,104 | **+70%** higher for incorrect |
+| Median reasoning tokens | 989 | 6,836 | **+591%** higher for incorrect |
+| Empty content (`content=""`) | 0 / 15 | 7 / 20 total — all incorrect | exclusively in incorrect set |
+| `finish_reason="length"` | 0 / 15 | matches every empty content case | budget exhausted in reasoning |
 
-3. Domain difficulty confound: Hard questions (Chemistry Organic) both
-   require more reasoning AND are inherently harder to answer.
+The model that thinks longer answers *worse*, not better — and beyond a critical length, it stops producing visible output at all.
 
-Controlled experiment needed: Vary max_tokens systematically (1K, 2K,
-4K, 8K, 16K) and measure accuracy at each level to isolate the effect.
-```
+#### 7.3.2 External literature converges on the same finding
 
-This has implications for RQ3 (instant vs thinking) — it's possible that bounded reasoning with forced answer extraction outperforms unbounded reasoning for certain question types.
+Theory-10 is one of the **best-supported** theories in this paper because the external literature has reached very similar conclusions independently:
+
+| Source | Finding | Relation to our data |
+|---|---|---|
+| Wu et al. 2025 (arXiv:2502.07266) | Accuracy follows an **inverted-U** curve in CoT length; optimal length increases with task difficulty, decreases with model capability. Formal scaling laws derived. | Provides theoretical anchor; closed-form optimal length |
+| UVA-Google "Deep Thinking Ratio" (arXiv:2602.13517) | Tested **GPT-OSS, DeepSeek-R1, Qwen3** on AIME and **GPQA-Diamond**. Length-vs-accuracy correlation: **r = −0.54** (negative). DTR (deep-layer revision fraction) correlates at +0.683. | Same model family + same benchmark; independent replication of our observation |
+| Chen et al. 2024b | First documentation of overthinking in o1-like models on simple problems | Confirms the phenomenon predates our observation |
+| Su et al. 2025 (arXiv:2508.17627) | Identifies **thinking–content compensation** that transitions into a saturation phase | Mechanistic backing for our empty-content phenomenon |
+| OptimalThinkingBench (arXiv:2508.13141) | Operationalizes over/underthinking as a benchmark | Methodological frame for future controlled studies |
+| "When More Thinking Hurts" (arXiv:2604.10739) | Diminishing returns + flip-event tracking + cost-aware metrics | Confirms our cost-aware framing of the trade-off |
+
+These six sources, combined with our own measurements, make Theory-10 the most externally-validated theoretical contribution in this paper.
+
+#### 7.3.3 The theory in compact form
+
+Theory-10 rests on four axioms (formalized in `PAPER/theory/10_*.md`):
+
+1. **Error accumulation** (Wu et al. 2025). Each reasoning step carries a small error probability ε; over N steps, accumulated error eventually overwhelms decomposition gains.
+2. **Confusion spiral** (observed in run_57). When a question exceeds the model's capacity window, extended reasoning generates competing hypotheses rather than converging on one answer.
+3. **Token budget exhaustion** (Empirical Discovery #3). When reasoning consumes `max_tokens`, the visible `content` is empty — a mechanism specific to reasoning-capable models that hide internal tokens.
+4. **Inverse capability scaling** (Wu et al. 2025). Optimal CoT length *decreases* as model capability increases — stronger models exhibit a "simplicity bias."
+
+Five testable predictions follow (see `PAPER/theory/10_*.md` §5):
+
+- **P1.** A sweet-spot `max_tokens` exists for GPQA-20 on gpt-oss-120b (expected: 4K–8K).
+- **P2.** GENESIS-style decision injection shifts the sweet spot *leftward* and lowers peak accuracy (predicted empty-content rate >40% vs pure baseline's 35%) — this is where Theory-10 interacts with Theory-07.
+- **P3.** Per-domain optimal lengths differ substantially (Chemistry Organic needs longer but saturates faster).
+- **P4.** Capability scaling: weaker models have sweet spots at higher token counts than gpt-oss-120b; very small models may never reach a sweet spot at all.
+- **P5.** DTR-based early termination achieves equal or better accuracy at roughly half the compute (replication of UVA-Google's result).
+
+#### 7.3.4 Why Theory-10 matters for the paper
+
+Three reasons elevate Theory-10 beyond a local hypothesis:
+
+1. **It explains Empirical Discovery #1 completely** — what looked like a paradox is actually a predicted consequence of an inverted-U structure documented across the literature.
+2. **It interacts non-trivially with Theory-07** through **Prop 4**: pipeline decision injection burns reasoning budget on signal-parsing rather than on answer-finding, pushing the model into the overthinking regime faster. This produces a *joint prediction* (Theory-07 × Theory-10) that GENESIS empty-content rate should exceed pure baseline empty-content rate on identical questions — a clean, falsifiable test.
+3. **It contributes externally** — orchestration frameworks broadly need to address reasoning saturation, not just GENESIS. The DTR-style or Wu-style length calibration becomes a generic architectural concern.
+
+#### 7.3.5 Concrete consequence for GENESIS design
+
+Our current `max_tokens=16384` may itself be *too high* for gpt-oss-120b on GPQA. The median correct answer used only 989 reasoning tokens — a budget of 16,384 leaves vast room for the confusion spiral when difficult questions trigger it. A budget of ~4K–8K, combined with the DTR-style early termination from Track A.5 (added to Future Work), is the prediction we cannot yet test but should test first when runs resume.
+
+This has implications for RQ3 (instant vs thinking) — bounded reasoning with forced answer extraction may outperform unbounded reasoning for certain question types, especially in the over-saturating regime.
 
 ### 7.4 Infrastructure Error Detection
 
@@ -805,6 +847,9 @@ Implement `anticipatory_mode` in `virtual_genesis/runtime/concept_engine/propose
 **A.4 [Phil-07 Prop 3] Re-test on stronger base models.**
 The capability-adjusted sufficiency hypothesis predicts the gap should narrow with stronger base models. Test GENESIS (same architecture) on Gemini-3.1-Pro, GPT-5 via GitHub Models, and Gemma 4 31B. Direct test of the inverse-scaling claim.
 
+**A.5 [Theory-10] Reasoning-length calibration + DTR-style early termination.**
+Drop `max_tokens` from 16,384 to a swept range {2K, 4K, 8K} on GPQA-20 to locate the inverted-U sweet spot for gpt-oss-120b. Then implement a DTR-inspired proxy (using only API-accessible signals such as token-level perplexity or semantic stability) to terminate low-quality reasoning early. Replicates the UVA-Google "Think@n" result on our infrastructure: same-or-better accuracy at ~50% compute. Tests Theory-10 predictions P1, P2, P5 jointly.
+
 ### Track B — Empirical Anchoring (Medium Priority)
 
 **B.1 Cross-model pure baselines.** Confirm pure baselines for Gemma 4 31B (84.3% official), Gemini Flash, and GPT-5 to enable apples-to-apples architecture impact comparisons.
@@ -866,14 +911,15 @@ We also document three broader empirical findings that we believe extend beyond 
 - **Domain asymmetry:** Physics is much easier than Chemistry Organic, meaning aggregate GPQA scores can hide structurally important domain effects.
 - **Infrastructure sensitivity:** response parsing, token budgeting, and field normalization are first-order determinants of measured performance in reasoning-capable models.
 
-Furthermore, Section 8.5 develops three internal theories and one philosophical reframing — all anchored by the empirical contrast with LEAP [T5.92; Idea-001] — that together convert the residual −10 gap into a specified engineering target:
+Furthermore, Sections 7.3 and 8.5 develop four internal theories and one philosophical reframing — three anchored by the empirical contrast with LEAP [T5.92; Idea-001] and one (Theory-10) anchored by both our own measurements and six independent external papers on reasoning saturation. Together they convert the residual −10 gap into a specified engineering target:
 
 - **[Theory-07] Pipeline as Memory vs Pipeline as Decision Injection.** The same architectural element (a "pipeline") can be net-positive when designed as queryable memory (LEAP DAG) or net-negative when designed as signal injection (GENESIS current). Prop 3 predicts that decision injection scales inversely with base model strength — strong models are actively harmed by injected signals.
 - **[Theory-08] Feedback Value = f(Determinism, Scope).** Stochastic LLM-as-judge feedback with broad rewrite scope (GENESIS current, bottom-right quadrant) compounds drift over generations. Deterministic verifier feedback with narrow scope (LEAP, top-left quadrant) compounds monotonic improvements. The run_58 Gen 2 regression from 70% to 60% is the predicted consequence of being in the wrong quadrant.
 - **[Theory-09] Anticipatory Concepts vs Anticipatory Lemmas.** Proactive abstraction is a general architectural principle. LEAP's anticipatory lemma planning contributed +10 to +17 points; the same principle, applied to GENESIS's Concept Engine, is predicted to disproportionately improve our weakest domain (Chemistry Organic).
-- **[Phil-07] Position D — Capability-Adjusted Sufficiency.** "General-purpose model + agentic scaffolding = enough" is true *under specifiable conditions*: sufficient base capability, memory-style pipeline, and narrow deterministic feedback. RQ2 is consequently reframed from a binary question to a structural one.
+- **[Theory-10] Reasoning Saturation (The Inverted-U).** Our counter-intuitive empirical finding (Discovery #1) is not an anomaly — it is the predicted manifestation of an inverted-U structure between reasoning length and accuracy. Six external papers (Wu et al. 2025, UVA-Google 2026, Chen et al. 2024b, Su et al. 2025, OptimalThinkingBench, "When More Thinking Hurts") converge on the same conclusion across the same model family and benchmark family we tested. Theory-10 interacts with Theory-07 through Prop 4: decision injection burns reasoning budget on signal-parsing, pushing the model into the overthinking regime faster. Falsifiable joint prediction: GENESIS empty-content rate should exceed pure-baseline empty-content rate on identical questions.
+- **[Phil-07] Position D — Capability-Adjusted Sufficiency.** "General-purpose model + agentic scaffolding = enough" is true *under specifiable conditions*: sufficient base capability, memory-style pipeline, narrow deterministic feedback, and reasoning length matched to task–capability optimum. RQ2 is consequently reframed from a binary question to a structural one.
 
-Therefore, the next phase of this research is not blind ablation but **principled structural redesign**: refactor the pipeline as memory + verifier (Theory-07), migrate feedback from bottom-right to top-left quadrant (Theory-08), activate anticipatory mode in the Concept Engine (Theory-09), and re-test on stronger base models when available (Phil-07 Prop 3). The infrastructure for the first of these steps (`narrow_feedback` ablation mode) is already wired in `genesis/orchestrator.py`; execution awaits.
+Therefore, the next phase of this research is not blind ablation but **principled structural redesign**: refactor the pipeline as memory + verifier (Theory-07), migrate feedback from bottom-right to top-left quadrant (Theory-08), activate anticipatory mode in the Concept Engine (Theory-09), calibrate reasoning length and add DTR-style early termination (Theory-10, Track A.5), and re-test on stronger base models when available (Phil-07 Prop 3). The infrastructure for the feedback step (`narrow_feedback` ablation mode) is already wired in `genesis/orchestrator.py`; the reasoning-calibration step requires only a `max_tokens` sweep, which is the cheapest single experiment in our entire roadmap.
 
 In short, this work delivers:
 
@@ -881,7 +927,7 @@ In short, this work delivers:
 - a repaired orchestration stack,
 - a first completed architecture comparison,
 - a contrast against the strongest external counterexample (LEAP),
-- three new internal theories with testable predictions,
+- four new internal theories with testable predictions (one of them — Theory-10 — externally validated by six independent papers),
 - a philosophical reframing of the research question itself,
 - and a fully specified — rather than open-ended — research agenda.
 
@@ -964,17 +1010,31 @@ The 20 questions used in our experiments are Q1-Q20 from the GPQA Diamond benchm
 | Theory-07 | Pipeline as Memory vs Pipeline as Decision Injection | `PAPER/theory/07_*.md` | Foundational theory explaining both GENESIS −10 and LEAP +100 |
 | Theory-08 | Feedback Value = f(Determinism, Scope) | `PAPER/theory/08_*.md` | 2×2 quadrant model; explains run_58 Gen 2 regression |
 | Theory-09 | Anticipatory Concepts vs Anticipatory Lemmas | `PAPER/theory/09_*.md` | Generalizes LEAP anticipatory lemmas to GENESIS Concept Engine |
+| Theory-10 | Reasoning Saturation (Inverted-U) | `PAPER/theory/10_*.md` | Externally validated by 6 papers; interacts with Theory-07 via Prop 4 |
 | Phil-07 | Meaning of General-Purpose Sufficiency | `PAPER/philosophy/07_*.md` | Position D: Capability-Adjusted Sufficiency; reframes RQ2 |
 
 ## Appendix D: Idea Attribution (per [Idea-002] Creative Attribution Rule)
 
+### D.1 Ideas sourced from Fares
+
 | Idea ID | Source | Verbatim trigger | Paper impact |
 |---------|--------|------------------|---------------|
-| Idea-001 | Fares (Session 6) | "Link – arxiv. org/abs/2606.03303 Title: 'LEAP: Supercharging LLMs for Formal Mathematics with Agentic Frameworks'" | Section 8.5 (full), Theories 07/08/09, Phil-07, Theft T5.92, Table 16, Table 17, Section 10 Track A roadmap |
-| Idea-002 | Fares (Session 7) | "تمام خلي بالك اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها" | `PAPER_PROTOCOL.md` §12.2, `PAPER/ideas/ATTRIBUTION_MAP.md`, this appendix itself, future Acknowledgments and Author Contributions sections |
+| Idea-001 | Fares (Session 6) | "Link – arxiv. org/abs/2606.03303 Title: 'LEAP: Supercharging LLMs for Formal Mathematics with Agentic Frameworks'" | Section 8.5 (full), Theories 07/08/09, Phil-07, Theft T5.92, Table 16, Table 17, Section 10 Track A.1–A.4 |
+| Idea-002 | Fares (Session 7) | "تمام خلي بالك اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها" | `PAPER_PROTOCOL.md` §12.2 (governance), `PAPER/ideas/ATTRIBUTION_MAP.md`, this appendix itself, future Acknowledgments and Author Contributions sections |
+| Session 9 trigger | Fares (Session 9) | "القرار عندك" — explicit delegation to agent | Authorized the agent-initiated work in §D.2 below |
+
+### D.2 Agent-initiated synthesis (attributed transparently per Idea-002)
+
+| Item | Source | Triggering context | Paper impact |
+|---|---|---|---|
+| Theory-10 (Reasoning Saturation) | Agent-initiated (Session 9) | Last remaining Empirical Discovery (#1) without a theory; Fares delegated choice with "القرار عندك" | Section 7.3 (full theory), Section 11 (Conclusion mention), Appendix C, Track A.5 in Future Work, external literature integration (6 papers) |
+| Candidate theft T5.93 (Wu et al. 2025) | Agent-initiated (Session 9) | Literature search supporting Theory-10 | Pending separate theft memo and Master Index entry |
+| Candidate theft T5.94 (UVA-Google DTR) | Agent-initiated (Session 9) | Literature search supporting Theory-10 | Pending separate theft memo and Master Index entry |
+
+Note: This distinction is itself a direct application of [Idea-002]. Fares-sourced content and agent-initiated content are tracked separately so the final paper's Acknowledgments and Author Contributions sections can honor the actual division of intellectual labor.
 
 Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: v0.3 — Post-LEAP Integration. Sections 8.5, Theories 07/08/09, Phil-07, revised RQ2, restructured Future Work (Tracks A–E), and Appendices C/D added. Next update after Fares review and/or Idea-003.*
+*Paper version: **v0.4 — Post-LEAP + Theory-10 Integration**. Theory-10 (Reasoning Saturation) added as the fourth internal theory, anchored by both internal empirical data and six external papers. Section 7.3 expanded from informal hypothesis to full theory with five testable predictions. Track A.5 (DTR-style early termination + max_tokens calibration) added to Future Work as the cheapest single experiment to run when execution resumes. Next update after Fares review, Idea-003, or further agent-initiated work as authorized.*

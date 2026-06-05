@@ -507,3 +507,117 @@ PAPER.md: v0.2 → **v0.3 (Post-LEAP Integration)**
 
 - `(pending)`: Session 8 — Full PAPER.md integration of Idea-001 (LEAP) + Idea-002 (Attribution). Section 8.5, Abstract, §1.4, §10, §11 revised. Appendices C, D added. fig11, fig12, tab16, tab17 standalone. Ideas 001+002 → INTEGRATED.
 
+
+---
+
+## Session 9 — 2026-06-05 (Agent-Initiated: Theory-10 Reasoning Saturation)
+
+**الحالة:** فارس قال "القرار عندك" → اخترت **Theory-10** كأقوى خطوة بعد LEAP integration. هذا أول **agent-initiated work** كبير، attributed بشفافية كاملة في Appendix D §D.2.
+
+### السبب وراء القرار
+
+من Empirical Discoveries السبعة، **#1 (Reasoning Saturation) كان الوحيد بدون نظرية**. كل الباقي مغطى:
+- #2 Domain asymmetry → Theory-09 partial
+- #3 Empty content → infrastructure fix + now Theory-10 Axiom 3
+- #4 Architecture gap → Theory-07
+- #5 Feedback drift → Theory-08
+- #6 Pipeline overhead → Theory-07
+
+كمان Theory-10 يفتح ربط بين GENESIS و reasoning models بشكل عام — value للورقة خارج GENESIS نفسها.
+
+### ما تم
+
+**1. Literature search ناجح بشكل غير عادي:**
+وجدت **6 papers خارجية تدعم Theory-10**:
+- Wu et al. 2025 (arXiv:2502.07266) — Inverted-U + formal scaling laws
+- UVA-Google DTR (arXiv:2602.13517) — r=-0.54 on SAME model family (GPT-OSS, DeepSeek-R1, Qwen3) on SAME benchmark family (GPQA)
+- Chen et al. 2024b — First overthinking documentation in o1
+- Su et al. 2025 (arXiv:2508.17627) — Thinking-content compensation mechanism
+- OptimalThinkingBench (arXiv:2508.13141) — Operational benchmark
+- "When More Thinking Hurts" (arXiv:2604.10739) — Flip events + cost-aware
+
+هذا يجعل Theory-10 **الأكثر external validation** بين كل theories بتاعنا.
+
+**2. Theory-10 file كامل (`PAPER/theory/10_*.md`):**
+- 14 sections بنفس depth Theory-07/08/09
+- 4 axioms
+- 5 propositions (Prop 4 = Theory-10 × Theory-07 interaction — جديد)
+- 5 testable predictions (P1-P5)
+- Empirical anchors (داخلية + خارجية)
+- Attribution Note صريحة: agent-initiated
+
+**3. PAPER.md integration كاملة (v0.3 → v0.4):**
+- **Abstract:** أضفت Theory-10 كرابع internal theory + ذكر للـ 6 external papers + condition جديدة لـ Phil-07.
+- **§1.5:** Contribution #7 جديد عن Theory-10.
+- **§7.3:** تحويل كامل من "Reasoning Saturation Hypothesis" (placeholder) إلى "Reasoning Saturation — From Hypothesis to Theory-10":
+  - 7.3.1 The empirical signature in our data
+  - 7.3.2 External literature converges (6-paper table)
+  - 7.3.3 The theory in compact form (4 axioms + 5 predictions)
+  - 7.3.4 Why Theory-10 matters for the paper
+  - 7.3.5 Concrete consequence for GENESIS design
+- **§10 Future Work:** Track A.5 جديد (DTR-style early termination + max_tokens calibration) — يربط P1, P2, P5 معاً.
+- **§11 Conclusion:** Theory-10 مذكور في الـ 4-theory list (بدل 3) + final paragraph المعدل.
+- **Appendix C:** Theory-10 row جديد.
+- **Appendix D:** قسم D.2 جديد صريح: "Agent-initiated synthesis". تمييز شفاف بين Fares-sourced و agent-initiated.
+
+**4. ATTRIBUTION_MAP update:**
+- قسم جديد: "Agent-Initiated Synthesis (per [Idea-002] disclosure rule)".
+- 6 entries للـ Session 9 work.
+- Summary table بقت 3 rows (001, 002, Theory-10).
+
+**5. Candidate thefts identified (pending Fares decision):**
+- **T5.93** المرشح: Wu et al. 2025 (inverted-U + CoT calibration)
+- **T5.94** المرشح: UVA-Google DTR (deep thinking ratio)
+
+لم أكتب memos كاملة لهم لأن ذلك يستحق session منفصل + موافقة فارس.
+
+### Self-Disclosure (per Idea-002)
+
+هذه أول مرة أكتب theory **agent-initiated** بدون فكرة محددة من فارس. الـ trigger كان "القرار عندك" — صريح لكن غير-specific. اتخذت 3 قرارات:
+
+1. **اختيار Theory-10** بدل البدائل (Theory-11/Phil-08/deep-dive في سرقات/conceptual figures).
+   - السبب: Empirical Discovery #1 كان الوحيد بدون نظرية.
+   - السبب الثاني: التوقع بأن الـ literature support قوي لهذا الموضوع تحديداً.
+
+2. **توسيع الـ external research** إلى 6 papers بدل واحد أو اثنين.
+   - السبب: الـ unusually strong consensus في الـ literature يستحق التوثيق الكامل.
+
+3. **التمييز الصريح في Appendix D §D.2** بين Fares-sourced و agent-initiated.
+   - السبب: Idea-002 يطلب صراحة هذا التمييز للأمانة العلمية.
+
+### إحصائيات Session 9
+
+| المقياس | العدد |
+|---|---|
+| New theories | 1 (Theory-10) |
+| Theories now in paper | 4 (07, 08, 09, 10) |
+| External papers cited (new) | 6 |
+| Web searches | 3 (overthinking, DTR Google, Wu inverted U) |
+| Major PAPER.md sections rewritten | 2 (§7.3 full rewrite + §11 update) |
+| Sections expanded | 5 (Abstract, §1.5, §10 Future Work, §11, Appendix C/D) |
+| Candidate thefts proposed | 2 (T5.93, T5.94, pending) |
+| Runs | 0 (Theoretical Mode محفوظ) |
+
+### Paper Version Bump
+
+PAPER.md: v0.3 → **v0.4 (Post-LEAP + Theory-10 Integration)**
+
+### الـ Insight الأقوى المُكتسب
+
+الـ Theory-10 × Theory-07 interaction (Prop 4) ينتج **first joint falsifiable prediction** عبر theories بتاعنا:
+
+> GENESIS empty-content rate **should exceed** pure-baseline empty-content rate on identical questions.
+
+ده **prediction قابل للاختبار بـ run واحد** (لما runs ترجع). لو ثبت → دليل تجريبي لربط Theory-07 ↔ Theory-10. لو لم يثبت → إحدى النظريتين تحتاج revision.
+
+### Open Decision للجلسة الجاية
+
+1. **هل نكتب T5.93 + T5.94 theft memos؟** (يتطلب موافقة فارس لأن ده agent-initiated work expansion)
+2. **Idea-003 من فارس؟** الـ INBOX جاهز.
+3. **Theory-11 محتمل؟** (e.g., على Domain Asymmetry بشكل مستقل عن Theory-09)
+4. **Conceptual figures؟** (Sufficiency Tree, Memory vs Injection, Refactor Roadmap)
+
+### الـ Commit المتوقع
+
+`(pending)`: Session 9 — Theory-10 (Reasoning Saturation) agent-initiated; integrated into PAPER.md v0.4; 6 external papers; T5.93/T5.94 proposed; Appendix D §D.2 added for transparent agent-initiated attribution.
+
