@@ -1,7 +1,7 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-05 (Session 3)  
-**آخر commit:** `c62835f`
+**آخر تحديث:** 2026-06-05 (Session 4)  
+**آخر commit:** `8bbdb93`
 
 ---
 
@@ -12,33 +12,36 @@
 - ✅ genesis/llm_helpers.py (463 tests passing)
 - ✅ 11 OpenRouter keys + 5 Gemini keys working
 - ✅ **Bug #6 discovered & fixed:** extract_response_text tuple unpacking
+- ✅ `tasks/gpqa_subset_20` created for fast paper-grade iteration
+- ✅ `run_openrouter_benchmark.py` now supports `--task_dir`
+- ✅ First post-fix architecture comparison completed: `run_57`
 
-## 🔴 الـ Critical Experiment — RE-SCOPED TO USEFUL 20Q SUBSET
+## 🔴 الحالة البحثية الحالية — أول Architecture Comparison مكتمل
 
 **Run 55 على 198 سؤال تم إيقافه** لأنه يضيع وقت/Quota على free tier.
+بعدها تم إنشاء المسار السريع `tasks/gpqa_subset_20`، وتم تشغيل أول مقارنة كاملة بعد الإصلاحات:
 
-**المسار الحالي الصحيح:**
-- استخدم `tasks/gpqa_subset_20`
-- شغّل GENESIS post-fix على **20 سؤال فقط**
-- قارن مباشرة مع **pure baseline = 75.00% على نفس الـ subset**
-- دليل التشغيل: `QUICK_RUN_20Q_GUIDE_AR.md`
-
-**لماذا ده أهم؟**
-- أسرع بكتير
-- نفس معيار المقارنة العلمي
-- مناسب للـ debugging والـ paper iteration
-- يمنع "العطلة" اللي حصلت مع 198 سؤال
+### `run_57` — GENESIS post-fix on 20-question subset
+- **Generation 1:** 65.00% (13/20)
+- **Generation 2:** 65.00% (13/20)
+- **Pure baseline على نفس الـ subset:** 75.00% (15/20)
+- **Architecture gap الحالي:** **−10.0 points**
+- **Invalid answers:** 0 في الجيلين
+- **الاستنتاج:** GENESIS recovered from catastrophic scaffolding failure, but still underperforms the direct baseline.
 
 ## 📊 الأرقام الحرجة
-- Pure baseline: 75.00% (n=20)
-- GENESIS pre-fix (run_53): 30.30%
-- GENESIS post-fix (run_55): RUNNING → expected >75%?
+- Pure baseline: **75.00%** (n=20)
+- GENESIS pre-fix (run_53): **30.30%**
+- GENESIS post-fix (run_57 gen1): **65.00%**
+- GENESIS post-fix (run_57 gen2): **65.00%**
+- Recovery from buggy run: **+34.7 points**
+- Residual architecture gap vs baseline: **−10.0 points**
 - Bugs found: 6 (5 original + tuple unpacking)
 - Tests: 463/463
 
-## 🎯 Next: After run_55 completes
-1. Check Gen 1 accuracy on 198 questions
-2. Run evaluation (evaluate.py)
-3. Check if Gen 2 improves further
-4. Answer: GENESIS > 75% pure baseline?
-5. Update PAPER.md Abstract + Conclusion
+## 🎯 Next: Actual next step
+1. **Ablation study** — أين يضيع الـ 10 points؟
+2. Compare `run_57` answers vs `pure_final` question-by-question
+3. Try stronger base model on same subset (Gemma / Gemini / GPT-5)
+4. Update PAPER figures/tables to reflect run_57 formally
+5. Only after competitiveness, scale to full 198 questions

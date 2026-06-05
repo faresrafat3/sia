@@ -1,22 +1,19 @@
 # 🔴 TODO — أولويات حرجة
 
-1. **[CRITICAL EXPERIMENT]** تشغيل GENESIS post-fix على **subset 20 سؤال**
-  - النموذج: `openai/gpt-oss-120b:free`
-  - المهمة: `tasks/gpqa_subset_20`
-  - الإعداد: `max_gen=2`, `--use_evolutionary_discovery`
-  - الهدف: معرفة هل GENESIS > 75% pure baseline
-  - المانع السابق (198 سؤال = بطء وعطلة) تم حله بإنشاء subset سريع
-  - التشغيل: راجع `QUICK_RUN_20Q_GUIDE_AR.md`
+1. **[ABLATION]** تفسير فجوة `−10.0 points` بين `pure_final=75%` و `run_57=65%`
+  - قارن answers question-by-question
+  - حدّد أين architecture أضرت وأين ساعدت
+  - افصل بين pipeline overhead و feedback drift و constitutional pressure
 
-2. **[PAPER]** إكمال PAPER.md بعد نتيجة run_54
-   - كتابة Abstract
-   - كتابة Conclusion
-   - تحديث Results section بالنتيجة الفعلية
+2. **[PAPER]** تحديث PAPER.md بالكامل بنتيجة `run_57`
+   - تحديث Abstract
+   - تحديث Discussion
+   - تحديث Conclusion
+   - تحديث Figure 2 والجداول
 
-3. **[DATA]** تشغيل Full 198-question GPQA
-   - مطلوب: quota كافية (198 سؤال × multiple models)
-   - Margin of error: ±3.5% بدل ±10%
-   - يقضي على sample bias الـ current
+3. **[DATA]** لا ننتقل لـ Full 198-question GPQA إلا بعد ما GENESIS يبقى competitive على 20Q subset
+   - المطلوب أولاً: تقليل gap من −10 إلى 0 أو أفضل
+   - بعدها فقط نطلع للـ 198
 
 4. **[INFRA]** استلام وتفعيل Gemini × 11 keys
    - فارس قال هيحضرهم

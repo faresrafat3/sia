@@ -13,7 +13,13 @@
     "pure_baseline_std_error_95ci": 10.0,
     "genesis_pre_fix_gpt_oss_120b": 30.3,
     "genesis_pre_fix_gap_from_pure": -44.7,
-    "genesis_post_fix_experiment": "PENDING",
+    "genesis_post_fix_experiment": {
+      "run_id": "run_57",
+      "gen_1_accuracy": 65.0,
+      "gen_2_accuracy": 65.0,
+      "gap_vs_pure_baseline": -10.0,
+      "status": "completed"
+    },
     "total_tests_passing": 463,
     "scaffolding_bugs_found": 5,
     "scaffolding_bugs_fixed": 5
@@ -24,7 +30,9 @@
     {"run_id": "smoke_v1_nano", "model": "nemotron-3-nano", "arch": "pure", "n": 20, "accuracy": 55.0, "invalid": 9, "physics": 90.9, "chemistry": 16.7, "biology": 0.0},
     {"run_id": "smoke_v1_lfm", "model": "lfm-2.5-thinking", "arch": "pure", "n": 20, "accuracy": 15.0, "invalid": 8, "physics": 18.2, "chemistry": 0.0, "biology": 33.3},
     {"run_id": "smoke_v2_nano", "model": "nemotron-3-nano", "arch": "pure", "n": 20, "accuracy": 65.0, "invalid": 3, "physics": 90.9, "chemistry": 16.7, "biology": 66.7},
-    {"run_id": "pure_final", "model": "gpt-oss-120b", "arch": "pure", "n": 20, "accuracy": 75.0, "invalid": 0, "recovered": 3, "physics": 81.8, "chemistry": 66.7, "biology": 66.7}
+ {"run_id": "pure_final", "model": "gpt-oss-120b", "arch": "pure", "n": 20, "accuracy": 75.0, "invalid": 0, "recovered": 3, "physics": 81.8, "chemistry": 66.7, "biology": 66.7},
+    {"run_id": "run_57_gen1", "model": "gpt-oss-120b", "arch": "GENESIS post-fix", "n": 20, "accuracy": 65.0, "invalid": 0, "physics": 90.9, "chemistry": 16.7, "biology": 66.7},
+    {"run_id": "run_57_gen2", "model": "gpt-oss-120b", "arch": "GENESIS post-fix", "n": 20, "accuracy": 65.0, "invalid": 0, "physics": 90.9, "chemistry": 33.3, "biology": 33.3} 
   ],
   "bugs": [
     {"id": 1, "name": "JSON case mismatch", "severity": "CRITICAL", "impact_points": 25, "fix": "safe_get_question_field() with multiple variants"},

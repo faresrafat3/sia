@@ -28,14 +28,14 @@ Accuracy (%)
 30 ┤      buggy scaffolding)    (lfm-2.5 smoke v2)
    |
 25 ┤
-   |                                             ┌─────────────────────┐
-20 ┤                                             │ GENESIS post-fix     │
-   |                                             │ (run_54) — PENDING   │
-15 ┤                                             │ Expected: ???        │
-   |                                             └─────────────────────┘
-   └─────────────────────────────────────────────────────────────────────▶
-      run_53    smoke_v1   smoke_v2   smoke_v2   pure        run_54
-      (pre-fix)  (4pat)    (lfm)      (nano)     baseline    (PENDING)
+   |
+20 ┤                                                           ● 65.0%
+   |                                                            (GENESIS post-fix
+15 ┤                                                            run_57 gen1/gen2)
+   |
+   └────────────────────────────────────────────────────────────────────────────▶
+      run_53    smoke_v1   smoke_v2   smoke_v2   pure         run_57
+      (pre-fix)  (4pat)    (lfm)      (nano)     baseline     (post-fix)
 ```
 
 ## The -44.70 Gap Decomposition
@@ -58,11 +58,16 @@ Accuracy (%)
                     GENESIS run_53: 30.3%  ← أداء كارثي (bugs)
                               │
                     ┌─────────▼─────────┐
-                    │ After fixes        │  +???   (Critical Experiment)
+                    │ After fixes        │  +34.7  (vs buggy run_53)
                     │ (commit 3a16a87)   │
                     └─────────┬─────────┘
                               │
-                    GENESIS post-fix: ???%  ← السؤال المفتوح
+                    GENESIS post-fix: 65.0%  ← recovered, but still below pure baseline
+                              │
+                    ┌─────────▼─────────┐
+                    │ Residual arch gap  │  −10.0  (65.0 vs 75.0)
+                    │                    │
+                    └───────────────────┘
 ```
 
 ## The Five Bugs That Caused the Gap
@@ -84,13 +89,13 @@ Accuracy (%)
         ↓                       ↓                          ↓
     Reference               True Ceiling             Architecture Impact
         ↓                       ↓                          ↓
-  80.1% ────────▶ 75.0% ────────────▶ ???%
-  [NVIDIA]      [Our measurement]     [Critical Experiment]
+  80.1% ────────▶ 75.0% ────────────▶ 65.0%
+  [NVIDIA]      [Our measurement]     [GENESIS run_57]
                      ↓                       ↓
-              Gap: −5.1                Gap: ???
-         (free-tier loss)        (architecture value)
+              Gap: −5.1                Gap: −10.0
+         (free-tier loss)        (current architecture overhead)
 ```
 
 This framework isolates infrastructure losses (Official → Pure) from architecture impact (Pure → Orchestrated). Without it, one might incorrectly attribute the free-tier quantization gap (−5.1) to GENESIS, or worse, attribute the scaffolding gap (−44.7) to model limitations.
 
-**The only gap that matters for our research question is the rightmost one (Pure → Orchestrated).**
+**The critical scientific conclusion now is precise:** GENESIS has eliminated the catastrophic scaffolding failure, but the current architecture still trails the pure baseline by 10 points on the same subset.

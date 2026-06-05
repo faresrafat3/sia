@@ -88,6 +88,46 @@
 
 ---
 
-## Session 3 — (Next, not yet started)
+## Session 3 — 2026-06-05 (Paper consolidation + quick-path experiment)
 
-**سيبدأ بـ:** قراءة `PAPER/notes/HANDOFF.md` + سؤال فارس عن الأولوية
+**الحالة:** تحويل الشغل من مسار بطيء غير عملي (198 سؤال) إلى مسار بحثي سريع ومفيد (20 سؤال)، ثم تنفيذ أول مقارنة حقيقية بعد الإصلاحات.
+
+### ما تم:
+
+**Paper consolidation:**
+- كتابة `PAPER.md` كـ master paper
+- كتابة `PAPER_PROTOCOL.md`
+- بناء `PAPER/notes/` system كامل
+- بناء 8 figures + aggregated data + per-question matrix
+
+**Quick-path infrastructure:**
+- إنشاء `tasks/gpqa_subset_20`
+- إضافة دعم `--task_dir` في `run_openrouter_benchmark.py`
+- توثيق `QUICK_RUN_20Q_GUIDE_AR.md`
+- إصلاح preference لـ `./.venv/bin/python` لو موجود
+
+**Critical bug #6:**
+- اكتشاف bug جديد: `extract_response_text()` from `genesis.llm_helpers` returns `(text, meta)` tuple
+- meta-agent generated code was treating it as string
+- النتيجة: `'tuple' object has no attribute 'strip'`
+- تم إصلاح الـ prompt + التحقق من generation الجديدة
+
+**Critical Experiment completed:**
+- تشغيل `run_57` على `tasks/gpqa_subset_20`
+- **Generation 1 = 65.00%**
+- **Generation 2 = 65.00%**
+- 0 invalid answers في الجيلين
+- architecture recovered from 30.3% buggy result, but still under pure baseline 75.0%
+
+### الـ Commits:
+- `db68f47`: paper protocol + handoff system
+- `8b018ce`: complete 8 figures + aggregated data
+- `a5e6d6b`: add GPQA 20-question subset + task_dir support
+- `8bbdb93`: prefer repo .venv python + document fast path
+- `c62835f`: tuple unpacking fix in orchestrator prompt
+
+### الـ Open Threads:
+- ⏭ Why is GENESIS still −10 points below pure baseline?
+- ⏭ Ablation study
+- ⏭ Cross-model same-subset comparison (Gemini / GPT-5 / Gemma)
+- ⏭ Paper updates with run_57 results

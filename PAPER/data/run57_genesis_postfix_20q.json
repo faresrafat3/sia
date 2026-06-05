@@ -1,0 +1,39 @@
+{
+  "run_id": "run_57",
+  "task": "tasks/gpqa_subset_20",
+  "model": "openai/gpt-oss-120b:free",
+  "pure_baseline_accuracy_percent": 75.0,
+  "gen_1": {
+    "accuracy_percent": 65.0,
+    "correct": 13,
+    "incorrect": 7,
+    "invalid": 0,
+    "wrong_question_ids": [2, 9, 11, 13, 16, 18, 19],
+    "per_domain": {
+      "Physics": 90.9,
+      "Chemistry": 16.7,
+      "Biology": 66.7
+    }
+  },
+  "gen_2": {
+    "accuracy_percent": 65.0,
+    "correct": 13,
+    "incorrect": 7,
+    "invalid": 0,
+    "wrong_question_ids": [8, 9, 11, 13, 16, 18, 19],
+    "per_domain": {
+      "Physics": 90.9,
+      "Chemistry": 33.3,
+      "Biology": 33.3
+    }
+  },
+  "delta_vs_pure": {
+    "gen_1": -10.0,
+    "gen_2": -10.0
+  },
+  "notes": [
+    "Post-fix GENESIS recovers dramatically from the old 30.3% buggy result.",
+    "However, both generations remain 10 points below the 75.0% pure baseline on the same 20-question subset.",
+    "Feedback changed the error pattern (Q2 fixed, Q8 regressed) but did not improve total score."
+  ]
+}
