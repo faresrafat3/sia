@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "generated": "2026-06-05T06:00:00Z",
+    "benchmark": "GPQA Diamond",
+    "question_subset": "Q1-Q20",
+    "models_tested": ["gpt-oss-120b:free", "nemotron-3-nano-30b-a3b:free", "liquid/lfm-2.5-1.2b-thinking:free"],
+    "runs": 6,
+    "notes": "All runs use reasoning=high, temperature=0.0. Free tier via OpenRouter."
+  },
+  "summary": {
+    "official_gpqa_gpt_oss_120b": 80.1,
+    "pure_baseline_gpt_oss_120b": 75.0,
+    "pure_baseline_std_error_95ci": 10.0,
+    "genesis_pre_fix_gpt_oss_120b": 30.3,
+    "genesis_pre_fix_gap_from_pure": -44.7,
+    "genesis_post_fix_experiment": "PENDING",
+    "total_tests_passing": 463,
+    "scaffolding_bugs_found": 5,
+    "scaffolding_bugs_fixed": 5
+  },
+  "per_run": [
+    {"run_id": "run_53", "model": "gpt-oss-120b", "arch": "GENESIS pre-fix", "n": 198, "accuracy": 30.3, "invalid": 0, "physics": 30.2, "chemistry": 29.0, "biology": 36.8},
+    {"run_id": "smoke_v1_gptoss", "model": "gpt-oss-120b", "arch": "pure", "n": 20, "accuracy": 60.0, "invalid": 5, "physics": 90.9, "chemistry": 33.3, "biology": 33.3},
+    {"run_id": "smoke_v1_nano", "model": "nemotron-3-nano", "arch": "pure", "n": 20, "accuracy": 55.0, "invalid": 9, "physics": 90.9, "chemistry": 16.7, "biology": 0.0},
+    {"run_id": "smoke_v1_lfm", "model": "lfm-2.5-thinking", "arch": "pure", "n": 20, "accuracy": 15.0, "invalid": 8, "physics": 18.2, "chemistry": 0.0, "biology": 33.3},
+    {"run_id": "smoke_v2_nano", "model": "nemotron-3-nano", "arch": "pure", "n": 20, "accuracy": 65.0, "invalid": 3, "physics": 90.9, "chemistry": 16.7, "biology": 66.7},
+    {"run_id": "pure_final", "model": "gpt-oss-120b", "arch": "pure", "n": 20, "accuracy": 75.0, "invalid": 0, "recovered": 3, "physics": 81.8, "chemistry": 66.7, "biology": 66.7}
+  ],
+  "bugs": [
+    {"id": 1, "name": "JSON case mismatch", "severity": "CRITICAL", "impact_points": 25, "fix": "safe_get_question_field() with multiple variants"},
+    {"id": 2, "name": "max_tokens too small", "severity": "CRITICAL", "impact_points": 12, "fix": "max_tokens=16384"},
+    {"id": 3, "name": "Anti-CoT prompt", "severity": "HIGH", "impact_points": 8, "fix": "Allow reasoning + ANSWER: X format"},
+    {"id": 4, "name": "No reasoning fallback", "severity": "HIGH", "impact_points": 4, "fix": "extract_response_text()"},
+    {"id": 5, "name": "Silent default to A", "severity": "MEDIUM", "impact_points": 0, "fix": "Force-letter follow-up"}
+  ],
+  "reasoning_analysis": {
+    "correct_avg_reasoning_tokens": 3001,
+    "correct_median_reasoning_tokens": 989,
+    "incorrect_avg_reasoning_tokens": 5104,
+    "incorrect_median_reasoning_tokens": 6836,
+    "empty_content_rate_pct": 35.0,
+    "empty_content_recovery_rate_pct": 85.7
+  },
+  "domain_difficulty": {
+    "easy": {"count": 11, "criteria": ">=4 of 6 models correct"},
+    "medium": {"count": 3, "criteria": "2-3 of 6 models correct"},
+    "hard": {"count": 6, "criteria": "<=1 of 6 models correct"},
+    "matrix": {
+      "physics": {"easy": 10, "medium": 0, "hard": 1, "total": 11},
+      "chemistry": {"easy": 1, "medium": 0, "hard": 5, "total": 6},
+      "biology": {"easy": 0, "medium": 3, "hard": 0, "total": 3}
+    }
+  },
+  "consensus_questions": {
+    "all_correct": [3, 12, 14, 20],
+    "all_wrong": [],
+    "near_consensus_wrong": [16]
+  }
+}
