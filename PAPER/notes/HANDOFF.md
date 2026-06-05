@@ -1,38 +1,33 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-05 (Session 10)
+**آخر تحديث:** 2026-06-05 (Session 11)
 **آخر commit:** `(pending after this session)`
-**PAPER version:** **v0.5 (Theory-10 Fully Anchored via T5.93 + T5.94)**
+**PAPER version:** **v0.6 (Author Contributions + Acknowledgments + Ethics of Authorship)**
 
 ---
 
 ## ⚠️ الـ Mode الحالي — Theoretical Focus (v2.0 of Protocol)
 
-فارس قرر في Session 6:
-> "هنعمل اسكيب لمواضيع التشغيل، احنا هنضبطها على الورقة وفلسفياً ونظرياً المشروع بالكامل."
-
-في Session 7 أضاف قاعدة Idea-002:
-> "اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها."
-
-في Sessions 9 + 10 قال "القرار عندك" مرتين متتاليتين → agent اختار:
+Sessions 6–11 كلها تحت theoretical mode. Fares delegated direction 4 times with "القرار قرارك" / "القرار عندك":
+- Session 8: LEAP integration (chose Option A — integrate everything into PAPER.md)
 - Session 9: Theory-10 (Reasoning Saturation)
-- Session 10: T5.93 + T5.94 thefts (to anchor Theory-10 properly)
+- Session 10: T5.93 + T5.94 thefts
+- Session 11: Author Contributions + Acknowledgments + Ethics of Authorship
 
 **القواعد الحالية:**
-- ✅ ورقة + theory + philosophy + ideas + thefts
+- ✅ ورقة + theory + philosophy + ideas + thefts + authorship framework
 - ❌ لا runs، لا API calls، لا quotas
-- 🔄 Fares delegates → Agent acts → All work transparently attributed in `ATTRIBUTION_MAP.md` + `PAPER.md` Appendix D §D.2
-- 📜 Idea-002 disclosure: any agent-initiated work is labeled as such
+- 🔄 Fares delegates → Agent acts → All work transparently attributed
+- 📜 Idea-002 disclosure: every agent-initiated piece is labelled
 
 ---
 
-## ✅ المكتمل (Cumulative through Session 10)
+## ✅ المكتمل (Cumulative through Session 11)
 
 ### البنية التحتية
-- ✅ **PAPER.md v0.5** (Theory-10 fully anchored via T5.93 + T5.94)
+- ✅ **PAPER.md v0.6** (now submission-ready in structure, modulo formatting for venue)
 - ✅ PAPER_PROTOCOL.md v2.0
 - ✅ genesis/llm_helpers.py (463 tests passing)
-- ✅ All keys available but deferred
 
 ### النتائج التجريبية (Empirical Anchors — locked)
 - Pure baseline: **75.00%** (n=20)
@@ -40,110 +35,119 @@
 - GENESIS post-fix (run_57): 65.00% / 65.00%
 - A3 no_pipeline (run_58): 70.00% / 60.00%
 
-### Theory Stack (4 theories + 1 philosophy)
-- ✅ Theory-07 — Pipeline as Memory vs Decision Injection [Idea-001]
-- ✅ Theory-08 — Feedback Value = f(Determinism, Scope) [Idea-001]
-- ✅ Theory-09 — Anticipatory Concepts vs Lemmas [Idea-001]
-- ✅ Theory-10 — Reasoning Saturation [Agent-initiated S9; anchored by T5.93+T5.94 in S10]
-- ✅ Phil-07 — Capability-Adjusted Sufficiency [Idea-001]
+### Theory Stack
+- ✅ Theory-07 (Pipeline as Memory) [Idea-001]
+- ✅ Theory-08 (Feedback Value matrix) [Idea-001]
+- ✅ Theory-09 (Anticipatory Concepts) [Idea-001]
+- ✅ Theory-10 (Reasoning Saturation) [Agent-initiated, anchored by T5.93+T5.94]
+- ✅ Phil-07 (Capability-Adjusted Sufficiency) [Idea-001]
 
 ### Idea Lifecycle
 - ✅ Idea-001 (LEAP) → INTEGRATED
-- ✅ Idea-002 (Attribution Rule) → INTEGRATED (perpetual governance)
+- ✅ Idea-002 (Attribution Rule) → INTEGRATED (perpetual governance, now fully operationalized in §12)
 - 📥 INBOX empty
 
 ### Master Index Thefts (scope 5.1-5.94)
 - ✅ T5.91 (Scaffolding-vs-Architecture, ours)
 - ✅ T5.92 (LEAP, from Idea-001)
-- ✅ **T5.93 (Wu et al. 2025 — formal inverted-U)** [Agent-initiated S10]
-- ✅ **T5.94 (Chen et al. 2026 — DTR + Think@n, UVA + Google)** [Agent-initiated S10]
+- ✅ T5.93 (Wu et al. — Inverted-U) [Agent-initiated]
+- ✅ T5.94 (Chen et al. UVA+Google — DTR) [Agent-initiated]
+
+### Paper Sections (12, 13, 14 — NEW in Session 11)
+- ✅ **Section 12 — Author Contributions** (3-layer structure)
+- ✅ **Section 13 — Acknowledgments**
+- ✅ **Section 14 — Ethics of Authorship in Human-Agent Research**
 
 ---
 
-## 🆕 الجديد في Session 10 — T5.93 + T5.94 Full Thefts
+## 🆕 الجديد في Session 11 — Author Contributions Stack
 
-### T5.93 (`GENESIS_External_Inverted_U_Wu2025_Theft_AR.md`)
-- 10 sections بـ template السرقات الكبيرة
-- Lambert W closed-form scaling laws included
-- Key empirical numbers: 14→4 steps optimal as model 1.5B→72B; 40-point gap on 72B
-- Cross-links مع T5.86, T5.92, T5.94, Cognitive Economy, Concept Engine
-- Promotes Theory-10 Axioms 1 + 4 من intuition → formal proof
+### Section 12 — Author Contributions (5 sub-sections)
+- §12.1 Note on Authorship Eligibility (NeurIPS 2025 compliance: only humans)
+- §12.2 Layered Contribution Statement:
+  - **Layer 1** (Fares-sourced) — 8 contributions with CRediT roles
+  - **Layer 2** (Agent-initiated under delegation) — 8 contributions with verbatim authorizing utterance for each
+  - **Layer 3** (Joint deliberative) — 4 contributions
+- §12.3 Verbatim Authorization Log — 7 Arabic utterances preserved exactly
+- §12.4 What This Three-Layer Statement Is For (4 reasons: integrity, reproducibility, methodological, compliance)
 
-### T5.94 (`GENESIS_External_DTR_ChenMeng2026_Theft_AR.md`)
-- 10 sections
-- DTR mechanism: Jensen-Shannon Divergence على intermediate layer distributions
-- Think@n algorithm: sample N → DTR proxy on first 50 tokens → top-50% kept → vote
-- GPT-OSS AIME: 92.7% → 94.7% with ~50% less compute
-- **Closest external precedent for our setup** (GPT-OSS + GPQA-Diamond)
-- DTR proxy via API signals as workaround for hidden-state access
+### Section 13 — Acknowledgments
+- Thanks to specific authors (Kung, Wu, Chen et al., Romera-Paredes)
+- GPQA Diamond team
+- Open-source LLM ecosystem
+- Compliance declarations
 
-### Master Index
-- Scope: 5.1-5.92 → **5.1-5.94**
-- 2 entries في الجدول الرئيسي
-- 2 source file references
-- 1 provenance entry combined (T5.93–5.94 as "Cycle 8")
+### Section 14 — Ethics of Authorship in Human-Agent Research
+- §14.1 Dual-honesty constraint (content + process)
+- §14.2 What we did NOT do (5 items)
+- §14.3 What we did DO (5 items)
+- §14.4 An open question we leave for the field (when agent chooses research direction, whose contribution?)
 
-### Theory-10
-- External literature section بقت structured في layers (T5.93/94 as anchors vs supplementary citations)
-
-### PAPER.md (v0.4 → v0.5)
-- §7.3.2 table: Wu + Chen rows marked **[T5.93]** + **[T5.94]** with explicit file paths
-- Appendix B: 2 new theft rows
-- Appendix D §D.2: Status moved من "Pending" → "✅ Integrated" + Status column added
-- Footer version bump
-
-### ATTRIBUTION_MAP
-- Session 10 work labeled صراحة
-- T5.93 + T5.94 in Summary table
+### Key Reading (Session 11)
+- CRediT Taxonomy (ANSI/NISO Z39.104-2022) — 14 roles
+- Petridis et al. 2025 (arXiv:2502.18357) — *initiative* dimension in human-AI co-creation
+- NeurIPS 2025 LLM Policy — "Only humans are eligible to be authors"
 
 ---
 
 ## 🎯 Next: في انتظار فارس
 
-### Open Questions
+### Q1 — Continue agent-initiated work? (remaining options from Session 10)
 
-**Q1 — Continue agent-initiated work?**
-If Fares says "القرار عندك" again, my next likely choices (priorities re-ordered after Session 10):
-- **(A) Theory-11** (Domain Asymmetry standalone) — currently Theory-09 partial
-- **(B) Phil-08** ("What does 'fair comparison' mean in the frontier-LLM era?") — orthogonal to Theory-10
-- **(C) Conceptual figures** — Sufficiency Tree, Memory vs Injection, Refactor Roadmap
-- **(D) Deep dive into unused thefts** — SkillClaw (T5.9), STaR (T5.7) deeper, Classical (6.1-6.13)
-- **(E) Author Contributions section draft** — explicit Fares-vs-agent labor division for paper submission
-- **(F) Re-read internal docs under new theories lens** — Concept Engine + Cognitive Economy + Memory OS under T5.92-94 + Theory-07-10
+Of the original options A-F, three remain particularly fresh:
+- **(A) Theory-11** (Domain Asymmetry standalone)
+- **(B) Phil-08** ("fair comparison" in frontier-LLM era)
+- **(C) Conceptual figures** (3 candidates: Sufficiency Tree, Memory vs Injection, Refactor Roadmap)
+- **(D) Deep dive into unused thefts** (SkillClaw, STaR, Classical 6.1-6.13)
+- **(F) Re-read internal docs under new theories lens**
 
-**Q2 — Idea-003 from Fares?**
-INBOX empty. Any new source gets the full Idea-001-style treatment.
+### Q2 — Idea-003 from Fares?
+INBOX empty. Any source gets full Idea-001-style treatment.
+
+### Q3 — NEW: Submission preparation?
+Now that the paper has §12-14, it is structurally submission-ready. To make it actually submittable:
+- One round of editorial polish (anonymization for double-blind venues)
+- Final figure formatting (some figures still ASCII; venues prefer SVG/PDF)
+- Bibliography in BibTeX format
+- Optional: LaTeX compilation
 
 ### My Recommendation
 
-If you say "القرار عندك" a third time, my top pick would be **(E) Author Contributions section draft**. Reason: we now have a stable Theory + Philosophy + Thefts stack. The paper increasingly needs the *meta-honesty layer* — explicit Fares-vs-agent attribution at the structural level — to be submission-ready.
+If you say "القرار عندك" a fifth time, my top picks now (in order):
 
-But (F) Re-reading internal docs is also very tempting because Theories 07-10 + T5.92-94 give us new lenses on existing documentation. Could reveal hidden insights.
+1. **(F) Re-read internal docs under new theories lens** — Theories 07-10 + T5.92-94 give us a new lens on the existing 50+ `GENESIS_*_AR.md` documents. This is hidden-gem mining; could surface insights we didn't know we had.
+
+2. **(C) Three conceptual figures** — paper currently has 12 figures, but most are data plots. Three conceptual figures (Sufficiency Tree showing Phil-07 Position D; Memory vs Injection contrast for Theory-07; Refactor Roadmap as Section 8.5.6 visualization) would significantly help readers.
+
+3. **(Q3) Submission preparation** — but this is more cosmetic. Doesn't change the paper's scientific content.
+
+(A), (B), (D) all valuable but lower marginal contribution given current state.
 
 ---
 
 ## 📊 الأرقام الحرجة (locked)
 
 - Pure baseline: **75.00%** (n=20)
-- GENESIS post-fix (run_57): **65.00%** (both gens)
-- A3 no_pipeline (run_58): **70.00% / 60.00%**
-- LEAP Putnam 2025: **0% → 100%** (+100)
+- GENESIS post-fix: **65.00%** (run_57)
+- A3 no_pipeline: **70.00%** (run_58 Gen 1)
+- LEAP architecture impact: **+100** (Putnam 2025)
 - LEAP vs GENESIS gap: **110 points**
-- **Reasoning saturation (ours):** 989 (correct) vs 6,836 (incorrect) median tokens
-- **External corroboration (T5.94):** r = −0.54 length-vs-accuracy on same model family + GPQA
-- **External theoretical anchor (T5.93):** Lambert W closed-form + 40-point gap on 72B
+- Reasoning saturation (ours): 989 vs 6,836 median tokens
+- External validation (T5.94): r = −0.54 on same model family + GPQA
 - Tests: 463/463
+- Master Index scope: **5.1–5.94**
+- Paper version: **v0.6**
 
 ---
 
 ## ✍️ ملاحظة للـ session الجاي
 
-1. اقرأ `PAPER_PROTOCOL.md` v2.0 (خاصة §12.2).
+1. اقرأ `PAPER_PROTOCOL.md` v2.0 (خاصة §12.2 Creative Attribution Rule).
 2. اقرأ هذا الملف.
-3. اقرأ `PAPER/ideas/ATTRIBUTION_MAP.md` (especially "Agent-Initiated Synthesis" section).
-4. اقرأ `PAPER.md` v0.5.
-5. اسأل فارس: **"عندك Idea-003، أم تريد agent-initiated work آخر (Q1 options A-F)؟"**
+3. اقرأ `PAPER/ideas/ATTRIBUTION_MAP.md`.
+4. اقرأ `PAPER.md` v0.6 (now includes §12-14 authorship framework).
+5. اسأل فارس: **"عندك Idea-003، أم تريد agent-initiated work آخر (Q1 options)، أم نبدأ submission prep (Q3)؟"**
 
 **لا تقترح runs جديدة** إلا لو فارس صراحة طلب.
 
-**كل agent-initiated work** يتسجل بشفافية في **Appendix D §D.2** + **ATTRIBUTION_MAP "Agent-Initiated Synthesis"**.
+**كل agent-initiated work** يتسجل في **Appendix D §D.2** + **ATTRIBUTION_MAP "Agent-Initiated Synthesis"** + **Section 12 Layer 2**.

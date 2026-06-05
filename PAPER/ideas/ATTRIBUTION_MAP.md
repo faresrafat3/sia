@@ -94,7 +94,7 @@
 
 > **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
 
-### Session 9 + Session 10 agent-initiated work
+### Session 9, 10, 11 agent-initiated work
 
 | Item | Triggering context | Paper impact | Status |
 |---|---|---|---|
@@ -102,6 +102,7 @@
 | **Theft T5.93** (Wu et al. 2025 — When More is Less) | Session 10 Fares delegation ("القرار عندك") on T5.93/T5.94 priority | `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md` (full Cycle 8 memo); Master Index scope 5.1-5.94 + entry; Theory-10 external literature section promotes Wu to T5.93 anchor; PAPER.md §7.3.2 table + Appendix B + Appendix D updated; PAPER version v0.5 | ✅ Integrated (Session 10) |
 | **Theft T5.94** (Chen et al. 2026 — Think Deep, Not Just Long, UVA + Google) | Session 10 Fares delegation (same as T5.93) | `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md` (full Cycle 8 memo); Master Index entry; Theory-10 external literature section promotes DTR to T5.94 anchor; PAPER.md §7.3.2 table + Appendix B + Appendix D updated; closest external precedent for our exact setup (GPT-OSS + GPQA-Diamond) | ✅ Integrated (Session 10) |
 | **Supplementary literature anchors** | Search to support Theory-10 | Chen 2024b, Su 2025, OptimalThinkingBench, "When More Thinking Hurts" — remain as citations (not full thefts) in §7.3.2 supplementary row | ✅ Cited as supporting evidence |
+| **Section 12 (Author Contributions) + Section 13 (Acknowledgments) + Section 14 (Ethics of Authorship)** | Session 11 Fares delegation ("القرار قرارك نعم") | `PAPER.md` Sections 12–14 (~250 lines): three-layer authorship statement (Fares-sourced / Agent-initiated / Joint deliberative); CRediT taxonomy adopted (ANSI/NISO Z39.104-2022); verbatim authorization utterances preserved; NeurIPS 2025 compliance explicit; Petridis et al. 2025 (arXiv:2502.18357) framework extended for *initiative* dimension. PAPER version v0.5 → v0.6. | ✅ Integrated (Session 11) |
 
 ---
 
@@ -114,6 +115,7 @@
 | Theory-10 | Reasoning Saturation | Agent-initiated (Session 9, Fares-authorized) | MAJOR | 3 (full theory file + Section 7.3 expansion + Appendix C/D rows + 6 external citations) |
 | T5.93 | Wu et al. — Inverted-U + scaling laws | Agent-initiated (Session 10, Fares-authorized) | MAJOR | 3 (Cycle 8 theft memo + Master Index entry + Theory-10 promotion to "primary theoretical backbone" + PAPER §7.3.2/Appendix B/D updates) |
 | T5.94 | Chen et al. — DTR + Think@n (UVA + Google) | Agent-initiated (Session 10, Fares-authorized) | MAJOR | 3 (Cycle 8 theft memo + Master Index entry + Theory-10 promotion to "closest external precedent" + PAPER §7.3.2/Appendix B/D updates) |
+| Sections 12–14 | Author Contributions + Acknowledgments + Ethics of Authorship | Agent-initiated (Session 11, Fares-authorized) | META-CORE | 3 sections (~250 lines) + ATTRIBUTION_MAP row + Petridis et al. 2025 + CRediT integration. Makes the paper submission-ready under NeurIPS 2025 LLM-disclosure policy. |
 
 ---
 

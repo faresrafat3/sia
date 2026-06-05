@@ -12,18 +12,21 @@
 
 ---
 
-## ملاحظة: Agent-Initiated Work في Session 9
+## ملاحظة: Agent-Initiated Work في Sessions 9–11
 
-**Theory-10 (Reasoning Saturation)** ليس Idea من Fares — هو agent-initiated work تم بتفويض صريح من Fares ("القرار عندك"). يُتبع كاملاً في:
-- `PAPER/ideas/ATTRIBUTION_MAP.md` → قسم "Agent-Initiated Synthesis"
-- `PAPER.md` Appendix D §D.2
+**كل العمل التالي agent-initiated تحت تفويض Fares ("القرار عندك" / "القرار قرارك نعم"):**
 
-Theory-10 لا يحتل خانة Idea-NNN لأنه لم يأت من فكرة فارس مباشرة. هذا التمييز شرط من Idea-002.
+- **Theory-10 (Reasoning Saturation)** [Session 9] — `PAPER/theory/10_*.md` + Section 7.3 expansion
+- **T5.93 (Wu et al. — Inverted-U)** [Session 10] — `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md`
+- **T5.94 (Chen et al. — DTR + Think@n, UVA + Google)** [Session 10] — `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md`
+- **Sections 12 + 13 + 14 (Author Contributions + Acknowledgments + Ethics of Authorship)** [Session 11] — `PAPER.md` §12-14
 
-**Candidates pending Fares decision (also agent-proposed):**
-- T5.93 (Wu et al. 2025) — full theft memo not yet written
-- T5.94 (UVA-Google DTR) — full theft memo not yet written
+كلها لا تحتل خانة Idea-NNN لأنها لم تأتِ من فكرة Fares مباشرة. التتبع الكامل في:
+- `PAPER/ideas/ATTRIBUTION_MAP.md` → "Agent-Initiated Synthesis" section
+- `PAPER.md` Section 12.2 Layer 2 + Appendix D §D.2
+
+هذا التمييز شرط من Idea-002.
 
 ---
 
-**في انتظار:** Idea-003 من فارس، أو تفويض جديد للـ agent-initiated work.
+**في انتظار:** Idea-003 من فارس، أو تفويض جديد للـ agent-initiated work، أو قرار بدء submission preparation.

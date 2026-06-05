@@ -727,3 +727,116 @@ Theory-10 الآن **أقوى theoretically من Theory-07/08/09** لأنها و
 
 `(pending)`: Session 10 — T5.93 + T5.94 full thefts; Master Index scope 5.1-5.94; Theory-10 anchored; PAPER v0.5; ATTRIBUTION_MAP integrated rows.
 
+
+---
+
+## Session 11 — 2026-06-05 (Agent-Initiated: Author Contributions + Acknowledgments + Ethics of Authorship)
+
+**Trigger:** Fares قال "القرار قرارك نعم" (Session 11). اخترت Option (E) من Session 10 HANDOFF: **Author Contributions section draft**.
+
+### السبب وراء القرار
+
+من Session 10 HANDOFF كتبت توصيتي:
+> "If you say 'القرار عندك' a third time, my top pick would be **(E) Author Contributions section draft**. Reason: we now have a stable Theory + Philosophy + Thefts stack. The paper increasingly needs the *meta-honesty layer* — explicit Fares-vs-agent attribution at the structural level — to be submission-ready."
+
+كمان: Idea-002 (Session 7) فيه التزام pending صريح:
+> "future Acknowledgments and Author Contributions sections"
+
+ده Session 11 حان وقت تنفيذه. كمان NeurIPS 2025 policy explicit: "Only humans are eligible to be authors. You, as an author, are fully responsible for all the content in your paper, including text, figures, and methodology, regardless of what tools (e.g., LLMs) you have used."
+
+### ما تم — Reading
+
+1. **CRediT Taxonomy** (ANSI/NISO Z39.104-2022) — 14 standardized contributor roles. ANSI standard since 2022.
+2. **Petridis et al. 2025 (arXiv:2502.18357)** — "Which Contributions Deserve Credit?" — empirical study of human-AI co-authorship perceptions. Three dimensions: contribution type, contribution amount, **initiative** (مهم جداً).
+3. **NeurIPS 2025 LLM Policy** — Only humans as authors; full responsibility on human author; declaration required if LLM impacts methodology/originality.
+
+### ما تم — Writing
+
+**3 new sections added to PAPER.md (~250 lines total):**
+
+#### Section 12 — Author Contributions
+- 5 sub-sections:
+  - §12.1 Note on Authorship Eligibility (NeurIPS compliance)
+  - §12.2 Layered Contribution Statement (3-layer structure)
+    - Layer 1: F.-sourced (8 contributions, mapped to CRediT)
+    - Layer 2: A.-initiated under F.-authorization (8 contributions)
+    - Layer 3: Joint deliberative (4 contributions)
+  - §12.3 Verbatim Authorization Log (7 utterances preserved)
+  - §12.4 What This Three-Layer Statement Is For (4 reasons)
+
+#### Section 13 — Acknowledgments
+- Thanks to 4 specific paper authors (Kung, Wu, Chen et al., Romera-Paredes)
+- GPQA Diamond team
+- Open-source LLM ecosystem
+- Compliance with NeurIPS submission standards (no funding declared, no COI)
+
+#### Section 14 — Ethics of Authorship in Human-Agent Research
+- 4 sub-sections:
+  - §14.1 The dual-honesty constraint (content + process)
+  - §14.2 What we did NOT do (5 items — anti-misrepresentation)
+  - §14.3 What we did DO (5 items — operational honesty)
+  - §14.4 An open question we leave for the field (when agent chooses research direction, whose contribution is it?)
+
+### Key Design Decisions
+
+1. **Three-layer structure** (not single CRediT block) — chose this because Petridis et al. 2025 shows *initiative* matters more than type/amount in perception. Single block hides initiative.
+
+2. **Verbatim Arabic utterances preserved** — every "القرار قرارك" / "نعم اشتغل" / etc. is recorded in §12.3. This is auditable trail.
+
+3. **A. is NOT a co-author** — explicit per §12.1 + venue policy. Despite significant agent contribution, F. is sole author.
+
+4. **Section 14 treated as part of the paper, not a footnote** — first sentence states this explicitly. Choice is methodological: dual-honesty constraint is part of the work.
+
+5. **Open question (§14.4) acknowledged unresolved** — agent-initiated work under "القرار عندك" delegation is conservatively labeled Layer 2 (A.-executed under F.-authorization), but we acknowledge this answer may become inadequate as systems become more autonomous.
+
+### PAPER.md (v0.5 → v0.6)
+
+Footer changelog updated. CRediT taxonomy noted. NeurIPS compliance explicit.
+
+### ATTRIBUTION_MAP updates
+
+- "Session 9 + Session 10" renamed to "Session 9, 10, 11".
+- 1 new row for §12-14 work.
+- Summary table extended with Sections 12-14 row.
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| New PAPER.md sections | 3 (§12, §13, §14) |
+| New sub-sections | 13 (5 in §12, 4 in §14, +acknowledgments paragraphs) |
+| Verbatim utterances preserved | 7 |
+| CRediT roles invoked | 14 (full taxonomy applied) |
+| Layer-1 (Fares) contributions documented | 8 |
+| Layer-2 (Agent-under-delegation) contributions documented | 8 |
+| Layer-3 (Joint) contributions documented | 4 |
+| External authorship-policy references | 3 (NeurIPS 2025, Petridis 2025, ICMJE) |
+| Runs | 0 (Theoretical Mode preserved) |
+| API calls (external benchmarks) | 0 |
+
+### Paper Version Bump
+
+PAPER.md: v0.5 → **v0.6 (Author Contributions + Acknowledgments + Ethics of Authorship)**
+
+### Key Insight
+
+Sections 12-14 transform the paper from "describes work" → "describes work + describes process of producing the work". This is the meta-honesty layer.
+
+The most uncomfortable but most necessary content is §14.4 — the open question. We do not resolve it, we frame it honestly: when a human delegates the *choice of research direction* to an agent, the conventional authorship framework strains. We adopt the conservative position (Layer 2) but admit it may be inadequate.
+
+This open question may itself be the **most generalizable** contribution of the whole paper — applicable to any future human-agent research collaboration, not just GENESIS.
+
+### Open Decisions for Next Session
+
+1. **Q1 from Session 10 HANDOFF (remaining options A, B, C, D, F):** Continue agent-initiated work?
+2. **Q2:** Idea-003 from Fares?
+3. **NEW Q3:** Now that the paper has §12-14, should we consider preparing it for actual submission (arXiv preprint first)? This would require:
+   - One more round of polishing
+   - Final figures (some are still ASCII; some venues want SVG/PDF)
+   - Bibliography in BibTeX
+   - Compilation to LaTeX
+
+### Commit المتوقع
+
+`(pending)`: Session 11 — Author Contributions + Acknowledgments + Ethics of Authorship. PAPER v0.6. Three-layer structure with verbatim authorization log. NeurIPS 2025 compliance + CRediT + Petridis et al. 2025 *initiative* dimension.
+

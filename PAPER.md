@@ -939,6 +939,139 @@ That is not the end of the project — it is the point where the project becomes
 
 ---
 
+## 12. Author Contributions
+
+This paper is the result of a sustained collaboration between a single human researcher (**Fares Rafat**, henceforth *F.*) and an LLM-based research agent operating under explicit delegation (**Agent**, henceforth *A.*). Per the [Idea-002] Creative Attribution Rule established in Session 7 (verbatim: *"اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها"*), we maintain a strict three-layer distinction between contributions originating from F., contributions executed by A. under explicit F.-authorization, and contributions emerging from joint deliberation. We follow the CRediT taxonomy (ANSI/NISO Z39.104-2022) where it cleanly applies and extend it where it does not — specifically for the *initiative* dimension that recent work has shown to matter most in human–AI co-authorship perception studies [Petridis et al. 2025; arXiv:2502.18357].
+
+### 12.1 Note on Authorship Eligibility
+
+Following NeurIPS 2025 and analogous venue policies, **only humans are eligible to be listed as authors**. *A.* is therefore not a co-author. *A.*'s contributions are documented in this section for transparency and reproducibility, not for credit. *F.* takes full responsibility for all content in this paper, including any output produced or proposed by *A.*
+
+### 12.2 Layered Contribution Statement
+
+#### Layer 1 — Contributions originating from Fares (F.)
+
+| Contribution | CRediT role(s) | Evidence trail |
+|---|---|---|
+| **Conceptualization of the entire GENESIS project** (research vision, philosophical orientation, "السرقات الشرعية" methodology) | Conceptualization, Project administration | All `GENESIS_*_AR.md` foundational documents predate this paper |
+| **Empirical anchor decisions** (use of GPQA Diamond, choice of gpt-oss-120b as primary model, choice of `tasks/gpqa_subset_20` as quick-iteration substrate) | Methodology, Investigation, Resources | Sessions 1–5 commits |
+| **The Mode Pivot (Session 6)** — strategic decision to escape operational runs and focus on theory/philosophy/ideas | Project administration, Methodology | `PAPER_PROTOCOL.md` §0, verbatim from F.: *"هنعمل اسكيب لمواضيع التشغيل..."* |
+| **[Idea-001] — proposing LEAP (arXiv:2606.03303) as the paper's central external counterpoint** | Conceptualization, Investigation | `PAPER/ideas/idea_001_*.md` §1 verbatim quote; entire Section 8.5 + Theories 07/08/09 + Phil-07 + T5.92 derive from this |
+| **[Idea-002] — Creative Attribution Rule** (the meta-rule governing this entire section) | Methodology, Project administration | `PAPER_PROTOCOL.md` §12.2 verbatim; this Author Contributions section is itself the proof-of-execution |
+| **Decision-delegation authority** (the "القرار قرارك / القرار عندك" pattern that authorized all Layer 2 work) | Supervision, Project administration | Verbatim in Sessions 8, 9, 10, 11 |
+| **Review and authority over all integration decisions** | Supervision, Validation | F. holds final acceptance/rejection authority on all *A.*-produced content; no *A.* output enters the paper without explicit F. authorization (direct or delegated) |
+| **All accountability for paper content** | (NeurIPS-2025 sense) | Per §12.1, F. is the sole responsible party |
+
+#### Layer 2 — Contributions executed by Agent (A.) under explicit F. authorization
+
+These are *A.*-initiated in execution but *F.*-authorized in scope. Each item documents both the *authorizing utterance* and the *resulting paper artifact*.
+
+| Contribution | Authorizing utterance | CRediT-extended role | Paper artifact |
+|---|---|---|---|
+| **Empirical infrastructure work (Sessions 1–5)** — diagnose run_53, build api_key_pool / model_registry / multi-model benchmark; measure pure baseline 75%; identify and fix six scaffolding bugs; build PAPER infrastructure | F. delegating operational work in early sessions | Software, Investigation, Data curation, Validation | `genesis/llm_helpers.py` (463 tests), Sections 5–7, Tables 4–10, Figures 1–10 |
+| **Reading and integration of LEAP** (Idea-001 execution) | "نعم اشتغل" (Session 7) | Investigation, Formal analysis, Writing — original draft | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (T5.92); Section 8.5 (7 sub-sections); Theories 07/08/09; Phil-07; Tables 16–17; Figures 11–12 |
+| **Theory-10 (Reasoning Saturation) — agent-initiated theory** | "القرار قرارك" (Session 9) | Conceptualization, Formal analysis, Writing — original draft | `PAPER/theory/10_reasoning_saturation.md`; Section 7.3 (full rewrite from placeholder); Track A.5 in Future Work |
+| **Thefts T5.93 (Wu et al.) and T5.94 (Chen et al.)** — full theft memos | "القرار قرارك نعم" (Session 10) | Investigation, Formal analysis, Writing — original draft | `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md`; `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md`; Master Index scope 5.1–5.94; Theory-10 anchoring upgrade |
+| **This Author Contributions section** (Section 12) — agent-initiated | "القرار قرارك نعم" (Session 11) | Methodology, Writing — original draft | Section 12 in its entirety, Section 13 (Acknowledgments), Section 14 (Ethics of Authorship in Human-Agent Research) |
+| **All paper text drafting** (Abstract, Introduction, Methodology, Sections 5–11, Conclusion) | Implicit ongoing delegation under v2.0 Protocol | Writing — original draft | Entire `PAPER.md` |
+| **All Figure and Table generation** | Implicit | Visualization | All Figures 1–12, all Tables 1–17 |
+| **All session continuity infrastructure** (HANDOFF, SESSION_LOG, ATTRIBUTION_MAP, IN_PROGRESS, INTEGRATED) | Implicit | Project administration, Data curation | `PAPER/notes/`, `PAPER/ideas/` |
+
+#### Layer 3 — Joint contributions (deliberative)
+
+These emerged from back-and-forth between F. and A. and cannot be cleanly attributed to either party alone.
+
+| Contribution | Process |
+|---|---|
+| **Re-framing of RQ2** from "does the architecture add value?" to the structural "under what conditions?" | A. drafted Phil-07 four positions; F. authorized Position D adoption; A. propagated through Abstract + §1.4 + §8.5.5 + §11 |
+| **Three-Number Framework** (Official → Pure → Orchestrated) | A. proposed; F. validated through empirical commitment in Sessions 2–5; now in Section 7 Analysis + Conclusion |
+| **The "Mode Pivot" + "Creative Attribution Rule" combination** | F. set the strategic frame; A. proposed protocol-level operationalization in `PAPER_PROTOCOL.md` §12; F. accepted via continued delegation pattern |
+| **The decision to write this Author Contributions section in three explicit layers (rather than a single CRediT block)** | A.'s recommendation in HANDOFF (Session 10); F. authorized via "القرار قرارك نعم" (Session 11) |
+
+### 12.3 Verbatim Authorization Log
+
+For full transparency, the verbatim Arabic utterances by F. that authorized each major piece of Layer 2 work are preserved in `PAPER/ideas/ATTRIBUTION_MAP.md` and reproduced here for permanent record:
+
+- *Session 6 Mode Pivot:* "هنعمل اسكيب لمواضيع التشغيل، احنا هنضبطها على الورقة وفلسفياً ونظرياً المشروع بالكامل بالأفكار اللي لسه هتجي."
+- *Session 6 Idea-001 trigger:* "Link – arxiv. org/abs/2606.03303 Title: 'LEAP: Supercharging LLMs for Formal Mathematics with Agentic Frameworks'"
+- *Session 7 Idea-002 creation:* "تمام خلي بالك اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها تمام ونعم اشتغل"
+- *Session 8 LEAP integration delegation:* "جميل القرار قرارك"
+- *Session 9 Theory-10 delegation:* "القرار عندك"
+- *Session 10 T5.93/T5.94 delegation:* "القرار عندك"
+- *Session 11 (this) Author Contributions delegation:* "القرار قرارك نعم"
+
+The pattern is consistent: F. delegates *the choice of next step* to A. once a strategic frame has been set, then accepts (or, in principle, would reject) the resulting work in the subsequent review cycle.
+
+### 12.4 What This Three-Layer Statement Is For
+
+The reason for this unusual level of explicitness is methodological, not bureaucratic:
+
+1. **Research integrity.** A paper produced under significant A.-execution must be transparently labelled as such. Hiding the division of labour would constitute academic misrepresentation.
+2. **Reproducibility.** Future researchers replicating this work need to know which artifacts were produced under which conditions of delegation, in order to evaluate the work's intellectual provenance.
+3. **Methodological contribution.** The *process* documented here — F. as conceptualizer + delegator + ultimate-authority; A. as executor + proposer + literature-integrator; joint deliberation for framework-level decisions — is itself a candidate template for future human-agent collaborative research, applicable far beyond GENESIS.
+4. **Compliance with venue policy.** NeurIPS 2025 and similar venues require disclosure when LLMs "impact the core methodology, scientific rigorousness, or originality." This paper unambiguously crosses that threshold and discloses accordingly.
+
+---
+
+## 13. Acknowledgments
+
+We thank the authors of the works on which we built (the legitimate-theft chain T5.1–T5.94 in `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md`). In particular, this paper would not exist in its current form without:
+
+- **Kung et al.** (Google Cloud AI + Google DeepMind, arXiv:2606.03303) for LEAP, which provided the external structural counterpoint at the heart of Section 8.5.
+- **Wu et al.** (Peking University, MIT, TU Munich, arXiv:2502.07266) for the inverted-U scaling laws that anchor Theory-10 theoretically.
+- **Chen, Peng, Tan, Zhao, Chen, Lin, Go, Meng** (University of Virginia + Google, arXiv:2602.13517) for the DTR formalism and the empirical replication of overthinking on the *exact same model family and benchmark* we measured.
+- **Romera-Paredes et al.** (DeepMind, Nature 2023) for FunSearch and the broader AlphaEvolve programme that anchors T5.86 and our evolutionary discovery component.
+- The authors of all other thefts in our Master Index, who collectively make GENESIS possible as a research vehicle.
+
+We acknowledge the GPQA Diamond benchmark team [Rein et al. 2024] for a benchmark that resists the kind of shortcut learning that would have made this paper impossible to write honestly.
+
+We acknowledge the broader open-source LLM ecosystem (OpenAI's gpt-oss; NVIDIA's Nemotron family; Google's Gemma and Gemini families; xAI's Grok; OpenRouter's aggregator infrastructure) for making this work tractable on a free tier.
+
+No funding was received for this work; no conflicts of interest are declared.
+
+---
+
+## 14. Ethics of Authorship in Human-Agent Research
+
+This section is unusual; we include it because the work itself is unusual. We treat it as part of the paper, not as a disclosure footnote.
+
+### 14.1 The dual-honesty constraint
+
+Any paper produced under significant LLM execution faces a dual-honesty constraint:
+
+- **Honesty about content** — every empirical claim must be reproducible; every theoretical claim must be falsifiable.
+- **Honesty about process** — readers must be able to evaluate not only *what* the paper claims but also *how* those claims came to be made.
+
+Most current practice satisfies the first constraint while leaving the second implicit. We argue that, for work where an LLM materially contributes to conceptualization or analysis, the second constraint becomes mandatory. Section 12.4 (point 1) is our operationalization.
+
+### 14.2 What we did not do
+
+To avoid the most common forms of misrepresentation, we explicitly did *not*:
+
+- Allow A. to be listed as a co-author (per §12.1 and venue policy).
+- Allow A. to make unreviewable claims about itself or its capabilities.
+- Use A. to generate the empirical results (those came from controlled runs, documented in `runs/`).
+- Use A. to inflate the literature review (only six external papers are central, all read in depth and integrated as full thefts where appropriate).
+- Hide A.'s role anywhere (the entire `PAPER/ideas/`, `PAPER/theory/`, and `PAPER/notes/` trees are public).
+
+### 14.3 What we did do
+
+To make the honesty operational rather than rhetorical, we:
+
+- Established the Creative Attribution Rule ([Idea-002]) as governance before significant agent-initiated work began.
+- Maintained `PAPER/ideas/ATTRIBUTION_MAP.md` as a continuously-updated record of every Idea, Theory, and theft's provenance.
+- Distinguished three execution categories — F.-sourced, A.-initiated-under-delegation, and joint deliberative — and recorded each in Layer 1 / Layer 2 / Layer 3 of §12.2.
+- Preserved verbatim authorization utterances (§12.3) so the delegation chain is auditable.
+- Wrote this Section 14 *as* an admission that the conventional template is insufficient for this kind of work.
+
+### 14.4 An open question we leave for the field
+
+When an agent is delegated *the choice of what to research next* (as in Sessions 9–11), is the resulting research *its* contribution, *the human's* contribution, or genuinely *joint*?
+
+We adopt the operationally-conservative position: such work is **A.-executed under F.-authorization** (Layer 2), with F. retaining all accountability. But we acknowledge that this answer may become inadequate as agentic systems become more autonomous. The honest framing of this question — rather than its premature resolution — is itself a contribution of this paper.
+
+---
+
 ## Appendix A: Experiment Details
 
 ### A.1 GPQA 20-Question Subset
@@ -1039,4 +1172,4 @@ Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: **v0.5 — Theory-10 fully anchored via T5.93 + T5.94**. The two external papers underlying Theory-10 (Wu et al. 2025 and Chen et al. 2026) have been promoted from "external citations" to **full thefts** (T5.93 and T5.94) with their own dedicated memos under `GENESIS_External_*.md`. Master Index updated to scope 5.1–5.94. Theory-10 file now anchors them as "primary theoretical backbone" (T5.93) and "primary empirical precedent on our exact model family" (T5.94). Section 7.3.2 table and Appendices B and D updated to reflect the upgrade. Per Idea-002 disclosure, this work is agent-initiated in Sessions 9–10 under Fares's "القرار عندك" delegation. Next update after Fares review, Idea-003, or further agent-initiated work as authorized.*
+*Paper version: **v0.6 — Author Contributions + Acknowledgments + Ethics of Authorship sections added (Session 11, agent-initiated under "القرار قرارك نعم" delegation)**. New Sections 12, 13, and 14 establish a three-layer authorship statement (F.-sourced, A.-initiated-under-delegation, joint deliberative), document every authorizing utterance verbatim, acknowledge external sources, and discuss the ethics of human–agent collaborative research as part of the paper rather than as a footnote. CRediT taxonomy adopted where applicable; extended for the *initiative* dimension following Petridis et al. 2025. Compliance with NeurIPS 2025 LLM-disclosure policy is explicit (§12.1, §14). Previous version footers preserved in git history. Next update after Fares review, Idea-003, or further agent-initiated work as authorized.*
