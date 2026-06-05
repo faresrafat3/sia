@@ -266,3 +266,57 @@
 فارس يبدأ بفكرة من عنده (Idea-001)، أو يختار من بدائل (A-E) في HANDOFF.
 أنا أنفذ + أوسع + أقترح اتجاهات مكملة بشكل تبادلي.
 
+
+---
+
+## Session 6 — Continuation: First Idea Received (LEAP)
+
+**الحالة:** فارس بعت أول فكرة رسمية في الـ Ideas Bank بعد إعداد البروتوكول v2.0.
+
+### الفكرة
+
+**Idea-001 — LEAP: Agentic Framework for Formal Mathematics**
+- arXiv 2606.03303 (Jun 2026)
+- Google Cloud AI Research + Google DeepMind
+- 13 authors (Po-Nien Kung et al.)
+
+### ما تم
+
+1. **استلام النص verbatim** في `INBOX.md`.
+2. **قراءة الورقة كاملة** (5 chunks، architecture + ablations + benchmarks).
+3. **إنشاء الملف التفصيلي** `PAPER/ideas/idea_001_leap_agentic_framework_for_formal_math.md`:
+   - 10 sections
+   - 7 connection points مع GENESIS (A–G)
+   - 5 open questions لفارس
+   - 6 expansion suggestions بأولويات
+4. **تحريك إلى IN_PROGRESS**.
+5. **إفراغ INBOX** (Idea-001 خرجت منه).
+
+### الـ Key Insights من LEAP
+
+- **Architecture impact شديد:** Direct Gemini 0% → LEAP 100% على Putnam 2025.
+- **Specialized models لا تستفيد من iteration** (10→6.6%) بينما general models تستفيد (20→36.6%).
+- **DAG memoization** يضيف +10 على Basic, +17 على Advanced.
+- **LLM Reviewer** هو الفرق بين الفشل والنجاح على الأسئلة الصعبة.
+- **Anticipatory lemma planning** ← يربط مباشرة بـ Concept Engine بتاعنا.
+
+### الـ Contrast الجوهري
+
+- **LEAP:** +100 architecture impact على نفس type of model.
+- **GENESIS:** −10 architecture impact حالياً.
+- الفرق = **110 نقطة** يجب تفسيرها نظرياً.
+
+### القرار المعلق
+
+فارس يختار من 6 expansion suggestions في الملف التفصيلي §6:
+1. سرقة شرعية T5.92.
+2. قسم 8.5 في الورقة (Contrast with LEAP).
+3. نظريتان جديدتان (Theory-07, Theory-08).
+4. ربط Concept Engine بـ anticipatory lemmas.
+5. Phil-07.
+6. Future Work entry.
+
+### الـ Commit المتوقع
+
+- `(pending)`: Idea-001 reception — LEAP arXiv 2606.03303 deep file + 7 connections + 6 expansion proposals.
+

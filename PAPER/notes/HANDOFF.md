@@ -46,7 +46,7 @@
 
 ---
 
-## 🆕 الجديد في Session 6 (v2.0 Infrastructure)
+## 🆕 الجديد في Session 6 (v2.0 Infrastructure + Idea-001)
 
 ### بنية تحتية فكرية جديدة
 - ✅ `PAPER_PROTOCOL.md` v2.0 — يعكس Theoretical Mode + Ideas/Theory/Philosophy pipelines
@@ -55,48 +55,32 @@
 - ✅ `PAPER/philosophy/` — الأسئلة الفلسفية العميقة (6 placeholders)
 - ✅ Citation tags جديدة: `[Idea-NNN]`, `[Theory-NN]`, `[Phil-NN]`
 
+### أول فكرة رسمية: Idea-001 (LEAP)
+- ✅ فارس بعت أول فكرة: **arXiv 2606.03303 — LEAP**.
+- ✅ قراءة الورقة كاملة (5 chunks).
+- ✅ ملف تفصيلي بـ 10 sections في `PAPER/ideas/idea_001_leap_agentic_framework_for_formal_math.md`.
+- ✅ تحديد 7 connections مباشرة بـ GENESIS (A–G).
+- ✅ صياغة 5 أسئلة لفارس + 6 اقتراحات للتوسع.
+- ⏳ **في انتظار قرار فارس** على الـ scope.
+
 ### لا يوجد runs جديدة في هذه السيشن — بالقصد
 
 ---
 
-## 🎯 Next: الـ Ideas Pipeline في انتظار فارس
+## 🎯 Next: في انتظار قرار فارس على Idea-001
 
-### الـ workflow الجديد
+السؤال المباشر له:
+**أي اقتراح من الـ 6 في `PAPER/ideas/idea_001_*.md` §6 نبدأ به؟**
 
-1. فارس يقول فكرة جديدة (نظرية، فلسفية، paper، تطوير).
-2. أنا أستلمها فوراً في `PAPER/ideas/INBOX.md`.
-3. أعمل ملف تفصيلي `idea_NNN_<slug>.md`.
-4. أسأل توضيحياً إن لزم.
-5. أقترح اتجاهات للتوسع.
-6. فارس يوافق/يرفض/يعدّل.
-7. ندخل التنفيذ (IN_PROGRESS).
-8. ندخل الورقة (INTEGRATED).
+الاقتراحات بالترتيب الموصى به:
+1. **Suggestion 1:** سرقة شرعية كاملة (T5.92) — الأقوى أساسياً.
+2. **Suggestion 2:** قسم 8.5 في الورقة (Contrast with LEAP).
+3. **Suggestion 3:** نظريتان جديدتان (Theory-07, Theory-08).
+4. **Suggestion 4:** ربط Concept Engine بـ anticipatory lemmas.
+5. **Suggestion 5:** Philosophy article Phil-07.
+6. **Suggestion 6:** Future Work entry.
 
-### بدائل لو فارس مش جاهز بفكرة محددة
-
-أقترح نبدأ بواحد من دول (كلهم theoretical/philosophical):
-
-**(A) أكتب أول نظرية كاملة:** Theory-01 (Pipeline Overhead Theory)
-- نشرح ليه إضافة pipeline أضرت بالـ score
-- نربطها بـ Cognitive Economy theory الداخلية
-- نربطها بـ Reasoning Saturation
-- نشتق منها predictions جديدة
-
-**(B) أكتب أول مقال فلسفي:** Phil-01 (ماذا يعني "architecture adds value"؟)
-- نحدد معنى RQ2 بدقة
-- نطرح positions ممكنة
-- نختار موقف الورقة
-
-**(C) أعمل deep dive في الـ thefts:**
-- أقرأ الـ 102+ سرقة
-- أبني خريطة "كل ظاهرة عندنا → أي theft تشرحها"
-- أرجع بـ thefts فاضلين ما اشتغلناش عليهم بعد
-
-**(D) أكتب deep related work section للورقة:**
-- بـ 5-7 أقسام فرعية
-- تربط GENESIS بـ context أوسع: SIA, Reflexion, AlphaEvolve, Co-Scientist, Aletheia, STaR, Self-Refine, إلخ
-
-**(E) فكرة من عند فارس** — وأنا أنفّذ.
+أو فارس يفضل البدء بفكرة Idea-002 جديدة.
 
 ---
 
