@@ -208,3 +208,61 @@
 
 - `(pending)`: A7 infrastructure + Table 15 + HANDOFF Session 5 update
 
+
+---
+
+## Session 6 — 2026-06-05 (Mode Pivot: Theoretical/Philosophical)
+
+**الحالة:** تحول جوهري في طريقة العمل. لا runs جديدة. تركيز كامل على الورقة، النظرية، الفلسفة، والأفكار.
+
+### القرار المركزي من فارس
+
+> "هنعمل اسكيب لمواضيع التشغيل، احنا هنضبطها على الورقة وفلسفياً ونظرياً المشروع بالكامل بالأفكار اللي لسه هتجي."
+
+> "اللي في بالي ده ممكن يكون مجرد 3% منه. تفاصيل كثيرة لسه جاية وكلها علمية مترابطة."
+
+> "أنا هقولك الأفكار أو الأوراق أو المواضيع، والاتنين متبادل. أيوة، اقترح وضيف واعمل."
+
+### ما تم في هذه السيشن (Infrastructure-only)
+
+**1. تحديث PAPER_PROTOCOL إلى v2.0:**
+- إضافة قسم "0. تحديث جوهري" يوثّق الـ Mode Pivot.
+- إضافة Ideas Pipeline (§12).
+- إضافة Theory Pipeline (§13).
+- إضافة Philosophy Pipeline (§14).
+- تحديث جدول القرارات بـ Theoretical mode entries.
+- تحديث الـ Don'ts بـ "لا تقترح runs جديدة كأولوية".
+- إضافة Empirical Anchors كـ ثوابت لا تتغير في v2.0.
+
+**2. بناء بنية تحتية فكرية جديدة في `PAPER/`:**
+- `PAPER/ideas/`:
+  - `README.md` — فلسفة الـ Ideas Bank
+  - `INBOX.md` — استقبال أفكار جديدة
+  - `IN_PROGRESS.md` — أفكار قيد التطوير
+  - `INTEGRATED.md` — أفكار دخلت الورقة
+- `PAPER/theory/`:
+  - `README.md` — بنية النظريات + جدول 6 نظريات placeholder
+- `PAPER/philosophy/`:
+  - `README.md` — بنية الفلسفة + جدول 6 أسئلة placeholder
+
+**3. تحديث notes:**
+- `HANDOFF.md` — يعكس Mode Pivot + 5 بدائل للجلسة الجاية (A-E).
+- `TODO_HIGH.md` — كل الـ TODOs بقت theoretical/philosophical.
+- `SESSION_LOG.md` — هذا الإدخال.
+
+### ما لم يتم (بالقصد)
+
+- ❌ لا runs جديدة.
+- ❌ لا استهلاك free tier.
+- ❌ لا ablations عملية.
+- ❌ لا تعديل على الـ empirical anchors (75% pure, 65% GENESIS, 70% A3).
+
+### الـ Commit (بعد الـ push)
+
+- `(pending)`: v2.0 Theoretical Mode infrastructure — protocol + ideas/theory/philosophy scaffolding
+
+### المتوقع في Session 7
+
+فارس يبدأ بفكرة من عنده (Idea-001)، أو يختار من بدائل (A-E) في HANDOFF.
+أنا أنفذ + أوسع + أقترح اتجاهات مكملة بشكل تبادلي.
+

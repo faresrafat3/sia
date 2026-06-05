@@ -1,61 +1,106 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-05 (Session 5)
-**آخر commit (قبل ما السيشن تعلق):** `78430fc`
+**آخر تحديث:** 2026-06-05 (Session 6)
+**آخر commit:** `(pending after this session)`
+
+## ⚠️ تغيير جوهري في الـ Mode — اقرأه أولاً
+
+في Session 6، فارس قرر صراحة:
+
+> "هنعمل اسكيب لمواضيع التشغيل، احنا هنضبطها على الورقة وفلسفياً ونظرياً المشروع بالكامل بالأفكار اللي لسه هتجي."
+
+**يعني:**
+- ✅ نشتغل على الورقة، النظرية، الفلسفة، والأفكار الجديدة من فارس.
+- ❌ لا نشغّل runs جديدة، لا نستهلك free tier، لا نقترح ablations عملية كأولوية.
+- 🔄 الديناميكية تبادلية: فارس يعطي أفكار، agent ينفّذ ويوسّع ويقترح أيضاً.
+
+**التفاصيل الكاملة:** اقرأ `PAPER_PROTOCOL.md` (v2.0).
 
 ---
 
-## ✅ المكتمل
+## ✅ المكتمل (لا يتغير في v2.0)
 
+### البنية التحتية
 - ✅ PAPER.md v0.2 + 10 figures + aggregated data
-- ✅ PAPER_PROTOCOL.md + handoff system
+- ✅ PAPER_PROTOCOL.md v2.0 (Theoretical Mode)
 - ✅ genesis/llm_helpers.py (463 tests passing)
-- ✅ 11 OpenRouter keys + 5 Gemini keys + GitHub PAT (gpt-5)
-- ✅ **Bug #6 fixed:** extract_response_text tuple unpacking
+- ✅ 11 OpenRouter keys + 5 Gemini keys + GitHub PAT (متاحة، مؤجلة)
 - ✅ `tasks/gpqa_subset_20` for fast paper-grade iteration
-- ✅ `run_openrouter_benchmark.py` supports `--task_dir` + `--ablation_mode`
-- ✅ `run_57` — first post-fix architecture comparison (65%)
-- ✅ `run_58` — A3 ablation (no_pipeline) → Gen1 = 70%
-- ✅ **A7 infrastructure ready** — `narrow_feedback` and `no_pipeline+narrow_feedback` modes wired into orchestrator (this session)
+- ✅ `run_openrouter_benchmark.py` يدعم `--task_dir` + `--ablation_mode` (na, no_pipeline, narrow_feedback, no_pipeline+narrow_feedback)
+
+### النتائج التجريبية (Empirical Anchors — ثابتة)
+- ✅ Pure baseline: **75.00%** (n=20)
+- ✅ GENESIS pre-fix (run_53): **30.30%** (n=198)
+- ✅ GENESIS post-fix standard (run_57): **65.00%** (both gens)
+- ✅ A3 no_pipeline (run_58): Gen1 = **70.00%**, Gen2 = **60.00%**
+- ✅ 6 bugs documented and fixed
+- ✅ Question-by-question delta analysis complete
+
+### الإكتشافات التجريبية (موضوع للتنظير في v2.0)
+1. Reasoning saturation: more tokens → less accuracy
+2. Domain asymmetry: Physics easy, Chemistry Organic hard
+3. Empty content phenomenon: 35% of reasoning responses return content=""
+4. Architecture gap localization: loss concentrated on Chemistry
+5. Feedback drift: Gen 2 changes pattern without improving total score
+6. Pipeline overhead: removing it recovers half the gap
 
 ---
 
-## 🔴 الحالة البحثية الحالية
+## 🆕 الجديد في Session 6 (v2.0 Infrastructure)
 
-| Run | Architecture | Gen 1 | Gen 2 | Delta vs pure |
-|---|---|---|---|---|
-| Pure baseline | none | 75.0% | — | 0 |
-| `run_53` | GENESIS pre-fix (buggy) | 30.3% | — | −44.7 |
-| `run_57` | GENESIS post-fix (standard) | 65.0% | 65.0% | −10.0 |
-| `run_58` | A3 (no_pipeline) | **70.0%** | 60.0% | −5.0 / −15.0 |
-| `run_59` (pending) | A7a (narrow_feedback) | ? | ? | ? |
-| `run_60` (pending) | A7b (no_pipeline + narrow_feedback) | ? | ? | ? |
-| `run_61` (pending) | A7c (no feedback at all) | ? | — | ? |
+### بنية تحتية فكرية جديدة
+- ✅ `PAPER_PROTOCOL.md` v2.0 — يعكس Theoretical Mode + Ideas/Theory/Philosophy pipelines
+- ✅ `PAPER/ideas/` — bank الأفكار من فارس (INBOX, IN_PROGRESS, INTEGRATED)
+- ✅ `PAPER/theory/` — النظريات اللي تشرح الـ observations (6 placeholders)
+- ✅ `PAPER/philosophy/` — الأسئلة الفلسفية العميقة (6 placeholders)
+- ✅ Citation tags جديدة: `[Idea-NNN]`, `[Theory-NN]`, `[Phil-NN]`
 
----
-
-## 🎯 Next: Run the three A7 experiments
-
-This session **wired the code** for A7 but did not execute the runs (free tier consumption + sandbox limits).
-The orchestrator now accepts `--ablation_mode narrow_feedback` and `--ablation_mode no_pipeline+narrow_feedback`.
-
-### Highest priority next runs (on Fares's machine)
-
-See **Table 15** (`PAPER/tables/tab15_a7_design.md`) for full CLI commands and pre-registered hypotheses.
-
-Recommended order:
-1. **A7b first** (`no_pipeline+narrow_feedback`) — combines both confirmed/suspected fixes, highest expected score.
-2. **A7a second** (`narrow_feedback` only) — isolates whether narrow feedback alone fixes Gen 2 drift.
-3. **A7c third** (`max_gen=1`) — control to confirm feedback adds anything at all.
-
-### After A7 results
-
-- If A7b ≥ 75%: GENESIS finally matches/beats pure baseline → first positive RQ2 answer.
-- If A7b < 75%: move to A5 (constitutional pressure) and A6 (evolutionary discovery).
+### لا يوجد runs جديدة في هذه السيشن — بالقصد
 
 ---
 
-## 📊 الأرقام الحرجة المحفوظة
+## 🎯 Next: الـ Ideas Pipeline في انتظار فارس
+
+### الـ workflow الجديد
+
+1. فارس يقول فكرة جديدة (نظرية، فلسفية، paper، تطوير).
+2. أنا أستلمها فوراً في `PAPER/ideas/INBOX.md`.
+3. أعمل ملف تفصيلي `idea_NNN_<slug>.md`.
+4. أسأل توضيحياً إن لزم.
+5. أقترح اتجاهات للتوسع.
+6. فارس يوافق/يرفض/يعدّل.
+7. ندخل التنفيذ (IN_PROGRESS).
+8. ندخل الورقة (INTEGRATED).
+
+### بدائل لو فارس مش جاهز بفكرة محددة
+
+أقترح نبدأ بواحد من دول (كلهم theoretical/philosophical):
+
+**(A) أكتب أول نظرية كاملة:** Theory-01 (Pipeline Overhead Theory)
+- نشرح ليه إضافة pipeline أضرت بالـ score
+- نربطها بـ Cognitive Economy theory الداخلية
+- نربطها بـ Reasoning Saturation
+- نشتق منها predictions جديدة
+
+**(B) أكتب أول مقال فلسفي:** Phil-01 (ماذا يعني "architecture adds value"؟)
+- نحدد معنى RQ2 بدقة
+- نطرح positions ممكنة
+- نختار موقف الورقة
+
+**(C) أعمل deep dive في الـ thefts:**
+- أقرأ الـ 102+ سرقة
+- أبني خريطة "كل ظاهرة عندنا → أي theft تشرحها"
+- أرجع بـ thefts فاضلين ما اشتغلناش عليهم بعد
+
+**(D) أكتب deep related work section للورقة:**
+- بـ 5-7 أقسام فرعية
+- تربط GENESIS بـ context أوسع: SIA, Reflexion, AlphaEvolve, Co-Scientist, Aletheia, STaR, Self-Refine, إلخ
+
+**(E) فكرة من عند فارس** — وأنا أنفّذ.
+
+---
+
+## 📊 الأرقام الحرجة المحفوظة (ثابتة)
 
 - Pure baseline: **75.00%** (n=20)
 - GENESIS pre-fix (run_53): **30.30%** (n=198)
@@ -67,14 +112,10 @@ Recommended order:
 
 ---
 
-## ✍️ What changed in this session
+## ✍️ ملاحظة للـ session الجاي
 
-1. Added `narrow_feedback` and `no_pipeline+narrow_feedback` to `--ablation_mode` choices in both:
-   - `genesis/orchestrator.py`
-   - `run_openrouter_benchmark.py`
-2. Decomposed `ablation_mode` into independent flags (`no_pipeline_active`, `narrow_feedback_active`) so they can be combined cleanly.
-3. Added a strict feedback-agent instruction block that forbids broad refactoring and only allows targeted fixes for the specific wrong-answer questions.
-4. Created `PAPER/tables/tab15_a7_design.md` with pre-registered hypotheses and reproducible CLI commands.
-5. Updated this HANDOFF + SESSION_LOG + TODO.
+اقرأ `PAPER_PROTOCOL.md` v2.0 أولاً.
+ثم اقرأ هذا الملف.
+ثم اسأل فارس: **"عندك فكرة جديدة نشتغل عليها، أم تختار من (A) إلى (D) أعلاه؟"**
 
-**No new actual ablation runs were executed in this session** — only the infrastructure to make A7 runnable.
+**لا تقترح runs جديدة** إلا لو فارس صراحة طلب.
