@@ -60,6 +60,9 @@ def main():
     parser.add_argument("--run_id", type=int, default=1)
     parser.add_argument("--use_evolutionary_discovery", action="store_true",
                         help="Enable AlphaEvolve evolutionary engine")
+    parser.add_argument("--ablation_mode", type=str, default="none",
+                        choices=["none", "no_pipeline"],
+                        help="Research ablation mode. 'no_pipeline' disables/neutralizes cognitive pipeline leverage while keeping the GENESIS scaffold.")
     # NEW: explicit model selection (defaults preserve old behavior)
     parser.add_argument("--meta_model", type=str, default="openai/gpt-oss-120b:free",
                         help=f"Meta-agent model id. Shortcuts: {list(RECOMMENDED_MODELS.keys())}")
@@ -106,6 +109,8 @@ def main():
         cmd += ["--task", args.task]
     if args.use_evolutionary_discovery:
         cmd.append("--use_evolutionary_discovery")
+    if args.ablation_mode != "none":
+        cmd += ["--ablation_mode", args.ablation_mode]
 
     if (not args.task_dir) and args.task == "swe_bench":
         print("\n=== SERIOUS BENCHMARK MODE: SWE-bench (for paper/project level) ===")
@@ -126,6 +131,7 @@ def main():
     print(f"Task source: {args.task_dir if args.task_dir else args.task}")
     print(f"Meta model: {meta_model}")
     print(f"Task model: {task_model}")
+    print(f"Ablation mode: {args.ablation_mode}")
     if args.use_evolutionary_discovery:
         print("Evolutionary Discovery (AlphaEvolve): ENABLED")
 

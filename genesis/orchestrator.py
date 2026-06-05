@@ -544,12 +544,20 @@ def main():
         choices=["claude", "openhands", "openai"],
         help="Agent backend to use: claude (Claude Code SDK), openhands (OpenHands SDK), or openai (OpenAI-compatible, with compression fix) (default: claude). For OpenRouter: use --backend openai and set OPENAI_BASE_URL=https://openrouter.ai/api/v1 + OPENAI_API_KEY=sk-or-...",
     )
+    parser.add_argument(
+        "--ablation_mode",
+        type=str,
+        default="none",
+        choices=["none", "no_pipeline"],
+        help="Research ablation mode. 'no_pipeline' disables or neutralizes cognitive pipeline leverage while preserving the rest of the GENESIS scaffold.",
+    )
     args = parser.parse_args()
 
     max_gen = args.max_gen
     task_dir, shared_dir = resolve_task_dir(args.task, args.task_dir)
     run_id = args.run_id
     backend = args.backend
+    ablation_mode = args.ablation_mode
 
     # Set default meta_model based on backend if not explicitly provided
     if args.meta_model is None:
@@ -574,6 +582,7 @@ def main():
     logger.info(f"  - Agent backend: {backend}")
     logger.info(f"  - Meta-agent model: {meta_model}")
     logger.info(f"  - Task-agent model: {task_model}")
+    logger.info(f"  - Ablation mode: {ablation_mode}")
     use_evo = getattr(args, "use_evolutionary_discovery", False)
     logger.info(f"  - Evolutionary Discovery (AlphaEvolve-style): {'ENABLED' if use_evo else 'disabled'}")
 
@@ -650,6 +659,7 @@ def main():
             "task_model": task_model,
             "backend": backend,
             "max_gen": max_gen,
+            "ablation_mode": ablation_mode,
         },
     )
     context_mgr.initialize()
@@ -676,6 +686,25 @@ def main():
     # SECTION 3: Define Prompts
     # ========================
 
+    if ablation_mode == "no_pipeline":
+        ablation_instruction = """
+
+**EXPERIMENTAL ABLATION MODE: NO_PIPELINE**
+This is a controlled research ablation. Your goal is to keep the GENESIS scaffold, logging, outputs, and overall agent structure, BUT **disable or neutralize cognitive pipeline leverage on answer generation**.
+
+Rules for this ablation:
+- You may still instantiate GENESIS stores for compatibility.
+- You may run `run_minimal_pipeline(...)` once for instrumentation/logging only, OR skip it entirely if that is cleaner.
+- **DO NOT use `tier_decision`, `theory_prediction`, `blackboard`, `verification`, or any pipeline-derived signal to choose answers.**
+- **DO NOT inject pipeline outputs into question prompts.**
+- Treat answer generation as a direct model call over the task/question content, while preserving the surrounding GENESIS agent scaffold (arguments, outputs, logging, submission format, etc.).
+- Prefer the simplest clean implementation that isolates the effect of removing pipeline leverage.
+
+This ablation is meant to answer a paper question: does pipeline leverage currently add useful signal, or only overhead/noise?
+"""
+    else:
+        ablation_instruction = ""
+
     META_AGENT_PROMPT = """You are a meta-agent. Write a COMPLETE, runnable target_agent.py NOW. Do NOT explore, do NOT use read_file tool on existing code, do NOT ask questions. Generate the FULL file from the spec below + your knowledge of GENESIS pipeline. The file must be self-contained and run without errors when invoked with --dataset_dir and --working_dir.
 
 TASK: Create target_agent.py that:
@@ -683,7 +712,7 @@ TASK: Create target_agent.py that:
 - Handles the specific task (e.g. classification, Q&A) by loading data from dataset_dir if needed (csv, json, task.md).
 - Produces required outputs in working_dir (e.g. submission.csv, answers, logs).
 - Logs execution for feedback: prefer multi-trajectory to agent_execution/ folder if multiple samples, else agent_execution.json.
-
+{ablation_instruction}
 MUST include EXACT imports at top (VERY FIRST LINES of the file, before ANY other code or functions. Do NOT put imports inside functions, try blocks, or after any executable code. This prevents scope errors like "cannot access local variable 'json'"):
 ```python
 import os
@@ -993,8 +1022,16 @@ Note: The meta-agent will fill in the task-specific parts intelligently. Make th
     META_AGENT_PROMPT = META_AGENT_PROMPT.format(
     task_model=task_model,
     META_AGENT_WORKING_DIRECTORY=META_AGENT_WORKING_DIRECTORY,
+    ablation_instruction=ablation_instruction,
 )
 
+
+    if ablation_mode == "no_pipeline":
+        ablation_feedback_instruction = """
+- **ABLATION MODE: NO_PIPELINE** — Preserve the ablation. Do NOT re-introduce cognitive pipeline leverage into answer generation. You may keep compatibility scaffolding and logging, but answers must be produced without using tier/theory/blackboard/verification signals.
+"""
+    else:
+        ablation_feedback_instruction = ""
 
     FEEDBACK_AGENT_PROMPT = """Fix target_agent.py based on execution report. JUST WRITE CODE, NO EXPLORATION.
 
@@ -1010,6 +1047,7 @@ CURRENT CODE:
 
 CRITICAL INSTRUCTIONS FOR FIX:
 - If you see "Failed to write execution log: cannot access local variable 'json'" or similar scope/import error, ensure imports are at VERY TOP (os, sys, json, datetime, pandas, numpy, openai, virtual_genesis imports), and include the EXACT ROBUST EXECUTION LOGGING block from the meta prompt at the end (before final print).
+{ablation_feedback_instruction}
 
 - **For gpqa-like QA tasks — DIAGNOSE COMMON FAILURE MODES BEFORE FIXING:**
 
@@ -1467,6 +1505,7 @@ Improvement priority: {gap.improvement_priority:.2f}
                 EXECUTION_SECTION=execution_section,
                 SPIN_SECTION=spin_section,
                 IMPROVEMENT_DIR=next_gen_directory,
+                ablation_feedback_instruction=ablation_feedback_instruction,
             )
 
             os.makedirs(next_gen_directory, exist_ok=True)

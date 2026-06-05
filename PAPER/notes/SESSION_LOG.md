@@ -70,14 +70,6 @@
 - `6240094`: 9 providers documented
 - `3a16a87`: THE FIX — genesis/llm_helpers + orchestrator
 - `3cbe48b`: Comprehensive research report
-- *(pending)*: PAPER infrastructure (هذا الـ session)
-
-### الـ Open Threads:
-- ⏭ Critical Experiment (run_54 GENESIS post-fix)
-- ⏭ Full 198-question run
-- ⏭ Cross-model baselines (Gemma 4 31B, Nemotron Ultra)
-- ⏭ Ablation study
-- ⏭ Gemini/Groq keys from Fares
 
 ### اكتشافات هذا الـ session:
 1. Reasoning saturation effect (more tokens → less accuracy)
@@ -88,7 +80,7 @@
 
 ---
 
-## Session 3 — 2026-06-05 (Paper consolidation + quick-path experiment)
+## Session 3 — 2026-06-05 (Paper consolidation + first real architecture comparison)
 
 **الحالة:** تحويل الشغل من مسار بطيء غير عملي (198 سؤال) إلى مسار بحثي سريع ومفيد (20 سؤال)، ثم تنفيذ أول مقارنة حقيقية بعد الإصلاحات.
 
@@ -112,7 +104,7 @@
 - النتيجة: `'tuple' object has no attribute 'strip'`
 - تم إصلاح الـ prompt + التحقق من generation الجديدة
 
-**Critical Experiment completed:**
+**First architecture comparison completed:**
 - تشغيل `run_57` على `tasks/gpqa_subset_20`
 - **Generation 1 = 65.00%**
 - **Generation 2 = 65.00%**
@@ -125,9 +117,47 @@
 - `a5e6d6b`: add GPQA 20-question subset + task_dir support
 - `8bbdb93`: prefer repo .venv python + document fast path
 - `c62835f`: tuple unpacking fix in orchestrator prompt
+- `b905901`: first post-fix architecture comparison in paper
+- `6dd35c2`: question-by-question delta map
+- `7d1d5d0`: ablation matrix + decision tree
+
+---
+
+## Session 4 — 2026-06-05 (A3 ablation: no pipeline leverage)
+
+**الحالة:** أول ablation فعلي على architecture gap.
+
+### ما تم:
+
+**A3 implementation:**
+- إضافة `--ablation_mode` إلى `run_openrouter_benchmark.py`
+- إضافة `--ablation_mode` إلى `genesis.orchestrator`
+- تنفيذ mode جديد: `no_pipeline`
+- meta-agent prompt بقى يقدر يكتب target_agent يحتفظ بالـ scaffold لكن يعطل pipeline leverage على answer generation
+- feedback prompt بقى aware بالـ ablation mode عشان ما يرجعش pipeline influence بالغلط
+
+**A3 experiment completed (`run_58`):**
+- `run_58 gen_1 = 70.00%`
+- `run_58 gen_2 = 60.00%`
+- مقارنة بـ `run_57 gen_1 = 65.00%`
+- النتيجة: إزالة pipeline leverage رفعت Gen 1 بـ **+5 points**
+- لكن feedback في هذا الوضع هبطت Gen 2 إلى **60.00%**
+
+**Paper updates:**
+- تحديث `PAPER.md` بالـ A3 result
+- إنشاء `PAPER/data/run58_a3_no_pipeline_20q.json`
+- إنشاء `PAPER/tables/tab14_a3_no_pipeline_results.md`
+- تحديث `aggregated_results.json`
+- تحديث `HANDOFF.md` و `TODO_HIGH.md`
+
+### الاستنتاج العلمي الجديد:
+1. **pipeline leverage currently hurts** (supported by +5 gain when removed)
+2. **feedback drift is real** (Gen 2 drops from 70 → 60 under A3)
+3. المشكلة المتبقية لم تعد غامضة: عندنا الآن culpritين مرشحين بقوة
+   - pipeline overhead/noise
+   - feedback instability
 
 ### الـ Open Threads:
-- ⏭ Why is GENESIS still −10 points below pure baseline?
-- ⏭ Run the ablations already designed in `tab13_ablation_matrix.md`
+- ⏭ A4 / A7 feedback-focused ablation
 - ⏭ Cross-model same-subset comparison (Gemini / GPT-5 / Gemma)
-- ⏭ Paper updates with run_57 results
+- ⏭ Decide whether constitutional pressure or feedback scope comes next

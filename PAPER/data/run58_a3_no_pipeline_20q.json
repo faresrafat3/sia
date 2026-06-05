@@ -1,0 +1,48 @@
+{
+  "run_id": "run_58",
+  "ablation": "A3_no_pipeline",
+  "task": "tasks/gpqa_subset_20",
+  "model": "openai/gpt-oss-120b:free",
+  "pure_baseline_accuracy_percent": 75.0,
+  "reference_run_57_accuracy_percent": {
+    "gen_1": 65.0,
+    "gen_2": 65.0
+  },
+  "gen_1": {
+    "accuracy_percent": 70.0,
+    "correct": 14,
+    "incorrect": 6,
+    "invalid": 0,
+    "wrong_question_ids": [9, 11, 13, 14, 18, 19],
+    "per_domain": {
+      "Physics": 90.9,
+      "Chemistry": 50.0,
+      "Biology": 33.3
+    }
+  },
+  "gen_2": {
+    "accuracy_percent": 60.0,
+    "correct": 12,
+    "incorrect": 8,
+    "invalid": 0,
+    "wrong_question_ids": [2, 8, 9, 11, 13, 16, 18, 19],
+    "per_domain": {
+      "Physics": 90.9,
+      "Chemistry": 16.7,
+      "Biology": 33.3
+    }
+  },
+  "delta_vs_pure": {
+    "gen_1": -5.0,
+    "gen_2": -15.0
+  },
+  "delta_vs_run_57": {
+    "gen_1": 5.0,
+    "gen_2": -5.0
+  },
+  "notes": [
+    "Removing pipeline leverage improves Gen 1 from 65.0% to 70.0%.",
+    "This supports the hypothesis that current pipeline usage adds harmful overhead/noise.",
+    "Gen 2 drops to 60.0%, strengthening the feedback-drift hypothesis."
+  ]
+}

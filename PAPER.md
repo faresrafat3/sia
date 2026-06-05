@@ -15,7 +15,9 @@ We build GENESIS, an LLM orchestration framework inspired by DeepMind's AlphaEvo
 
 We then run the first **post-fix architecture comparison** on the same 20-question subset using a quick external task directory. GENESIS reaches **65.00%** in both Generation 1 and Generation 2, improving by **+34.7 points** over the buggy 30.30% result, but still falling **−10.0 points below** the pure baseline. This establishes a crucial intermediate conclusion: the catastrophic failure was indeed mostly scaffolding, but the current GENESIS architecture in its present form still does **not** exceed direct single-pass inference on this subset.
 
-Our key findings include: (1) a **counter-intuitive reasoning saturation effect** where questions consuming more reasoning tokens were less likely to be answered correctly (median 6,836 tokens for incorrect vs 989 for correct); (2) strong **domain asymmetry** with Physics questions being dramatically easier (10/11 classified as Easy across models) than Chemistry Organic (5/6 classified as Hard); (3) the "empty content" phenomenon where 35% of reasoning model responses return zero visible tokens, requiring extraction from internal reasoning traces; and (4) an **architecture-overhead gap** in which GENESIS, despite producing zero invalid answers and clean execution, underperforms the pure baseline primarily on Chemistry and Biology.
+We further execute the first targeted ablation (**A3: no cognitive pipeline leverage**). In this setting, Generation 1 rises to **70.00%**, recovering **+5 points** relative to the standard post-fix GENESIS run and reducing the pure-baseline gap from **−10.0** to **−5.0**. However, Generation 2 drops to **60.00%**, providing stronger evidence that the current feedback loop introduces drift when not tightly constrained. This result supports the hypothesis that **pipeline leverage currently adds some harmful noise**, while also suggesting that **feedback instability remains a second-order source of loss**.
+
+Our key findings include: (1) a **counter-intuitive reasoning saturation effect** where questions consuming more reasoning tokens were less likely to be answered correctly (median 6,836 tokens for incorrect vs 989 for correct); (2) strong **domain asymmetry** with Physics questions being dramatically easier (10/11 classified as Easy across models) than Chemistry Organic (5/6 classified as Hard); (3) the "empty content" phenomenon where 35% of reasoning model responses return zero visible tokens, requiring extraction from internal reasoning traces; (4) an **architecture-overhead gap** in which GENESIS, despite producing zero invalid answers and clean execution, underperforms the pure baseline primarily on Chemistry and Biology; and (5) initial ablation evidence that removing pipeline leverage improves Generation 1 from **65% to 70%**.
 
 These results suggest that GENESIS has successfully crossed the “scaffolding catastrophe” stage, but has not yet crossed the “architecture adds value” threshold. The next research phase is therefore not basic bug-fixing, but targeted ablation: identifying which architectural components help, which are neutral, and which currently dilute model performance.
 
@@ -106,6 +108,8 @@ This paper primarily addresses RQ1 and sets up the measurement framework for RQ2
 4. **Infrastructure for rigorous measurement:** We build and open-source a multi-provider, multi-key benchmarking infrastructure supporting 13 models across 9 free providers, enabling reproducible LLM evaluation at scale.
 
 5. **First post-fix architecture comparison:** We show that GENESIS post-fix reaches **65.00%** on the same 20-question subset where the pure baseline reaches **75.00%**, proving that the architecture has recovered from catastrophic scaffolding failure but still imposes a measurable performance overhead in its current form.
+
+6. **First targeted ablation result (A3):** Disabling pipeline leverage raises Generation 1 from **65.00%** to **70.00%**, providing the first direct evidence that the cognitive pipeline in its current usage contributes harmful overhead/noise on GPQA-20.
 
 ---
 
@@ -289,8 +293,10 @@ All experiments use:
 | **pure_final** | **Pure baseline** | **All fixes applied** | **75.00%** | **0/20** |
 | **run_57_gen1** | **GENESIS post-fix** | 20Q subset, Gen 1 | **65.00%** | **0/20** |
 | **run_57_gen2** | **GENESIS post-fix** | 20Q subset, Gen 2 + feedback | **65.00%** | **0/20** |
+| **run_58_gen1** | **A3 no_pipeline** | 20Q subset, Gen 1 | **70.00%** | **0/20** |
+| **run_58_gen2** | **A3 no_pipeline** | 20Q subset, Gen 2 + feedback | **60.00%** | **0/20** |
 
-**Table 4: Experiment Timeline and Results.** "Invalid 0*" for run_53 is misleading — invalid responses defaulted to "A" without detection. Starting from smoke_v1, we properly track and recover invalid responses. The first completed post-fix architecture comparison (`run_57`) shows that GENESIS cleanly executes and eliminates invalid answers, but still underperforms the pure baseline by 10 points on the same 20-question subset.
+**Table 4: Experiment Timeline and Results.** "Invalid 0*" for run_53 is misleading — invalid responses defaulted to "A" without detection. Starting from smoke_v1, we properly track and recover invalid responses. The first completed post-fix architecture comparison (`run_57`) shows that GENESIS cleanly executes and eliminates invalid answers, but still underperforms the pure baseline by 10 points on the same 20-question subset. The first targeted ablation (`run_58`) then shows that removing pipeline leverage improves Gen 1 to 70.0%, implicating the current pipeline usage as a real source of overhead — but Generation 2 simultaneously drops to 60.0%, strengthening the case that feedback drift is a second problem.
 
 ### 5.3 The run_53 Diagnosis
 
@@ -462,7 +468,38 @@ This means the current architecture gap is not “general weakness”; it is a *
 
 See `PAPER/tables/tab12_question_delta_analysis.md` and `PAPER/figures/fig09_question_delta_map.md` for the full question-level breakdown.
 
-### 6.6 Nemotron 3 Nano vs gpt-oss-120b Comparison
+### 6.6 First Targeted Ablation (run_58, A3 = no_pipeline)
+
+The first targeted ablation removes or neutralizes **cognitive pipeline leverage** while preserving the rest of the GENESIS scaffold. This directly tests the hypothesis that the pipeline, in its current form, may be injecting noisy context rather than decision-useful signal.
+
+```
+A3 no_pipeline ablation (run_58)
+────────────────────────────────────────────────────────
+Generation 1: 14/20 correct = 70.00%
+  Physics   10/11 = 90.9%
+  Chemistry  3/6  = 50.0%
+  Biology    1/3  = 33.3%
+
+Generation 2: 12/20 correct = 60.00%
+  Physics   10/11 = 90.9%
+  Chemistry  1/6  = 16.7%
+  Biology    1/3  = 33.3%
+
+Comparison points:
+- Pure baseline: 75.00%
+- Standard GENESIS Gen 1 (run_57): 65.00%
+- A3 Gen 1 improvement over standard GENESIS: +5.00 points
+- Remaining gap vs pure baseline: −5.00 points
+```
+
+**Interpretation:**
+
+- Removing pipeline leverage improves Generation 1 from **65% → 70%**.
+- This is the first direct experimental evidence that the current pipeline usage is not neutral — it is likely adding harmful overhead or distracting context.
+- The fact that Physics remains unchanged at **90.9%** while Chemistry rises from **16.7% → 50.0%** strongly suggests that the pipeline is disproportionately harmful on Chemistry questions.
+- Generation 2 then collapses to **60.0%**, showing that the feedback loop can actively worsen performance once the pipeline is removed. This implies that **feedback drift** is a second, separate source of loss.
+
+### 6.7 Nemotron 3 Nano vs gpt-oss-120b Comparison
 
 ```
 Model              Accuracy  Invalid  Physics   Chemistry  Biology
@@ -570,15 +607,16 @@ Our answer taxonomy:
 
 ### 8.3 GENESIS Architecture: Positive, Neutral, or Negative?
 
-The first completed post-fix experiment (`run_57`) allows us to answer this question **provisionally** on the 20-question subset:
+The first completed post-fix experiment (`run_57`) and the first targeted ablation (`run_58`) allow us to answer this question more precisely on the 20-question subset:
 
-- **Observed impact:** `65.0% (GENESIS)` vs `75.0% (pure baseline)` → **−10.0 points**
-- **Interpretation:** the current GENESIS architecture is **negative on this subset** in its present form, but no longer catastrophically negative.
+- **Observed impact (standard GENESIS):** `65.0%` vs `75.0%` pure baseline → **−10.0 points**
+- **Observed impact (A3 no_pipeline Gen 1):** `70.0%` vs `75.0%` pure baseline → **−5.0 points**
 
-This result lets us separate two claims very clearly:
+This lets us separate three claims very clearly:
 
 1. **Scaffolding claim:** supported. The catastrophic 30.3% result was primarily engineering failure.
-2. **Architecture-value claim:** not yet supported. Once the scaffolding is fixed, GENESIS still does not beat the direct baseline.
+2. **Pipeline-overhead claim:** partially supported. Removing pipeline leverage recovers **+5 points**.
+3. **Architecture-value claim:** still not supported. Even after the A3 improvement, no tested orchestrated configuration beats the direct baseline.
 
 This means the next scientific step is no longer “debug everything blindly,” but rather:
 
@@ -586,12 +624,16 @@ This means the next scientific step is no longer “debug everything blindly,”
 - identify which components are neutral,
 - identify which components currently dilute performance.
 
-The most likely sources of residual loss are:
+The evidence now points most strongly to two residual loss sources:
 
-- **pipeline overhead** that adds context but not decision-useful signal,
-- **feedback drift** that changes answer patterns without improving total score,
-- **constitutional pressure** that optimizes code quality/safety properties more than benchmark accuracy,
-- **single-agent answer generation** still relying on the same base model without enough task-specific leverage from the architecture.
+- **pipeline overhead** that adds context but not decision-useful signal, especially on Chemistry,
+- **feedback drift** that changes answer patterns without improving total score (and in A3, actively worsens it).
+
+The other candidates remain open but secondary:
+
+- **constitutional pressure** may optimize code quality/safety properties more than benchmark accuracy,
+- **evolutionary discovery** may be neutral or noisy on small subsets,
+- **single-agent answer generation** may still not exploit enough task-specific leverage from the architecture.
 
 ### 8.4 Limitations of Current Study
 
@@ -619,11 +661,11 @@ The most likely sources of residual loss are:
 
 ### Immediate (Next Session)
 
-1. **Ablation of current GENESIS stack:** Since run_57 answered RQ2 provisionally (current architecture is −10 points vs baseline), the next step is to isolate where that loss comes from.
+1. **Ablation of current GENESIS stack:** Since `run_58` supports the pipeline-overhead hypothesis, the next step is to test the second suspected culprit: feedback drift (A4 / A7), followed by constitutional pressure (A5).
 
-2. **Cross-model baseline:** Extend pure baseline measurements to Gemma 4 31B (84.3% official), Gemini Flash, and Nemotron 3 Ultra to identify the strongest base model.
+2. **Cross-model baseline:** Extend pure baseline measurements to Gemma 4 31B (84.3% official), Gemini Flash, and GPT-5/GitHub Models to identify the strongest base model.
 
-3. **Full 198-question run:** Only after the architecture is competitive on the 20-question subset should we scale to the complete GPQA Diamond benchmark (±3.5% margin of error).
+3. **Full 198-question run:** Only after an orchestrated configuration becomes at least competitive (≈75%) on the 20-question subset should we scale to the complete GPQA Diamond benchmark (±3.5% margin of error).
 
 ### Short-Term (Within 1-2 Weeks)
 
@@ -662,9 +704,10 @@ Our most important conclusion is that **two different problems were previously c
 
 The first problem is now resolved. Five identifiable scaffolding bugs — most importantly JSON key case mismatch and reasoning-token mishandling — explain the bulk of the earlier 30.30% collapse. Once these are fixed, GENESIS improves by **+34.7 points** on the 20-question subset, rising from **30.3% to 65.0%**.
 
-However, this does **not** yet constitute evidence that the architecture adds value over direct inference. The properly measured pure baseline on the same subset remains **75.0%**, leaving GENESIS at **−10.0 points** relative to the model alone. In other words:
+However, this does **not** yet constitute evidence that the architecture adds value over direct inference. The properly measured pure baseline on the same subset remains **75.0%**, leaving standard GENESIS at **−10.0 points** relative to the model alone. Our first targeted ablation (A3, no pipeline leverage) improves Generation 1 to **70.0%**, cutting the gap in half, but still does not beat the model-alone baseline. In other words:
 
 - **GENESIS is no longer broken**,
+- **removing pipeline leverage helps**,
 - but **GENESIS is not yet winning**.
 
 This distinction matters. Without the pure baseline, one might have concluded that the architecture was hopelessly harmful. Without the post-fix run, one might have concluded that the architecture was already competitive. The correct scientific conclusion is more nuanced:

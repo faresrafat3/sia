@@ -32,7 +32,9 @@
     {"run_id": "smoke_v2_nano", "model": "nemotron-3-nano", "arch": "pure", "n": 20, "accuracy": 65.0, "invalid": 3, "physics": 90.9, "chemistry": 16.7, "biology": 66.7},
  {"run_id": "pure_final", "model": "gpt-oss-120b", "arch": "pure", "n": 20, "accuracy": 75.0, "invalid": 0, "recovered": 3, "physics": 81.8, "chemistry": 66.7, "biology": 66.7},
     {"run_id": "run_57_gen1", "model": "gpt-oss-120b", "arch": "GENESIS post-fix", "n": 20, "accuracy": 65.0, "invalid": 0, "physics": 90.9, "chemistry": 16.7, "biology": 66.7},
-    {"run_id": "run_57_gen2", "model": "gpt-oss-120b", "arch": "GENESIS post-fix", "n": 20, "accuracy": 65.0, "invalid": 0, "physics": 90.9, "chemistry": 33.3, "biology": 33.3} 
+    {"run_id": "run_57_gen2", "model": "gpt-oss-120b", "arch": "GENESIS post-fix", "n": 20, "accuracy": 65.0, "invalid": 0, "physics": 90.9, "chemistry": 33.3, "biology": 33.3},
+    {"run_id": "run_58_gen1", "model": "gpt-oss-120b", "arch": "A3 no_pipeline", "n": 20, "accuracy": 70.0, "invalid": 0, "physics": 90.9, "chemistry": 50.0, "biology": 33.3},
+    {"run_id": "run_58_gen2", "model": "gpt-oss-120b", "arch": "A3 no_pipeline", "n": 20, "accuracy": 60.0, "invalid": 0, "physics": 90.9, "chemistry": 16.7, "biology": 33.3} 
   ],
   "bugs": [
     {"id": 1, "name": "JSON case mismatch", "severity": "CRITICAL", "impact_points": 25, "fix": "safe_get_question_field() with multiple variants"},

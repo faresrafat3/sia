@@ -2,8 +2,8 @@
 
 1. **[ABLATION]** تفسير فجوة `−10.0 points` بين `pure_final=75%` و `run_57=65%`
   - ✅ تم إنجاز question-by-question delta analysis
-  - التالي: isolate likely causes عملياً
-  - افصل بين pipeline overhead و feedback drift و constitutional pressure
+  - ✅ تم إنجاز A3 (`no_pipeline`) → Gen1 = 70.0%
+  - التالي: افصل feedback drift عملياً (A4 / A7)
 
 2. **[PAPER]** تحديث PAPER.md بالكامل بنتيجة `run_57`
    - تحديث Abstract
