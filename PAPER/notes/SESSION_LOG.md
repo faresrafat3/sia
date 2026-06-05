@@ -418,3 +418,92 @@
 - Option B: ننتظر review فارس على الـ 4 ملفات الجديدة قبل دمجها.
 - **توصية:** Option B.
 
+
+---
+
+## Session 8 — 2026-06-05 (Full PAPER.md Integration of Idea-001 + Idea-002)
+
+**الحالة:** فارس قال "القرار قرارك" → اخترت Option A (نكتب Section 8.5 مدمج فوراً، بدلاً من ننتظر review على ملفات منفصلة).
+
+### النص الافتتاحي
+
+> "جميل القرار قرارك"
+
+### ما تم — Full PAPER.md Integration
+
+**في الورقة الرئيسية (PAPER.md):**
+
+1. **Abstract** — أضفت paragraph كامل عن LEAP contrast (110-point gap), Theories 07/08/09, Phil-07 reframing of RQ2. Keywords extended.
+
+2. **§1.4 RQ2 reframing** — RQ2 الأصلي محفوظ + RQ2-revised أضيف صراحة.
+
+3. **§8.5 جديد بالكامل** (7 sub-sections, ~400 سطر):
+   - 8.5.1 The Headline Contrast (Table 16 embedded)
+   - 8.5.2 Theory-07: Pipeline as Memory vs Decision Injection
+   - 8.5.3 Theory-08: Feedback Value Matrix (Table 17 embedded)
+   - 8.5.4 Theory-09: Anticipatory Concepts vs Lemmas
+   - 8.5.5 Phil-07: Reframing Sufficiency (4 positions, Position D adopted)
+   - 8.5.6 Path Forward (4 specified engineering steps)
+   - 8.5.7 Honest Caveat (no runs executed yet)
+
+4. **§10 Future Work — restructured كاملاً** إلى 5 Tracks (A–E):
+   - Track A: Structural Redesign Following Theories 07/08/09 (highest priority)
+   - Track B: Empirical Anchoring
+   - Track C: Generalization Beyond GPQA
+   - Track D: Publication and Open Source
+   - Track E: Long-Term Research Program
+
+5. **§11 Conclusion — كامل revised:**
+   - Theories 07/08/09 + Phil-07 woven into narrative
+   - New precise final claim: "consequence of specific design properties... now identified and addressable"
+
+6. **Appendix B** — T5.91 + T5.92 added
+7. **Appendix C جديد** — Cross-reference to internal theories + philosophy
+8. **Appendix D جديد** — Idea attribution table activated
+
+**Standalone figures + tables:**
+
+- `PAPER/figures/fig11_110_point_gap.md` (115-point spread visualization)
+- `PAPER/figures/fig12_feedback_quadrant.md` (2×2 matrix with empirical anchors)
+- `PAPER/tables/tab16_leap_vs_genesis.md` (comprehensive comparison with caveats)
+- `PAPER/tables/tab17_feedback_value_matrix.md` (full 2×2 matrix with axioms)
+
+**Idea Lifecycle:**
+
+- ✅ Idea-001 (LEAP) → **moved to INTEGRATED** (full lifecycle complete).
+- ✅ Idea-002 (Attribution Rule) → **moved to INTEGRATED** (governance, perpetually active).
+- IN_PROGRESS now empty.
+- INBOX now empty.
+
+**ATTRIBUTION_MAP fully updated** with exact paper locations (not "مخطط" anymore — all "مُنفّذ").
+
+### إحصائيات Session 8
+
+| المقياس | العدد |
+|---|---|
+| New PAPER.md sections | 1 (§8.5 with 7 sub-sections) |
+| New PAPER.md appendices | 2 (Appendix C, D) |
+| Major PAPER.md revisions | 4 (Abstract, §1.4, §10, §11) |
+| New standalone figures | 2 (fig11, fig12) |
+| New standalone tables | 2 (tab16, tab17) |
+| Ideas moved INTEGRATED | 2 (Idea-001, Idea-002) |
+| Runs | 0 (Theoretical Mode محفوظ) |
+
+### الـ Paper Version Bump
+
+PAPER.md: v0.2 → **v0.3 (Post-LEAP Integration)**
+
+### الـ Insight الأقوى المُكتسب
+
+الـ paper version v0.3 يحمل **claim جديد أقوى من v0.2**:
+
+> v0.2: "GENESIS recovered from catastrophic scaffolding failure. On GPQA-20 it still underperforms the pure baseline by 10 points in its current form."
+>
+> v0.3: "...On GPQA-20 it still underperforms the pure baseline by 10 points in its current form. **The contrast with LEAP and the resulting Theories 07/08/09 + Phil-07 indicate that this residual gap is not a fundamental limit of orchestration architectures — it is a consequence of specific design properties (decision injection, broad stochastic feedback, reactive-only concept proposal) that are now identified and addressable.**"
+
+ده **upgrade من ورقة scientifically honest** إلى ورقة scientifically honest **AND structurally directed**.
+
+### الـ Commit المتوقع
+
+- `(pending)`: Session 8 — Full PAPER.md integration of Idea-001 (LEAP) + Idea-002 (Attribution). Section 8.5, Abstract, §1.4, §10, §11 revised. Appendices C, D added. fig11, fig12, tab16, tab17 standalone. Ideas 001+002 → INTEGRATED.
+

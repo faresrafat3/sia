@@ -40,26 +40,34 @@
 | العنصر | الحالة | الوصف |
 |---|---|---|
 | **Theft T5.92** | ✅ مُنفّذ | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` — سرقة شرعية كاملة (10 sections) |
-| **Master Index** | ✅ مُحدّث | T5.92 + scope 5.1-5.92 + provenance + sources |
+| **Master Index** | ✅ مُحدّث | T5.91 + T5.92 + scope 5.1-5.92 + provenance + sources |
 | **Theory-07** | ✅ مُنفّذ | `PAPER/theory/07_pipeline_as_memory_vs_decision_injection.md` |
 | **Theory-08** | ✅ مُنفّذ | `PAPER/theory/08_feedback_value_determinism_scope.md` |
 | **Theory-09** | ✅ مُنفّذ | `PAPER/theory/09_anticipatory_concepts_vs_lemmas.md` |
 | **Phil-07** | ✅ مُنفّذ | `PAPER/philosophy/07_meaning_of_general_purpose_sufficiency.md` |
-| **Section 8.5** (Contrast with LEAP) | ⏳ مخطط | placeholder موجود في idea file |
-| **Table 16** (LEAP vs GENESIS) | ⏳ مخطط | في theft memo (§5) |
-| **Figure 11** (110-point gap) | ⏳ مخطط | spec في theft memo (§5) |
-| **Figure 12** (Theory-08 quadrant) | ⏳ مخطط | spec في Theory-08 |
-| **Table 17** (Feedback value matrix) | ⏳ مخطط | spec في Theory-08 |
-| **Future Work** | ⏳ مخطط | يتبع Section 8.5 |
+| **PAPER.md Section 8.5** (Contrast with LEAP) | ✅ مُنفّذ | 7 sub-sections (8.5.1–8.5.7), full integration of theories + philosophy + theft |
+| **PAPER.md Abstract revision** | ✅ مُنفّذ | LEAP contrast + Theories 07/08/09 + Phil-07 reframing of RQ2 added |
+| **PAPER.md §1.4 RQ2 reframing** | ✅ مُنفّذ | Added RQ2-revised based on Phil-07 Position D |
+| **PAPER.md §10 Future Work** | ✅ مُنفّذ | Restructured into Tracks A–E; Track A is direct adoption of Theory-07/08/09 |
+| **PAPER.md §11 Conclusion** | ✅ مُنفّذ | New paragraph integrating Theories + Phil-07; revised final claim |
+| **PAPER.md Appendix B** | ✅ مُحدّث | T5.91 + T5.92 added |
+| **PAPER.md Appendix C** (new) | ✅ مُنفّذ | Cross-reference to internal theories + philosophy |
+| **PAPER.md Appendix D** (new) | ✅ مُنفّذ | Idea attribution table per [Idea-002] |
+| **Figure 11** (110-point gap) | ✅ مُنفّذ | `PAPER/figures/fig11_110_point_gap.md` |
+| **Figure 12** (Theory-08 quadrant) | ✅ مُنفّذ | `PAPER/figures/fig12_feedback_quadrant.md` |
+| **Table 16** (LEAP vs GENESIS) | ✅ مُنفّذ | `PAPER/tables/tab16_leap_vs_genesis.md` + embedded in §8.5.1 |
+| **Table 17** (Feedback Value Matrix) | ✅ مُنفّذ | `PAPER/tables/tab17_feedback_value_matrix.md` + embedded in §8.5.3 |
 
-**حجم التأثير:** **CORE** — أعادت تشكيل RQ2 من "هل architecture يضيف قيمة؟" إلى "تحت أي conditions يضيف قيمة؟"
+**حجم التأثير:** **CORE** — أعادت تشكيل RQ2 من "هل architecture يضيف قيمة؟" إلى "تحت أي conditions يضيف قيمة؟" *وتم تطبيق هذا الـ reframing في كل قسم رئيسي من الورقة*.
 
-**مدخلات Session 7:**
-- 1 theft memo (10 sections)
-- 3 theories (07, 08, 09)
-- 1 philosophy article (Phil-07)
-- 1 Master Index update
-- 1 IN_PROGRESS update
+**مدخلات Session 7 + Session 8 (continuation):**
+
+| Session | Outputs |
+|---|---|
+| Session 7 | 1 theft memo + 3 theories + 1 philosophy + Master Index update |
+| Session 8 (this) | PAPER.md Section 8.5 (7 sub-sections), Abstract revision, RQ2 reframing, Future Work restructure, Conclusion revision, Appendix C + D added, Figure 11, Figure 12, Table 16, Table 17 |
+
+**Status:** ✅ **INTEGRATED** — Idea-001 has fully entered the paper. Move from IN_PROGRESS to INTEGRATED.
 
 ---
 

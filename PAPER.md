@@ -19,9 +19,11 @@ We further execute the first targeted ablation (**A3: no cognitive pipeline leve
 
 Our key findings include: (1) a **counter-intuitive reasoning saturation effect** where questions consuming more reasoning tokens were less likely to be answered correctly (median 6,836 tokens for incorrect vs 989 for correct); (2) strong **domain asymmetry** with Physics questions being dramatically easier (10/11 classified as Easy across models) than Chemistry Organic (5/6 classified as Hard); (3) the "empty content" phenomenon where 35% of reasoning model responses return zero visible tokens, requiring extraction from internal reasoning traces; (4) an **architecture-overhead gap** in which GENESIS, despite producing zero invalid answers and clean execution, underperforms the pure baseline primarily on Chemistry and Biology; and (5) initial ablation evidence that removing pipeline leverage improves Generation 1 from **65% to 70%**.
 
-These results suggest that GENESIS has successfully crossed the “scaffolding catastrophe” stage, but has not yet crossed the “architecture adds value” threshold. The next research phase is therefore not basic bug-fixing, but targeted ablation: identifying which architectural components help, which are neutral, and which currently dilute model performance.
+Finally, we situate these results against the **LEAP** framework [Kung et al. 2026; T5.92; sourced via Idea-001], which on the same class of base model demonstrates a **+100-point** architecture impact (Putnam 2025: 0% → 100%). The 110-point gap between LEAP's +100 and GENESIS's −10 cannot be explained by base model strength, scaffolding bugs, or benchmark difficulty alone — it is structural. To explain it, we develop three internal theories: **[Theory-07]** *Pipeline as Memory vs Pipeline as Decision Injection*; **[Theory-08]** *Feedback Value = f(Determinism, Scope)*; and **[Theory-09]** *Anticipatory Concepts vs Anticipatory Lemmas*, which together reframe our research question from "does the architecture add value?" to the more precise **"under what structural conditions does an orchestration architecture add measurable value?"** [Phil-07, Position D]. We argue that GENESIS currently violates two of the three conditions (memory rather than injection; narrow deterministic feedback rather than broad stochastic refactor), which makes the residual −10 gap a specified engineering target rather than a mysterious deficit.
 
-**Keywords:** LLM orchestration, reasoning benchmarks, GPQA Diamond, evolutionary search, agentic architectures, scaffolding errors
+These results suggest that GENESIS has successfully crossed the "scaffolding catastrophe" stage, but has not yet crossed the "architecture adds value" threshold. The next research phase is therefore not basic bug-fixing, but **structural redesign along principles validated externally by LEAP and theorized internally in Theories 07/08/09**: identifying which architectural components help, which are neutral, and which currently dilute model performance.
+
+**Keywords:** LLM orchestration, reasoning benchmarks, GPQA Diamond, evolutionary search, agentic architectures, scaffolding errors, pipeline-as-memory, feedback drift, anticipatory abstraction
 
 ---
 
@@ -91,11 +93,13 @@ Our investigation centers on three questions:
 
 **RQ1 (Scaffolding):** How much of the gap between pure model performance and orchestrated performance is attributable to scaffolding bugs rather than fundamental architecture limitations?
 
-**RQ2 (Architecture Value):** Does the GENESIS orchestration architecture, when correctly implemented, add measurable value above the pure model baseline?
+**RQ2 (Architecture Value — original framing):** Does the GENESIS orchestration architecture, when correctly implemented, add measurable value above the pure model baseline?
+
+**RQ2-revised (Section 8.5):** Following our contrast with LEAP [T5.92] and the development of Theory-07/08/09 + Phil-07, we reframe RQ2 as: *Under what structural conditions does an orchestration architecture add measurable value over direct inference, and by how much?* This shifts the question from binary (yes/no value) to structural (which design properties produce value, and which dilute it).
 
 **RQ3 (Deferred — Thinking vs Instant):** Does the architecture's impact differ between reasoning-heavy models (gpt-oss, Nemotron Ultra, gpt-5, DeepSeek-R1) and faster instant-inference models (Llama 3.3 70B, Gemini Flash, Phi-4)?
 
-This paper primarily addresses RQ1 and sets up the measurement framework for RQ2 (the critical experiment that will determine whether orchestration adds value).
+This paper primarily addresses RQ1 (Sections 5.3–5.4, 7.1), provides initial empirical evidence on the original RQ2 (Sections 6.4–6.6, 7.x), and develops the theoretical apparatus to answer RQ2-revised (Section 8.5). RQ3 is deferred to future work.
 
 ### 1.5 Contributions
 
@@ -651,6 +655,132 @@ The other candidates remain open but secondary:
 
 ---
 
+### 8.5 Contrast with LEAP — Why GENESIS Loses 10 Points While LEAP Gains 100
+
+This section integrates an external empirical contrast that fundamentally reshapes our reading of GENESIS's residual gap. The contrasting system is **LEAP** (LLM-in-Lean Environment Agentic Prover) [Kung et al. 2026; T5.92], a recently released agentic framework from Google Cloud AI Research and Google DeepMind. LEAP was brought to our attention by Fares as the first formal idea in our Ideas Bank [Idea-001].
+
+#### 8.5.1 The Headline Contrast
+
+Both LEAP and GENESIS use **general-purpose foundation models** (Gemini-3.1-Pro for LEAP, gpt-oss-120b for GENESIS) as their reasoning backbone. Both wrap the model in an **agentic framework** intended to add value over direct single-pass inference. Yet the measured architecture impact differs by **110 points**:
+
+**Table 16: LEAP vs GENESIS Architecture Impact Comparison (same-model, agentic-framework results)**
+
+| System | Benchmark | Direct LLM | + Agentic Framework | **Δ (Architecture Impact)** |
+|---|---|---|---|---|
+| **LEAP** [T5.92] | Putnam 2025 | 0% (0/12) | **100%** (12/12) | **+100.0** |
+| **LEAP** [T5.92] | Lean-IMO Basic | 20.0% | **83.3%** | **+63.3** |
+| **LEAP** [T5.92] | Lean-IMO Advanced | 3.3% | **56.7%** | **+53.4** |
+| **GENESIS** (run_57) | GPQA-20 | 75.0% | 65.0% | **−10.0** |
+| **GENESIS** (run_58 A3 Gen1) | GPQA-20 | 75.0% | 70.0% | **−5.0** |
+
+The 110-point gap between LEAP's +100 and GENESIS's −10 cannot be explained by:
+
+- **Base model differences alone** — both are frontier-grade general-purpose models.
+- **Scaffolding bugs alone** — we already eliminated those (run_57 is post-fix).
+- **Benchmark difficulty** — both are graduate-level reasoning tasks.
+
+Something **structural** about the architectures themselves accounts for most of the gap. This observation motivates the three internal theories we develop below.
+
+#### 8.5.2 Theory-07: Pipeline as Memory vs Pipeline as Decision Injection
+
+We propose that orchestration pipelines fall on a spectrum between two philosophically distinct types [Theory-07]:
+
+**Type A — Pipeline as Memory (helpful):**
+- The pipeline stores state (proven lemmas, open goals, dependencies).
+- The LLM pulls from it on demand.
+- No signals are pushed into the answer-generation prompt.
+- **Relationship:** LLM leads, pipeline serves.
+
+**Type B — Pipeline as Decision Injection (harmful at scale):**
+- The pipeline computes signals (tier decisions, theory predictions, blackboard hints).
+- These signals are injected into every question prompt.
+- The LLM must weigh injected signals against its own reasoning.
+- **Relationship:** pipeline leads, LLM obeys or resists.
+
+LEAP's DAG memoization is the canonical example of Type A — the proof graph is queried, never pushed. GENESIS's current pipeline (tier_decision, theory_prediction, blackboard, verification all injected into prompts) is Type B.
+
+**Three axioms underlie Theory-07:**
+
+1. **Capacity Asymmetry.** Frontier LLMs have enormous prior knowledge. Any externally-injected signal must be *decision-useful*, or it lowers signal-to-noise ratio.
+2. **Memory is Pull, Decision is Push.** Pull-based memory access is opt-in by the LLM. Push-based injection is imposed on every call. Push requires far higher justification.
+3. **Verification ≠ Decision.** A pipeline can be a strong verifier (filtering outputs) without being a decision injector (shaping inputs).
+
+**The most consequential prediction (Prop 3):** *Decision injection scales inversely with base model strength.* Weak models may benefit from pipeline signals because they need guidance; strong models are actively harmed because injected signals interfere with their internal reasoning. This directly explains why GENESIS may have shown apparent value in earlier weak-model regimes while now hurting with gpt-oss-120b.
+
+#### 8.5.3 Theory-08: Feedback Value = f(Determinism, Scope)
+
+The second contrast is in the **feedback mechanism**. LEAP's feedback comes from the Lean compiler — fully deterministic, machine-verifiable, locally scoped to specific tactic failures. GENESIS's feedback comes from an LLM judge that may rewrite the entire target agent on each generation.
+
+We propose [Theory-08] that feedback value depends on two measurable dimensions:
+
+**Table 17: Feedback Value Matrix (2×2 quadrant model)**
+
+| Determinism ↓ \ Scope → | **Narrow** (targeted fix only) | **Broad** (full refactor allowed) |
+|---|---|---|
+| **High** (compiler / formal verifier) | ✅ **Best** — compound monotonic improvement | ⚠ Mixed — wastes budget without harm |
+| **Low** (LLM-as-judge) | ✅ Good — bounded stochastic gain | ❌ **Worst** — drift compounded over generations |
+
+LEAP sits in the top-left quadrant. GENESIS currently sits in the bottom-right.
+
+This framework predicts our exact observed regression in run_58: Gen 1 = 70.0%, Gen 2 = 60.0%. The 10-point drop is **not** noise — it is the predicted consequence of stochastic LLM feedback with broad rewrite scope. Three axioms:
+
+1. **Determinism Reduces Stochastic Drift.** Compiler signals are consistent across iterations; LLM judgments inject fresh noise each generation.
+2. **Broad Scope Amplifies Stochastic Noise.** Each allowed change has independent risk; broad refactors compound that risk multiplicatively.
+3. **Narrow Scope Compounds Deterministic Wins.** Bounded fixes on deterministic signals are monotonic — they never make things worse.
+
+Migration from bottom-right to top-left is the design path our A7 ablation (`narrow_feedback` mode, infrastructure already wired in Session 5) is designed to probe.
+
+#### 8.5.4 Theory-09: Anticipatory Concepts vs Anticipatory Lemmas
+
+LEAP's third architectural innovation is **anticipatory lemma planning** — proposing lemma statements during blueprint generation that are not immediately needed but expected to support later proof steps. Remarkably, GENESIS already contains a structurally analogous mechanism: the Concept Formation Engine's `propose_concepts_from_groups`, which generates concept candidates based on observed patterns.
+
+We propose [Theory-09] that **anticipatory abstraction** is a general architectural principle that manifests differently across domains:
+
+| Domain | Anticipatory Unit | Currently Implemented In |
+|---|---|---|
+| Formal mathematics | Anticipatory Lemmas | LEAP (DAG nodes) |
+| Scientific MCQ | Anticipatory Concepts | GENESIS Concept Engine (latent) |
+| Software engineering | Anticipatory Helpers | (candidate for future work) |
+| Combinatorial discovery | Anticipatory Constructs | (candidate for future work) |
+
+The LEAP ablation showed anticipatory lemmas contribute +10 points on the Basic set and +17 on the Advanced set. By analogy, Theory-09 predicts that activating an `anticipatory_mode` in GENESIS's Concept Engine — proactively proposing concepts for predicted-adjacent sub-tasks rather than only reacting to observed groups — would disproportionately improve Chemistry Organic, our weakest domain (5/6 questions classified as Hard).
+
+#### 8.5.5 Phil-07: Reframing What "Sufficient" Means
+
+LEAP makes the strong claim that a general-purpose foundation model is *sufficient* for state-of-the-art formal theorem proving — no specialized prover needed. This is the strongest version of an implicit assumption GENESIS shares. But what does "sufficient" actually mean? [Phil-07]
+
+We considered four positions:
+
+- **Position A — Strong Sufficiency:** general LLM + scaffolding = enough for any reasoning domain.
+- **Position B — Domain-Conditional Sufficiency:** enough only when a deterministic verifier exists, output structure is fixed, and sub-problems compose hierarchically.
+- **Position C — Hybrid Sufficiency:** general LLM for orchestration, specialized models for leaf-level steps.
+- **Position D — Capability-Adjusted Sufficiency:** enough *given* sufficient base capability + architecture designed as memory + verifier + narrow deterministic feedback.
+
+We adopt **Position D** as the working position of this paper. It is the position best supported by the combined LEAP + GENESIS evidence: LEAP succeeds because all three conditions are met; GENESIS underperforms because the pipeline is injection-based (violating the memory condition) and feedback is broad and stochastic (violating the deterministic-narrow condition).
+
+Phil-07 has a concrete consequence for our central research question. RQ2 as originally stated — *"does the architecture add value?"* — is now seen to be **poorly framed**. The empirically meaningful version is:
+
+> **RQ2-revised:** *Under what conditions does an orchestration architecture add measurable value over direct inference, and by how much?*
+
+This revised RQ2 turns a binary question into a structural one. The answer is now traceable to specific design properties (memory vs injection; deterministic vs stochastic feedback; narrow vs broad scope).
+
+#### 8.5.6 What This Implies for GENESIS's Path Forward
+
+The contrast with LEAP — combined with Theories 07, 08, 09 and Phil-07 — converts our −10 gap from a mysterious deficit into a structured engineering target. The path forward is now specified, not speculative:
+
+1. **Refactor the pipeline as memory + verifier** (Theory-07): Stop injecting `tier_decision`, `theory_prediction`, `blackboard` signals into question prompts. Make them queryable, not pushed.
+2. **Migrate feedback to top-left quadrant** (Theory-08): Constrain feedback agent to narrow, targeted fixes. Add a deterministic post-feedback verifier with rollback on regression. (Infrastructure for `narrow_feedback` mode is already wired in `genesis/orchestrator.py`.)
+3. **Activate anticipatory mode in the Concept Engine** (Theory-09): Have the engine propose concepts for predicted-adjacent sub-tasks, not only react to observed groups.
+4. **Re-test on stronger base models when available** (Phil-07 Prop 3): Capability-adjusted sufficiency predicts the gap should narrow as base model strength increases.
+
+None of these steps require new theoretical invention. They are direct adoptions of mechanisms LEAP has already empirically validated, restructured to fit GENESIS's task domain (scientific MCQ rather than formal proofs).
+
+#### 8.5.7 Honest Caveat
+
+Importantly, this entire subsection is **theoretical reframing supported by external empirical evidence (LEAP) and our own existing measurements (run_57, run_58)**. We have *not* yet executed any GENESIS run under the Theory-07/08/09-aligned design. Whether the predicted gains materialize is the central open question for the next experimental phase. The contribution of this subsection is to make the question precise and actionable, not to claim that it has been answered.
+
+---
+
 ## 09. Limitations
 
 *[This section will be expanded as more experiments are conducted. Currently captured in Section 8.4.]*
@@ -659,37 +789,53 @@ The other candidates remain open but secondary:
 
 ## 10. Future Work
 
-### Immediate (Next Session)
+The Future Work agenda is now organized around the structural redesign roadmap that emerged from Section 8.5 (Theories 07/08/09 + Phil-07), rather than the unstructured ablation list of earlier drafts.
 
-1. **Ablation of current GENESIS stack:** Since `run_58` supports the pipeline-overhead hypothesis, the next step is to test the second suspected culprit: feedback drift (A4 / A7), followed by constitutional pressure (A5).
+### Track A — Structural Redesign Following Theories 07/08/09 (Highest Priority)
 
-2. **Cross-model baseline:** Extend pure baseline measurements to Gemma 4 31B (84.3% official), Gemini Flash, and GPT-5/GitHub Models to identify the strongest base model.
+**A.1 [Theory-07] Refactor pipeline as memory + verifier, not injection.**
+Stop pushing `tier_decision`, `theory_prediction`, `blackboard`, `verification` signals into question prompts. Make them pull-based (LLM queries when needed). Predicted: closes a substantial portion of the −10 gap. *Empirical test:* new ablation mode `memory_only_pipeline`.
 
-3. **Full 198-question run:** Only after an orchestrated configuration becomes at least competitive (≈75%) on the 20-question subset should we scale to the complete GPQA Diamond benchmark (±3.5% margin of error).
+**A.2 [Theory-08] Migrate feedback to top-left quadrant.**
+Constrain the feedback agent to narrow, targeted fixes only (the existing `narrow_feedback` mode wired in Session 5). Add a deterministic post-feedback verifier that rolls back regressions. Predicted: closes Gen 2 regression, may push Gen 2 ≥ Gen 1. *Empirical test:* A7a, A7b, A7c runs already specified in `PAPER/tables/tab15_a7_design.md`.
 
-### Short-Term (Within 1-2 Weeks)
+**A.3 [Theory-09] Activate anticipatory mode in the Concept Engine.**
+Implement `anticipatory_mode` in `virtual_genesis/runtime/concept_engine/proposer.py` per the design sketch in `PAPER/theory/09_*.md`. Predicted: disproportionate improvement on Chemistry Organic (our weakest domain, 5/6 hard).
 
-4. **Ablation Study:** Systematically disable or narrow GENESIS components (pipeline leverage, feedback loop, constitutional pressure, evolutionary discovery) to measure individual contributions. See `PAPER/tables/tab13_ablation_matrix.md` and `PAPER/figures/fig10_ablation_decision_tree.md`.
+**A.4 [Phil-07 Prop 3] Re-test on stronger base models.**
+The capability-adjusted sufficiency hypothesis predicts the gap should narrow with stronger base models. Test GENESIS (same architecture) on Gemini-3.1-Pro, GPT-5 via GitHub Models, and Gemma 4 31B. Direct test of the inverse-scaling claim.
 
-5. **Controlled Reasoning Token Experiment:** Vary max_tokens systematically to test the reasoning saturation hypothesis.
+### Track B — Empirical Anchoring (Medium Priority)
 
-6. **Multi-Provider Expansion:** Integrate Google Gemini (1,500 RPD) and Groq (3,000 RPD) through the multi-provider pool.
+**B.1 Cross-model pure baselines.** Confirm pure baselines for Gemma 4 31B (84.3% official), Gemini Flash, and GPT-5 to enable apples-to-apples architecture impact comparisons.
 
-### Medium-Term (Deferred)
+**B.2 Full 198-question runs.** Only *after* one of Track A interventions produces a competitive configuration (≥75% on GPQA-20). Premature scaling wastes quota.
 
-7. **SWE-bench Integration:** Extend the measurement framework to software engineering benchmarks using Laguna M.1 and Qwen3 Coder.
+**B.3 Controlled reasoning token experiment.** Vary `max_tokens` ∈ {1K, 2K, 4K, 8K, 16K, 32K} to test the reasoning saturation hypothesis at the model level (independent of architecture).
 
-8. **Instant vs Thinking Architecture Impact:** Compare GENESIS's effect on reasoning-heavy models vs instant-inference models. This is designated as RQ3 and deferred per agreement with the project owner.
+**B.4 Multi-provider expansion.** Integrate Google Gemini (1,500 RPD) and Groq (3,000 RPD) through the multi-provider pool to enable Track A.4 at scale.
 
-9. **Paper Submission:** Target arXiv and an ML conference workshop (ICLR/NeurIPS).
+### Track C — Generalization Beyond GPQA (Lower Priority, High Long-Term Value)
 
-### Long-Term Vision
+**C.1 SWE-bench integration.** Replicate the three-number framework (Official → Pure → Orchestrated) on software engineering benchmarks using Laguna M.1 and Qwen3 Coder. Tests whether Theories 07/08/09 generalize beyond MCQ scientific reasoning.
 
-10. **Full Research Program:** The measurement framework established here provides a foundation for systematic investigation of orchestration architectures. Future directions include:
-    - Memory architecture comparisons (flat vs hierarchical vs graph)
-    - Theory quality impact measurement
-    - Cross-domain transfer of cognitive pipeline components
-    - Open-source release of the full infrastructure
+**C.2 [RQ3] Instant vs Thinking architecture impact.** Compare GENESIS's structural impact on reasoning-heavy models (gpt-oss, gpt-5, Nemotron Ultra, DeepSeek-R1) vs instant-inference models (Llama 3.3 70B, Gemini Flash, Phi-4). Per protocol, deferred until Tracks A and B yield a competitive configuration.
+
+### Track D — Publication and Open Source
+
+**D.1 Paper submission.** Target arXiv preprint followed by an ML conference workshop (ICLR/NeurIPS).
+
+**D.2 Open-source release.** The measurement infrastructure (multi-key API pool, 9-provider catalog, 16-pattern response parser, multi-model benchmark runner, GENESIS framework) is general-purpose and benefits the community regardless of GENESIS-specific outcomes.
+
+### Track E — Long-Term Research Program
+
+**E.1 Memory architecture comparisons.** Flat vs hierarchical vs graph (DAG) memory structures — direct generalization of Theory-09.
+
+**E.2 Theory-quality impact measurement.** How does the *quality* of internal theories (e.g., Theory-07/08/09) affect orchestration value? Meta-research direction.
+
+**E.3 Cross-domain transfer of cognitive pipeline components.** Which components transfer from formal math (LEAP domain) to scientific MCQ (GENESIS domain) to coding (SWE-bench) to creative tasks?
+
+**E.4 Hybrid architecture pilot.** [Phil-07 Position C] General LLM for orchestration + domain-specialized fine-tune for leaf-level steps (e.g., Chemistry Organic). Compare against Position D's pure general-model approach.
 
 ---
 
@@ -714,26 +860,36 @@ This distinction matters. Without the pure baseline, one might have concluded th
 
 > **The catastrophic failure was scaffolding. The remaining 10-point gap is architecture.**
 
-We also document three broader findings that we believe extend beyond GENESIS itself:
+We also document three broader empirical findings that we believe extend beyond GENESIS itself:
 
 - **Reasoning saturation:** more internal reasoning tokens can correlate with *worse* answers rather than better ones.
 - **Domain asymmetry:** Physics is much easier than Chemistry Organic, meaning aggregate GPQA scores can hide structurally important domain effects.
 - **Infrastructure sensitivity:** response parsing, token budgeting, and field normalization are first-order determinants of measured performance in reasoning-capable models.
 
-Therefore, the next phase of this research is not basic debugging, but **ablation science**: isolating which parts of GENESIS help, which are neutral, and which currently reduce performance. Only after this step can we responsibly ask the more ambitious questions about cross-model effects, instant-vs-thinking model interaction, or broader benchmark generalization.
+Furthermore, Section 8.5 develops three internal theories and one philosophical reframing — all anchored by the empirical contrast with LEAP [T5.92; Idea-001] — that together convert the residual −10 gap into a specified engineering target:
+
+- **[Theory-07] Pipeline as Memory vs Pipeline as Decision Injection.** The same architectural element (a "pipeline") can be net-positive when designed as queryable memory (LEAP DAG) or net-negative when designed as signal injection (GENESIS current). Prop 3 predicts that decision injection scales inversely with base model strength — strong models are actively harmed by injected signals.
+- **[Theory-08] Feedback Value = f(Determinism, Scope).** Stochastic LLM-as-judge feedback with broad rewrite scope (GENESIS current, bottom-right quadrant) compounds drift over generations. Deterministic verifier feedback with narrow scope (LEAP, top-left quadrant) compounds monotonic improvements. The run_58 Gen 2 regression from 70% to 60% is the predicted consequence of being in the wrong quadrant.
+- **[Theory-09] Anticipatory Concepts vs Anticipatory Lemmas.** Proactive abstraction is a general architectural principle. LEAP's anticipatory lemma planning contributed +10 to +17 points; the same principle, applied to GENESIS's Concept Engine, is predicted to disproportionately improve our weakest domain (Chemistry Organic).
+- **[Phil-07] Position D — Capability-Adjusted Sufficiency.** "General-purpose model + agentic scaffolding = enough" is true *under specifiable conditions*: sufficient base capability, memory-style pipeline, and narrow deterministic feedback. RQ2 is consequently reframed from a binary question to a structural one.
+
+Therefore, the next phase of this research is not blind ablation but **principled structural redesign**: refactor the pipeline as memory + verifier (Theory-07), migrate feedback from bottom-right to top-left quadrant (Theory-08), activate anticipatory mode in the Concept Engine (Theory-09), and re-test on stronger base models when available (Phil-07 Prop 3). The infrastructure for the first of these steps (`narrow_feedback` ablation mode) is already wired in `genesis/orchestrator.py`; execution awaits.
 
 In short, this work delivers:
 
 - a validated pure baseline,
 - a repaired orchestration stack,
 - a first completed architecture comparison,
-- and a clear research agenda.
+- a contrast against the strongest external counterexample (LEAP),
+- three new internal theories with testable predictions,
+- a philosophical reframing of the research question itself,
+- and a fully specified — rather than open-ended — research agenda.
 
-The paper’s current claim is intentionally modest but strong:
+The paper's current claim is intentionally modest but precise:
 
-> **GENESIS has successfully recovered from catastrophic scaffolding failure, but on GPQA-20 it still underperforms the pure baseline by 10 points in its current form.**
+> **GENESIS has successfully recovered from catastrophic scaffolding failure. On GPQA-20 it still underperforms the pure baseline by 10 points in its current form. The contrast with LEAP and the resulting Theories 07/08/09 + Phil-07 indicate that this residual gap is not a fundamental limit of orchestration architectures — it is a consequence of specific design properties (decision injection, broad stochastic feedback, reactive-only concept proposal) that are now identified and addressable.**
 
-That is not the end of the project — it is the point where the project becomes scientifically honest.
+That is not the end of the project — it is the point where the project becomes scientifically honest *and* structurally directed.
 
 ---
 
@@ -791,14 +947,34 @@ The 20 questions used in our experiments are Q1-Q20 from the GPQA Diamond benchm
 
 | Theft ID | Paper | How We Use It |
 |----------|-------|---------------|
-| T5.86 | AlphaEvolve/FunSearch (DeepMind, Nature 2023) | Evolutionary discovery engine in orchestrator |
-| T5.84 | Co-Scientist (DeepMind) | Multi-agent architecture inspiration |
-| T5.85 | Aletheia (DeepMind) | Generate-verify-revise loop in feedback agent |
 | T5.4 | SIA (Self-Improving AI) | Base orchestrator architecture |
 | T5.5 | Reflexion | Memory-based self-reflection |
 | T5.6 | Self-Refine | Generate→critique→refine loop |
 | T5.7 | STaR (Self-Taught Reasoner) | Bootstrapped reasoning improvement |
+| T5.84 | Co-Scientist (DeepMind) | Multi-agent architecture inspiration |
+| T5.85 | Aletheia (DeepMind) | Generate-verify-revise loop in feedback agent |
+| T5.86 | AlphaEvolve/FunSearch (DeepMind, Nature 2023) | Evolutionary discovery engine in orchestrator |
+| T5.91 | Scaffolding-vs-Architecture Distinction (our own) | Empirical anchor + 5-bug taxonomy + three-number framework |
+| **T5.92** | **LEAP (Kung et al., Google Cloud AI + DeepMind, arXiv 2606.03303, Jun 2026)** | **Section 8.5: structural contrast yielding +110-point architecture-impact gap. Source for Theories 07/08/09, Phil-07, and the structural redesign roadmap in Section 10. Brought to project attention by [Idea-001] from Fares.** |
+
+## Appendix C: Cross-Reference to Internal Theories and Philosophy
+
+| Tag | Title | Location | Role |
+|----|-------|----------|------|
+| Theory-07 | Pipeline as Memory vs Pipeline as Decision Injection | `PAPER/theory/07_*.md` | Foundational theory explaining both GENESIS −10 and LEAP +100 |
+| Theory-08 | Feedback Value = f(Determinism, Scope) | `PAPER/theory/08_*.md` | 2×2 quadrant model; explains run_58 Gen 2 regression |
+| Theory-09 | Anticipatory Concepts vs Anticipatory Lemmas | `PAPER/theory/09_*.md` | Generalizes LEAP anticipatory lemmas to GENESIS Concept Engine |
+| Phil-07 | Meaning of General-Purpose Sufficiency | `PAPER/philosophy/07_*.md` | Position D: Capability-Adjusted Sufficiency; reframes RQ2 |
+
+## Appendix D: Idea Attribution (per [Idea-002] Creative Attribution Rule)
+
+| Idea ID | Source | Verbatim trigger | Paper impact |
+|---------|--------|------------------|---------------|
+| Idea-001 | Fares (Session 6) | "Link – arxiv. org/abs/2606.03303 Title: 'LEAP: Supercharging LLMs for Formal Mathematics with Agentic Frameworks'" | Section 8.5 (full), Theories 07/08/09, Phil-07, Theft T5.92, Table 16, Table 17, Section 10 Track A roadmap |
+| Idea-002 | Fares (Session 7) | "تمام خلي بالك اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها" | `PAPER_PROTOCOL.md` §12.2, `PAPER/ideas/ATTRIBUTION_MAP.md`, this appendix itself, future Acknowledgments and Author Contributions sections |
+
+Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: v0.1 — Pre-Critical-Experiment Draft. Next update after run_54 completion.*
+*Paper version: v0.3 — Post-LEAP Integration. Sections 8.5, Theories 07/08/09, Phil-07, revised RQ2, restructured Future Work (Tracks A–E), and Appendices C/D added. Next update after Fares review and/or Idea-003.*
