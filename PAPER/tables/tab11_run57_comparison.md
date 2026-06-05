@@ -12,7 +12,7 @@
 
 ## Wrong question IDs
 
-- **Pure baseline wrong:** Q2, Q11, Q16, Q18, Q19
+- **Pure baseline wrong:** Q2, Q7, Q11, Q16, Q18
 - **GENESIS Gen 1 wrong:** Q2, Q9, Q11, Q13, Q16, Q18, Q19
 - **GENESIS Gen 2 wrong:** Q8, Q9, Q11, Q13, Q16, Q18, Q19
 

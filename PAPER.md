@@ -439,7 +439,30 @@ Architecture gap: −10.00 points
 - The post-fix architecture is **still below the pure baseline** (65.0% vs 75.0%), meaning the current orchestration stack introduces overhead or decision dilution rather than measurable gain on this subset.
 - Generation 2 does **not** improve aggregate accuracy over Generation 1. It trades one corrected Chemistry question (Q2) for one newly wrong Biology question (Q8), indicating that the feedback loop is currently producing lateral variation rather than net gain.
 
-### 6.5 Nemotron 3 Nano vs gpt-oss-120b Comparison
+### 6.5 Question-by-Question Delta Pattern
+
+A more informative analysis than aggregate accuracy is to ask: **where exactly does GENESIS help, and where does it hurt, relative to the pure baseline?**
+
+The answer is highly structured rather than uniform:
+
+- **Stable wins across all systems:** 11/20 questions
+- **Persistent failures across all systems:** 3/20 questions
+- **Architecture gains:** 1 question in Gen 1, 2 questions in Gen 2
+- **Architecture losses:** 3 questions in Gen 1, 4 questions in Gen 2
+
+The losses are concentrated primarily in **Chemistry Organic**:
+
+- Q9
+- Q13
+- Q19
+
+while the main stable architecture gain appears on a Physics question (Q7), with one additional Chemistry recovery (Q2) appearing only after feedback in Generation 2.
+
+This means the current architecture gap is not “general weakness”; it is a **localized pattern of preserved Physics + damaged Chemistry**.
+
+See `PAPER/tables/tab12_question_delta_analysis.md` and `PAPER/figures/fig09_question_delta_map.md` for the full question-level breakdown.
+
+### 6.6 Nemotron 3 Nano vs gpt-oss-120b Comparison
 
 ```
 Model              Accuracy  Invalid  Physics   Chemistry  Biology

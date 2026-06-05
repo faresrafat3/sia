@@ -1,8 +1,8 @@
 # 🔴 TODO — أولويات حرجة
 
 1. **[ABLATION]** تفسير فجوة `−10.0 points` بين `pure_final=75%` و `run_57=65%`
-  - قارن answers question-by-question
-  - حدّد أين architecture أضرت وأين ساعدت
+  - ✅ تم إنجاز question-by-question delta analysis
+  - التالي: isolate likely causes عملياً
   - افصل بين pipeline overhead و feedback drift و constitutional pressure
 
 2. **[PAPER]** تحديث PAPER.md بالكامل بنتيجة `run_57`
