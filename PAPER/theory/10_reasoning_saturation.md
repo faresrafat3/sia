@@ -3,7 +3,10 @@
 **Source:** Agent-initiated synthesis of Empirical Discovery #1 + external literature
 **Related ideas:** [Idea-001] (LEAP — confirmed domain-asymmetry pattern), [Idea-002] (Attribution Rule)
 **Related findings:** Empirical Discovery #1 (reasoning saturation), Empirical Discovery #3 (empty content, 35%)
-**External literature:** Wu et al. 2025 (arXiv:2502.07266); UVA-Google DTR paper (arXiv:2602.13517); Chen et al. 2024b (overthinking in o1); Su et al. 2025 (thinking-content compensation, arXiv:2508.17627); OptimalThinkingBench (arXiv:2508.13141); "When More Thinking Hurts" (arXiv:2604.10739)
+**External literature (anchored as full thefts after Session 10):**
+- **T5.93** — Wu et al. 2025 (arXiv:2502.07266) — formal inverted-U + scaling laws. See `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md`.
+- **T5.94** — Chen et al. 2026 (UVA + Google, arXiv:2602.13517) — DTR + Think@n on same model family + GPQA-Diamond. See `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md`.
+- Supplementary citations: Chen et al. 2024b (overthinking in o1); Su et al. 2025 (thinking-content compensation, arXiv:2508.17627); OptimalThinkingBench (arXiv:2508.13141); "When More Thinking Hurts" (arXiv:2604.10739).
 **Status:** Draft Theory v1.0
 **Tag:** `[Theory-10]`
 

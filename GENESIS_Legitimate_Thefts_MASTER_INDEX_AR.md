@@ -4,7 +4,7 @@
 > Document Type: Master Theft Registry (Single Source of Truth)
 > Status: Authoritative / Living Document
 > Date: 2026-06-04
-> Scope: يجمع كل السرقات الشرعية (5.1–5.92 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
+> Scope: يجمع كل السرقات الشرعية (5.1–5.94 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
 > Total: 89 سرقة بحثية + 13 سرقة كلاسيكية = **102 سرقة موثقة**
 
 ---
@@ -35,7 +35,7 @@
 
 ---
 
-## 1) الجدول الرئيسي — السرقات البحثية (5.1–5.92)
+## 1) الجدول الرئيسي — السرقات البحثية (5.1–5.94)
 
 ### الموجة التأسيسية (5.1–5.23) — من Master Architecture
 
@@ -62,6 +62,8 @@
 | 5.90 | **Real GPQA Benchmark Results + Evo Lift (run_53 successful execution)** | First real accuracy on graduate-level GPQA: Gen1 30.30% (60/198 correct), Gen2 32.32% (64/198, +2% lift from feedback/evo). 0 missing/invalid (finder picked answers.json correctly). Constitutional 0/10 → 5/10. All 198 questions processed per-gen. Evo fitness 0.800 (proxy). LLM summary notes refactoring + _get helper + better data loading. | Updated theft memo (5.90 section), MASTER_INDEX, STRATEGIC. Evidence: full run log + evaluation_results.json (per-domain lifts in Biology 36.8%→42.1%). Proves thefts (5.84-5.90) deliver genuine reasoning lift vs 98.6% keyword baseline. | 🟢🟢 (run completed successfully; real metrics achieved; lift measured) |
 | 5.91 | **Scaffolding-vs-Architecture Distinction + 5-Bugs Taxonomy (post-fix re-measurement, run_57 + run_58)** | After diagnosing run_53 (30.30%) we proved the gap was entirely scaffolding (case mismatch in JSON keys, max_tokens=50, anti-CoT prompting, no reasoning fallback, silent default-to-A). Pure baseline = 75% confirmed. Post-fix GENESIS = 65% (run_57). A3 ablation (no_pipeline) = 70% (run_58 Gen1). Established "three-number framework" (Official → Pure → Orchestrated) as paper-grade methodology. | `genesis/llm_helpers.py` (220 lines, battle-tested), updated META + FEEDBACK prompts, 463/463 tests, full paper write-up in `PAPER.md` v0.2 + 10 figures + delta analysis tables. Evidence: ~44.7 points recovered by scaffolding fixes alone. | 🟢🟢 (full empirical anchor + theoretical framework established) |
 | 5.92 | **LEAP Agentic Framework for Formal Math (DeepMind + Google Cloud AI, Jun 2026, arXiv 2606.03303)** [Idea-001] | Blueprint-driven DAG decomposition for goal-oriented LLM agents: AND-OR DAG memoization, anticipatory lemma planning, interleaved informal-formal planning, two-level verification (deterministic + LLM reviewer), state reader/writer pattern. Proves orchestration can add **+100 points** on same base model (Gemini-3.1-Pro: 0% → 100% on Putnam 2025) — direct evidence for our RQ2. Also confirms: specialized models DON'T benefit from iteration (10%→6.6%) while general models do (20%→36.6%). | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (detailed 2026 theft) → Theory-07 (Pipeline as Memory vs Decision Injection), Theory-08 (Feedback Value = f(Determinism, Scope)), Theory-09 (Anticipatory Concepts vs Lemmas), Phil-07 (general-purpose sufficiency), PAPER Section 8.5 (Contrast with LEAP), Table 16, Figure 11. Refactor plan for orchestrator (DAG mode) + Concept Engine (anticipatory proposer) + LLM Reviewer. | 🟢 (detailed theft + integration plan + paper integration plan ready; pending execution) |
+| 5.93 | **When More is Less — Inverted-U Scaling Laws of CoT Length (Wu et al., arXiv:2502.07266, Feb-May 2025)** [Agent-initiated, Session 9-10] | Formal theoretical proof of inverted-U relationship between CoT length and accuracy. Closed-form optimal length $N_{opt} = T \cdot Z / [M(Z+1)]$ via Lambert W function. Empirical: optimal length drops from 14 steps (1.5B model) to 4 steps (72B); 40-point accuracy gap between optimal and longest CoT on 72B; difficulty-vs-optimal correlation p=1e-8. Simplicity bias proved as emergent in RL training. Length-aware Vote = inference-time filter. | `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md` (Cycle 8 memo, Session 10) → Theory-10 axioms 1+4 promoted from intuition to formal proof; Track A.5 (max_tokens sweep + per-domain length table + length-aware vote in AlphaEvolve); Cognitive Economy ledger refinement. | 🟢 (full theft memo + Theory-10 promotion + integration plan ready) |
+| 5.94 | **Think Deep, Not Just Long — Deep-Thinking Tokens (Chen, Peng, Tan, Zhao, Chen, Lin, Go, Meng — UVA + Google, arXiv:2602.13517, Feb 2026)** [Agent-initiated, Session 9-10] | Deep Thinking Ratio (DTR) via Jensen-Shannon Divergence of intermediate hidden-layer distributions. Empirical anchor closest to our setup: tested **GPT-OSS, DeepSeek-R1, Qwen3** on **GPQA-Diamond** + AIME 24/25 + HMMT 25. Length-vs-accuracy r=-0.54 (negative, replicates our run_57 observation); DTR-vs-accuracy r=+0.683 (better predictor). Think@n strategy: sample N → DTR proxy on first 50 tokens → top-50% kept → vote. GPT-OSS-120B AIME 2025: 92.7% (standard) → 94.7% (Think@n) at ~50% less compute. | `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md` (Cycle 8 memo, Session 10) → Theory-10 Prop 5 (DTR early termination) gains primary empirical anchor; Track A.5.d/e/f (proxy DTR on run_57 logs + Think@n implementation in target_agent + DTR-weighted AlphaEvolve evaluator); Cognitive Economy: cost = deep_thinking × value + filler × overhead. | 🟢 (full theft memo + closest-to-our-setup empirical replication + practical integration plan ready) |
 | 5.13 | **AutoTTS** ([arxiv](https://arxiv.org/abs/2605.08083)) | ابنِ environment يكتشف heuristics | Replay Research Lab | 🟡 |
 | 5.14 | **Mem0** ([arxiv](https://arxiv.org/pdf/2504.19413)) | memory ops: add/update/delete/noop | explicit memory operations | 🟢 |
 | 5.15 | **MemOS** ([arxiv](https://arxiv.org/html/2505.22101v1)) | memory as managed resource + lifecycle | Memory OS core plane | 🟢 |
@@ -268,6 +270,8 @@
 - `GENESIS_DeepMind_CoScientist_Theft_AR.md` (5.85)
 - `GENESIS_DeepMind_Aletheia_Theft_AR.md` (5.86)
 - `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (5.92) — [Idea-001 from Fares]
+- `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md` (5.93) — [Agent-initiated, Session 9-10 under "القرار عندك" delegation]
+- `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md` (5.94) — [Agent-initiated, Session 9-10 under "القرار عندك" delegation]
 
 ---
 
@@ -285,6 +289,7 @@
 | 5.84–5.90 | **DeepMind Science Thefts (AlphaEvolve + Co-Scientist + Aletheia) + Robust Evo Code Gen + Submission/Eval Integration** | `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md` (5.84 + 5.87-5.89), `GENESIS_DeepMind_CoScientist_Theft_AR.md`, `GENESIS_DeepMind_Aletheia_Theft_AR.md` (Cycle 6 memos) + prompt robustness + evaluate integration in orchestrator (run_49/52/53 evidence) |
 | 5.91 | **Scaffolding-vs-Architecture Distinction + 5-Bugs Taxonomy** | `genesis/llm_helpers.py` + updated orchestrator prompts + `PAPER.md` v0.2 (full empirical anchor: pure=75%, GENESIS=65%, A3=70%) |
 | 5.92 | **LEAP (DeepMind Agentic Framework for Formal Math)** [Idea-001] | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (Cycle 7 memo) — paper arXiv 2606.03303, Google Cloud AI + DeepMind, Jun 2026. Source proposed by Fares [Idea-001] under [Idea-002] Creative Attribution Rule. |
+| 5.93–5.94 | **External Reasoning-Saturation Thefts (Cycle 8)** [Agent-initiated, Session 9-10] | `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md` (Wu et al., arXiv:2502.07266, formal inverted-U + scaling laws) + `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md` (Chen et al. UVA + Google, arXiv:2602.13517, DTR + Think@n on **same model family + GPQA**). Both anchor Theory-10. Per [Idea-002], agent-initiated work under Fares "القرار عندك" delegation in Sessions 9 & 10; transparently disclosed in `PAPER.md` Appendix D §D.2 + `PAPER/ideas/ATTRIBUTION_MAP.md` "Agent-Initiated Synthesis". |
 
 > كل هذه السرقات موثّقة بالتفصيل الكامل (ما أُخذ / ما تُرك / ما أصبح) في وثائقها الأصلية المذكورة
 > في §6، ومُلخّصة في الجداول أعلاه (§1).

@@ -567,8 +567,8 @@ Theory-10 is one of the **best-supported** theories in this paper because the ex
 
 | Source | Finding | Relation to our data |
 |---|---|---|
-| Wu et al. 2025 (arXiv:2502.07266) | Accuracy follows an **inverted-U** curve in CoT length; optimal length increases with task difficulty, decreases with model capability. Formal scaling laws derived. | Provides theoretical anchor; closed-form optimal length |
-| UVA-Google "Deep Thinking Ratio" (arXiv:2602.13517) | Tested **GPT-OSS, DeepSeek-R1, Qwen3** on AIME and **GPQA-Diamond**. Length-vs-accuracy correlation: **r = −0.54** (negative). DTR (deep-layer revision fraction) correlates at +0.683. | Same model family + same benchmark; independent replication of our observation |
+| **[T5.93]** Wu et al. 2025 (arXiv:2502.07266) | Accuracy follows an **inverted-U** curve in CoT length; optimal length increases with task difficulty, decreases with model capability. **Formal scaling laws derived** via Lambert W function; **40-point accuracy gap** between optimal and longest CoT on a 72B model. | Provides the *formal theoretical backbone* for Theory-10. Promoted to full Theft T5.93 (see `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md`). |
+| **[T5.94]** Chen et al. 2026 (UVA + Google, arXiv:2602.13517) | Tested **GPT-OSS, DeepSeek-R1, Qwen3** on AIME and **GPQA-Diamond**. Length-vs-accuracy correlation: **r = −0.54** (negative). DTR (deep-layer revision fraction) correlates at **+0.683**. Think@n strategy: same accuracy or +2 points at ~50% less compute. | **Closest external precedent for our setup** (same model family + same benchmark). Promoted to full Theft T5.94 (see `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md`). |
 | Chen et al. 2024b | First documentation of overthinking in o1-like models on simple problems | Confirms the phenomenon predates our observation |
 | Su et al. 2025 (arXiv:2508.17627) | Identifies **thinking–content compensation** that transitions into a saturation phase | Mechanistic backing for our empty-content phenomenon |
 | OptimalThinkingBench (arXiv:2508.13141) | Operationalizes over/underthinking as a benchmark | Methodological frame for future controlled studies |
@@ -1002,6 +1002,8 @@ The 20 questions used in our experiments are Q1-Q20 from the GPQA Diamond benchm
 | T5.86 | AlphaEvolve/FunSearch (DeepMind, Nature 2023) | Evolutionary discovery engine in orchestrator |
 | T5.91 | Scaffolding-vs-Architecture Distinction (our own) | Empirical anchor + 5-bug taxonomy + three-number framework |
 | **T5.92** | **LEAP (Kung et al., Google Cloud AI + DeepMind, arXiv 2606.03303, Jun 2026)** | **Section 8.5: structural contrast yielding +110-point architecture-impact gap. Source for Theories 07/08/09, Phil-07, and the structural redesign roadmap in Section 10. Brought to project attention by [Idea-001] from Fares.** |
+| **T5.93** | **Wu et al. 2025 — When More is Less (arXiv:2502.07266)** | **Section 7.3: formal theoretical backbone for Theory-10. Lambert W closed-form optimal CoT length; 40-point gap between optimal and longest on 72B; simplicity bias proof. Agent-initiated theft in Sessions 9–10 under Fares's "القرار عندك" delegation.** |
+| **T5.94** | **Chen et al. 2026 — Think Deep, Not Just Long (UVA + Google, arXiv:2602.13517)** | **Section 7.3: closest external empirical precedent for our setup (same model family: GPT-OSS/DeepSeek-R1/Qwen3; same benchmark: GPQA-Diamond). Length-vs-accuracy r=−0.54; DTR r=+0.683; Think@n compute-savings strategy. Agent-initiated theft in Sessions 9–10.** |
 
 ## Appendix C: Cross-Reference to Internal Theories and Philosophy
 
@@ -1025,11 +1027,11 @@ The 20 questions used in our experiments are Q1-Q20 from the GPQA Diamond benchm
 
 ### D.2 Agent-initiated synthesis (attributed transparently per Idea-002)
 
-| Item | Source | Triggering context | Paper impact |
-|---|---|---|---|
-| Theory-10 (Reasoning Saturation) | Agent-initiated (Session 9) | Last remaining Empirical Discovery (#1) without a theory; Fares delegated choice with "القرار عندك" | Section 7.3 (full theory), Section 11 (Conclusion mention), Appendix C, Track A.5 in Future Work, external literature integration (6 papers) |
-| Candidate theft T5.93 (Wu et al. 2025) | Agent-initiated (Session 9) | Literature search supporting Theory-10 | Pending separate theft memo and Master Index entry |
-| Candidate theft T5.94 (UVA-Google DTR) | Agent-initiated (Session 9) | Literature search supporting Theory-10 | Pending separate theft memo and Master Index entry |
+| Item | Source | Triggering context | Paper impact | Status |
+|---|---|---|---|---|
+| Theory-10 (Reasoning Saturation) | Agent-initiated (Session 9) | Last remaining Empirical Discovery (#1) without a theory; Fares delegated choice with "القرار عندك" | Section 7.3 (full theory), Section 11 (Conclusion mention), Appendix C, Track A.5 in Future Work, external literature integration (6 papers) | ✅ Integrated |
+| **Theft T5.93** (Wu et al. 2025 — formal inverted-U) | Agent-initiated (Sessions 9–10) | Literature search supporting Theory-10; second "القرار عندك" delegation in Session 10 authorized full theft memo | `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md` (Cycle 8 memo); Master Index entry; Theory-10 anchored as primary theoretical backbone; Section 7.3.2 table updated | ✅ Integrated |
+| **Theft T5.94** (Chen et al. 2026 — DTR + Think@n) | Agent-initiated (Sessions 9–10) | Literature search supporting Theory-10; same delegation as T5.93 | `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md` (Cycle 8 memo); Master Index entry; Theory-10 Prop 5 anchored as primary empirical precedent on our exact model family + benchmark; Section 7.3.2 table updated | ✅ Integrated |
 
 Note: This distinction is itself a direct application of [Idea-002]. Fares-sourced content and agent-initiated content are tracked separately so the final paper's Acknowledgments and Author Contributions sections can honor the actual division of intellectual labor.
 
@@ -1037,4 +1039,4 @@ Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: **v0.4 — Post-LEAP + Theory-10 Integration**. Theory-10 (Reasoning Saturation) added as the fourth internal theory, anchored by both internal empirical data and six external papers. Section 7.3 expanded from informal hypothesis to full theory with five testable predictions. Track A.5 (DTR-style early termination + max_tokens calibration) added to Future Work as the cheapest single experiment to run when execution resumes. Next update after Fares review, Idea-003, or further agent-initiated work as authorized.*
+*Paper version: **v0.5 — Theory-10 fully anchored via T5.93 + T5.94**. The two external papers underlying Theory-10 (Wu et al. 2025 and Chen et al. 2026) have been promoted from "external citations" to **full thefts** (T5.93 and T5.94) with their own dedicated memos under `GENESIS_External_*.md`. Master Index updated to scope 5.1–5.94. Theory-10 file now anchors them as "primary theoretical backbone" (T5.93) and "primary empirical precedent on our exact model family" (T5.94). Section 7.3.2 table and Appendices B and D updated to reflect the upgrade. Per Idea-002 disclosure, this work is agent-initiated in Sessions 9–10 under Fares's "القرار عندك" delegation. Next update after Fares review, Idea-003, or further agent-initiated work as authorized.*

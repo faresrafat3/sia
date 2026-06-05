@@ -94,16 +94,14 @@
 
 > **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
 
-### Session 9 agent-initiated work
+### Session 9 + Session 10 agent-initiated work
 
 | Item | Triggering context | Paper impact | Status |
 |---|---|---|---|
-| **Theory-10 (Reasoning Saturation)** | Fares delegation ("القرار عندك") + last untheorized Empirical Discovery (#1) | `PAPER/theory/10_*.md` (full theory, 14 sections); Section 7.3 expanded from placeholder to full theory; §1.5 Contributions item 7 added; §11 Conclusion mention; Appendix C row; Track A.5 added to Future Work | ✅ Integrated |
-| **Literature anchor: Wu et al. 2025** | Search to support Theory-10 | Cited in §7.3.2, Theory-10 Axiom 1 & 4, Future Work | ✅ Cited (no theft memo yet) |
-| **Literature anchor: UVA-Google DTR** | Search to support Theory-10 | Cited in §7.3.2 (r=-0.54 on same model family); Track A.5 DTR-style termination | ✅ Cited (no theft memo yet) |
-| **Literature anchor: 4 more papers** | Search to support Theory-10 | Chen 2024b, Su 2025, OptimalThinkingBench, "When More Thinking Hurts" all cited in §7.3.2 | ✅ Cited |
-| **Candidate Theft T5.93 (Wu et al.)** | Agent recommendation | Master Index entry pending Fares approval | ⏳ Proposed, awaiting decision |
-| **Candidate Theft T5.94 (UVA-Google DTR)** | Agent recommendation | Master Index entry pending Fares approval | ⏳ Proposed, awaiting decision |
+| **Theory-10 (Reasoning Saturation)** | Session 9 Fares delegation ("القرار عندك") + last untheorized Empirical Discovery (#1) | `PAPER/theory/10_*.md` (full theory, 14 sections); Section 7.3 expanded from placeholder to full theory; §1.5 Contributions item 7 added; §11 Conclusion mention; Appendix C row; Track A.5 added to Future Work | ✅ Integrated (Session 9) |
+| **Theft T5.93** (Wu et al. 2025 — When More is Less) | Session 10 Fares delegation ("القرار عندك") on T5.93/T5.94 priority | `GENESIS_External_Inverted_U_Wu2025_Theft_AR.md` (full Cycle 8 memo); Master Index scope 5.1-5.94 + entry; Theory-10 external literature section promotes Wu to T5.93 anchor; PAPER.md §7.3.2 table + Appendix B + Appendix D updated; PAPER version v0.5 | ✅ Integrated (Session 10) |
+| **Theft T5.94** (Chen et al. 2026 — Think Deep, Not Just Long, UVA + Google) | Session 10 Fares delegation (same as T5.93) | `GENESIS_External_DTR_ChenMeng2026_Theft_AR.md` (full Cycle 8 memo); Master Index entry; Theory-10 external literature section promotes DTR to T5.94 anchor; PAPER.md §7.3.2 table + Appendix B + Appendix D updated; closest external precedent for our exact setup (GPT-OSS + GPQA-Diamond) | ✅ Integrated (Session 10) |
+| **Supplementary literature anchors** | Search to support Theory-10 | Chen 2024b, Su 2025, OptimalThinkingBench, "When More Thinking Hurts" — remain as citations (not full thefts) in §7.3.2 supplementary row | ✅ Cited as supporting evidence |
 
 ---
 
@@ -114,6 +112,8 @@
 | 001 | LEAP integration | Fares (Session 6) | CORE | 10+ (theft + 3 theories + 1 philosophy + index + Section 8.5 + 2 figures + 2 tables + future work + appendices) |
 | 002 | Creative Attribution Rule | Fares (Session 7) | META-CORE | 5 (protocol §12.2 + map + proof + Appendix D + agent-initiated disclosure) |
 | Theory-10 | Reasoning Saturation | Agent-initiated (Session 9, Fares-authorized) | MAJOR | 3 (full theory file + Section 7.3 expansion + Appendix C/D rows + 6 external citations) |
+| T5.93 | Wu et al. — Inverted-U + scaling laws | Agent-initiated (Session 10, Fares-authorized) | MAJOR | 3 (Cycle 8 theft memo + Master Index entry + Theory-10 promotion to "primary theoretical backbone" + PAPER §7.3.2/Appendix B/D updates) |
+| T5.94 | Chen et al. — DTR + Think@n (UVA + Google) | Agent-initiated (Session 10, Fares-authorized) | MAJOR | 3 (Cycle 8 theft memo + Master Index entry + Theory-10 promotion to "closest external precedent" + PAPER §7.3.2/Appendix B/D updates) |
 
 ---
 
