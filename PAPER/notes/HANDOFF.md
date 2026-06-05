@@ -46,41 +46,69 @@
 
 ---
 
-## 🆕 الجديد في Session 6 (v2.0 Infrastructure + Idea-001)
+## 🆕 الجديد في Session 7 (Idea-001 Execution + Idea-002 New Rule)
 
-### بنية تحتية فكرية جديدة
-- ✅ `PAPER_PROTOCOL.md` v2.0 — يعكس Theoretical Mode + Ideas/Theory/Philosophy pipelines
-- ✅ `PAPER/ideas/` — bank الأفكار من فارس (INBOX, IN_PROGRESS, INTEGRATED)
-- ✅ `PAPER/theory/` — النظريات اللي تشرح الـ observations (6 placeholders)
-- ✅ `PAPER/philosophy/` — الأسئلة الفلسفية العميقة (6 placeholders)
-- ✅ Citation tags جديدة: `[Idea-NNN]`, `[Theory-NN]`, `[Phil-NN]`
+### Idea-002 — قاعدة نَسب الإبداع (الجديدة من فارس)
 
-### أول فكرة رسمية: Idea-001 (LEAP)
-- ✅ فارس بعت أول فكرة: **arXiv 2606.03303 — LEAP**.
-- ✅ قراءة الورقة كاملة (5 chunks).
-- ✅ ملف تفصيلي بـ 10 sections في `PAPER/ideas/idea_001_leap_agentic_framework_for_formal_math.md`.
-- ✅ تحديد 7 connections مباشرة بـ GENESIS (A–G).
-- ✅ صياغة 5 أسئلة لفارس + 6 اقتراحات للتوسع.
-- ⏳ **في انتظار قرار فارس** على الـ scope.
+**نص فارس:** "تمام خلي بالك اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها"
 
-### لا يوجد runs جديدة في هذه السيشن — بالقصد
+**التطبيق:**
+- ✅ `PAPER_PROTOCOL.md` v2.0 §12.2 — قاعدة فارس الإبداعية رسمياً جزء من العقد.
+- ✅ `PAPER/ideas/ATTRIBUTION_MAP.md` — تتبع تأثير كل فكرة على الورقة.
+- ✅ Citation discipline: كل ملف من الآن يحمل `[Idea-NNN]` tag.
+- ✅ **Idea-002 = proof-of-concept** للقاعدة نفسها.
+
+### Idea-001 — Execution كامل لـ LEAP
+
+تم تنفيذ **5 من 6 suggestions** في idea-001 file §6 (الـ 6th = Future Work entry سيُكتب مع Section 8.5):
+
+| # | Suggestion | الحالة | الملف |
+|---|---|---|---|
+| 1 | سرقة شرعية T5.92 كاملة | ✅ مُنفّذ | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (10 sections) |
+| — | Master Index update | ✅ مُنفّذ | `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md` (T5.91 + T5.92) |
+| 3a | Theory-07 | ✅ مُنفّذ | `PAPER/theory/07_pipeline_as_memory_vs_decision_injection.md` |
+| 3b | Theory-08 | ✅ مُنفّذ | `PAPER/theory/08_feedback_value_determinism_scope.md` |
+| 4 | Theory-09 (Concept Engine ↔ LEAP) | ✅ مُنفّذ | `PAPER/theory/09_anticipatory_concepts_vs_lemmas.md` |
+| 5 | Phil-07 | ✅ مُنفّذ | `PAPER/philosophy/07_meaning_of_general_purpose_sufficiency.md` |
+| 2 | Section 8.5 في PAPER.md | ⏳ مخطط | يحتاج رد فارس |
+| 6 | Future Work entries | ⏳ مخطط | يكتب مع Section 8.5 |
+
+### الـ Key Insight من Session 7
+
+ظهرت **نظرية تأسيسية** (Theory-07) قد تعيد framing لكل الورقة:
+
+> **Pipeline as Memory vs Pipeline as Decision Injection.**
+>
+> الـ pipeline في GENESIS الحالي = injection-based (يضر).
+> الـ pipeline في LEAP = memory-based (يضيف +100).
+>
+> الـ refactor المقترح = تحويل GENESIS pipeline من injection إلى memory + verifier.
+> هذا قد يقفل الـ -10 gap الحالي بل ويتجاوزه.
+
+### لا يوجد runs جديدة — Theoretical Mode محفوظ
 
 ---
 
-## 🎯 Next: في انتظار قرار فارس على Idea-001
+## 🎯 Next: قرارات فارس المعلقة
 
-السؤال المباشر له:
-**أي اقتراح من الـ 6 في `PAPER/ideas/idea_001_*.md` §6 نبدأ به؟**
+### قرار 1 (الأكثر إلحاحاً)
+**هل أكتب Section 8.5 (Contrast with LEAP) في PAPER.md دلوقتي، أم ننتظر review فارس على الـ 3 theories + Phil-07 أولاً؟**
 
-الاقتراحات بالترتيب الموصى به:
-1. **Suggestion 1:** سرقة شرعية كاملة (T5.92) — الأقوى أساسياً.
-2. **Suggestion 2:** قسم 8.5 في الورقة (Contrast with LEAP).
-3. **Suggestion 3:** نظريتان جديدتان (Theory-07, Theory-08).
-4. **Suggestion 4:** ربط Concept Engine بـ anticipatory lemmas.
-5. **Suggestion 5:** Philosophy article Phil-07.
-6. **Suggestion 6:** Future Work entry.
+- **Option A:** أكتب 8.5 على طول (يدمج theories + philosophy في قسم متكامل).
+- **Option B:** ننتظر review من فارس على الـ 4 ملفات الجديدة قبل ما ندمجها في الورقة.
 
-أو فارس يفضل البدء بفكرة Idea-002 جديدة.
+**توصيتي:** Option B — أنت review الـ theories الأول، ولو فيه تعديلات نطبقها قبل دمجها في الورقة.
+
+### قرار 2
+**فيه فكرة Idea-003 جديدة منك؟** الـ INBOX فاضي الآن وجاهز لاستقبال أي:
+- ورقة بحثية جديدة (نفس pattern Idea-001).
+- اقتراح نظري.
+- سؤال فلسفي.
+- إعادة framing.
+- ملاحظة حادة.
+
+### قرار 3 (تذكير)
+الـ runs **محجوزة بالكامل** (Theoretical Mode). لا أقترح runs ما لم تطلب أنت صراحة.
 
 ---
 

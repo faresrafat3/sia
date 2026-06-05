@@ -4,7 +4,7 @@
 > Document Type: Master Theft Registry (Single Source of Truth)
 > Status: Authoritative / Living Document
 > Date: 2026-06-04
-> Scope: يجمع كل السرقات الشرعية (5.1–5.90 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
+> Scope: يجمع كل السرقات الشرعية (5.1–5.92 بحثية + 6.1–6.13 كلاسيكية) في مرجع واحد
 > Total: 89 سرقة بحثية + 13 سرقة كلاسيكية = **102 سرقة موثقة**
 
 ---
@@ -35,7 +35,7 @@
 
 ---
 
-## 1) الجدول الرئيسي — السرقات البحثية (5.1–5.90)
+## 1) الجدول الرئيسي — السرقات البحثية (5.1–5.92)
 
 ### الموجة التأسيسية (5.1–5.23) — من Master Architecture
 
@@ -60,6 +60,8 @@
 | 5.88 | **GPQA-style QA/Reasoning Agent Generation (from run_50 on gpqa, AlphaEvolve evo)** | Explicit GENERAL template for loading JSON questions (diamond_questions.json etc.), per-question pipeline call + client step-by-step reasoning to choose A/B/C/D, robust per-question error handling, and output compatible with evaluate.py. Addresses "No recognizable data files" fallback that caused 0% in first hard benchmark run. | Added dedicated "DEDICATED GUIDANCE FOR Q&A..." section + strengthened FEEDBACK in `genesis/orchestrator.py`; run_50 on gpqa succeeded without crash (constitutional lifted to 5/10 on Gen2), evaluate.py ran and produced results (198 questions), but agent still defaulted to generic path (0% accuracy — expected at this stage). | 🟢 (prompt update pushed; evidence from first real GPQA run with evo) |
 | 5.89 | **Robust Submission Format Discovery + Escaping + Real Eval Integration (from run_52/53 gpqa, AlphaEvolve evo)** | Fix KeyError '"question_id"' in META_PROMPT.format (unescaped JSON examples); improve evaluate.py find_submission_file (prefer answers.json/submission.json, skip execution logs, content-aware); support evaluation_results.json in run_evaluation + evo fitness; strengthen prompts for BOTH files + strict A/B/C/D only + client enforcement. GENERAL for any Q&A/benchmark. Ties real metrics to evo (accuracy_percent). | Updated `genesis/orchestrator.py` (prompts, run_evaluation, evo engine); `genesis/tasks/gpqa/data/public/evaluate.py` (finder); format test passed, ready for real accuracy >0 on gpqa/SWE; run_53+ will pick correct submission. | 🟢 (fixes applied in workspace; evidence from run_52 0% + crash + evaluate.py source analysis; GENERAL protected) |
 | 5.90 | **Real GPQA Benchmark Results + Evo Lift (run_53 successful execution)** | First real accuracy on graduate-level GPQA: Gen1 30.30% (60/198 correct), Gen2 32.32% (64/198, +2% lift from feedback/evo). 0 missing/invalid (finder picked answers.json correctly). Constitutional 0/10 → 5/10. All 198 questions processed per-gen. Evo fitness 0.800 (proxy). LLM summary notes refactoring + _get helper + better data loading. | Updated theft memo (5.90 section), MASTER_INDEX, STRATEGIC. Evidence: full run log + evaluation_results.json (per-domain lifts in Biology 36.8%→42.1%). Proves thefts (5.84-5.90) deliver genuine reasoning lift vs 98.6% keyword baseline. | 🟢🟢 (run completed successfully; real metrics achieved; lift measured) |
+| 5.91 | **Scaffolding-vs-Architecture Distinction + 5-Bugs Taxonomy (post-fix re-measurement, run_57 + run_58)** | After diagnosing run_53 (30.30%) we proved the gap was entirely scaffolding (case mismatch in JSON keys, max_tokens=50, anti-CoT prompting, no reasoning fallback, silent default-to-A). Pure baseline = 75% confirmed. Post-fix GENESIS = 65% (run_57). A3 ablation (no_pipeline) = 70% (run_58 Gen1). Established "three-number framework" (Official → Pure → Orchestrated) as paper-grade methodology. | `genesis/llm_helpers.py` (220 lines, battle-tested), updated META + FEEDBACK prompts, 463/463 tests, full paper write-up in `PAPER.md` v0.2 + 10 figures + delta analysis tables. Evidence: ~44.7 points recovered by scaffolding fixes alone. | 🟢🟢 (full empirical anchor + theoretical framework established) |
+| 5.92 | **LEAP Agentic Framework for Formal Math (DeepMind + Google Cloud AI, Jun 2026, arXiv 2606.03303)** [Idea-001] | Blueprint-driven DAG decomposition for goal-oriented LLM agents: AND-OR DAG memoization, anticipatory lemma planning, interleaved informal-formal planning, two-level verification (deterministic + LLM reviewer), state reader/writer pattern. Proves orchestration can add **+100 points** on same base model (Gemini-3.1-Pro: 0% → 100% on Putnam 2025) — direct evidence for our RQ2. Also confirms: specialized models DON'T benefit from iteration (10%→6.6%) while general models do (20%→36.6%). | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (detailed 2026 theft) → Theory-07 (Pipeline as Memory vs Decision Injection), Theory-08 (Feedback Value = f(Determinism, Scope)), Theory-09 (Anticipatory Concepts vs Lemmas), Phil-07 (general-purpose sufficiency), PAPER Section 8.5 (Contrast with LEAP), Table 16, Figure 11. Refactor plan for orchestrator (DAG mode) + Concept Engine (anticipatory proposer) + LLM Reviewer. | 🟢 (detailed theft + integration plan + paper integration plan ready; pending execution) |
 | 5.13 | **AutoTTS** ([arxiv](https://arxiv.org/abs/2605.08083)) | ابنِ environment يكتشف heuristics | Replay Research Lab | 🟡 |
 | 5.14 | **Mem0** ([arxiv](https://arxiv.org/pdf/2504.19413)) | memory ops: add/update/delete/noop | explicit memory operations | 🟢 |
 | 5.15 | **MemOS** ([arxiv](https://arxiv.org/html/2505.22101v1)) | memory as managed resource + lifecycle | Memory OS core plane | 🟢 |
@@ -265,6 +267,7 @@
 - `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md` (5.84)
 - `GENESIS_DeepMind_CoScientist_Theft_AR.md` (5.85)
 - `GENESIS_DeepMind_Aletheia_Theft_AR.md` (5.86)
+- `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (5.92) — [Idea-001 from Fares]
 
 ---
 
@@ -280,6 +283,8 @@
 | 5.77–5.80 | **Adversarial Validation** | `eval/task_sets/adversarial_hard_cases.py`, `eval/runners/run_adversarial_llm_eval.py` |
 | 5.81–5.83 | **Internal Regime Lock** | `Virtual_SIA_Internal_Regime_Lock_AR.md` |
 | 5.84–5.90 | **DeepMind Science Thefts (AlphaEvolve + Co-Scientist + Aletheia) + Robust Evo Code Gen + Submission/Eval Integration** | `GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md` (5.84 + 5.87-5.89), `GENESIS_DeepMind_CoScientist_Theft_AR.md`, `GENESIS_DeepMind_Aletheia_Theft_AR.md` (Cycle 6 memos) + prompt robustness + evaluate integration in orchestrator (run_49/52/53 evidence) |
+| 5.91 | **Scaffolding-vs-Architecture Distinction + 5-Bugs Taxonomy** | `genesis/llm_helpers.py` + updated orchestrator prompts + `PAPER.md` v0.2 (full empirical anchor: pure=75%, GENESIS=65%, A3=70%) |
+| 5.92 | **LEAP (DeepMind Agentic Framework for Formal Math)** [Idea-001] | `GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md` (Cycle 7 memo) — paper arXiv 2606.03303, Google Cloud AI + DeepMind, Jun 2026. Source proposed by Fares [Idea-001] under [Idea-002] Creative Attribution Rule. |
 
 > كل هذه السرقات موثّقة بالتفصيل الكامل (ما أُخذ / ما تُرك / ما أصبح) في وثائقها الأصلية المذكورة
 > في §6، ومُلخّصة في الجداول أعلاه (§1).

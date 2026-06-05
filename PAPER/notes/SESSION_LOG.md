@@ -320,3 +320,101 @@
 
 - `(pending)`: Idea-001 reception — LEAP arXiv 2606.03303 deep file + 7 connections + 6 expansion proposals.
 
+
+---
+
+## Session 7 — 2026-06-05 (Idea-002 + Full Execution of Idea-001)
+
+**الحالة:** فارس أضاف قاعدة إبداعية جديدة + طلب تنفيذ الـ suggestions في Idea-001.
+
+### نص فارس الافتتاحي
+
+> "تمام خلي بالك اضافه السرقه الشرعيه القويه دي كفكره مني فلو عندك حاجات زي كده ابداعيه باي شكل اعملها تمام ونعم اشتغل"
+
+### ما تم — Track 1: Idea-002 (Creative Attribution Rule)
+
+1. ✅ تسجيل Idea-002 رسمياً في `PAPER/ideas/idea_002_creative_attribution_rule.md`.
+2. ✅ تحديث `PAPER_PROTOCOL.md` بـ §12.2 جديد:
+   - "قاعدة فارس الإبداعية" نص فارس verbatim.
+   - جدول أمثلة لما يُعتبر فكرة إبداعية (8 أنواع).
+   - "Attribution Discipline" — كل فكرة لها traceable trail.
+   - السبب الفلسفي (research ethics + paper submission requirements).
+3. ✅ إنشاء `PAPER/ideas/ATTRIBUTION_MAP.md` لتتبع تأثير كل فكرة.
+
+### ما تم — Track 2: Idea-001 (LEAP) Full Execution
+
+تنفيذ **5 من 6 suggestions** في idea-001 file:
+
+**1) Theft T5.92 كامل (`GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md`):**
+- 10 sections بنفس قالب AlphaEvolve/Co-Scientist/Aletheia thefts.
+- ما أخذناه / ما تركناه / ما أصبح عندنا (تطبيق GENESIS).
+- 7 sub-sections في "ما أصبح عندنا" تشمل: Orchestrator, Concept Engine, Theory Runtime, Memory OS, Verification, Improvement Plane, Hybrid Architecture.
+- 3 مراحل دمج (immediate/medium/long).
+- Cross-links مع T5.84 (AlphaEvolve), T5.85 (Co-Scientist), T5.86 (Aletheia), T5.5 (Reflexion), T5.6 (Self-Refine), T5.7 (STaR).
+- 5 أسئلة بحثية جديدة (Q-LEAP-1 إلى Q-LEAP-5).
+
+**2) Master Index update (`GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md`):**
+- Scope: 5.1-5.92 (بدلاً من 5.90).
+- T5.91 جديد: "Scaffolding-vs-Architecture Distinction + 5-Bugs Taxonomy" (لتسجيل عملنا التجريبي الذاتي).
+- T5.92 جديد: LEAP مع [Idea-001] attribution.
+- Provenance section updated.
+- Sources section updated.
+
+**3) Theory-07 (`PAPER/theory/07_pipeline_as_memory_vs_decision_injection.md`):**
+- نظرية تأسيسية: Pipeline as Memory vs Pipeline as Decision Injection.
+- 3 axioms + 3 propositions + 5 predictions.
+- يفسر كل من GENESIS -10 gap و LEAP +100 gain بنفس framework.
+- Prop 3: Decision Injection Scales Inversely with Base Model Strength (insight جديد).
+
+**4) Theory-08 (`PAPER/theory/08_feedback_value_determinism_scope.md`):**
+- نظرية: Feedback Value = f(Determinism, Scope).
+- 2x2 quadrant model (det. × scope).
+- GENESIS الحالي = Bottom-Right (worst).
+- LEAP = Top-Left (best).
+- Path للـ migration من البقعة الأسوأ للأفضل.
+- يفسر run_58 Gen 2 regression بشكل صريح.
+
+**5) Theory-09 (`PAPER/theory/09_anticipatory_concepts_vs_lemmas.md`):**
+- نظرية: anticipatory abstraction كمبدأ معماري عام.
+- ربط مباشر بـ Concept Engine بتاعنا (LEAP lemmas ≡ GENESIS concepts).
+- Design sketch لـ `anticipatory_mode` في Concept Engine.
+- توقع: قد يرفع Chemistry Organic من 16.7% إلى 50%+ (matching A3).
+
+**6) Phil-07 (`PAPER/philosophy/07_meaning_of_general_purpose_sufficiency.md`):**
+- سؤال فلسفي: ماذا يعني "general-purpose model is sufficient"؟
+- 4 Positions (A, B, C, D) مع pros/cons.
+- موقف الورقة: Position D (Capability-Adjusted Sufficiency).
+- يعيد framing لـ RQ2 من "هل architecture يضيف قيمة؟" إلى "تحت أي conditions؟".
+
+### Notes Updates
+
+- ✅ `PAPER/ideas/INBOX.md` — فاضي (Idea-001 و Idea-002 في IN_PROGRESS).
+- ✅ `PAPER/ideas/IN_PROGRESS.md` — تحديث كامل لـ Idea-001 + Idea-002.
+- ✅ `PAPER/ideas/ATTRIBUTION_MAP.md` — مُحدّث بكل المُنفّذات.
+- ✅ `PAPER/notes/HANDOFF.md` — Session 7 status + قرارات معلقة لفارس.
+- ✅ هذا الإدخال.
+
+### إحصائيات Session 7
+
+| المقياس | العدد |
+|---|---|
+| Ideas جديدة مستلمة | 1 (Idea-002) |
+| Ideas منفذة بالكامل أو جزئياً | 2 (Idea-001 = 5/6 suggestions, Idea-002 = كاملة) |
+| Theft memos جديدة | 1 (T5.92 LEAP) |
+| Theories جديدة | 3 (07, 08, 09) |
+| Philosophy articles جديدة | 1 (Phil-07) |
+| Master Index updates | 1 (scope + 2 entries + provenance + sources) |
+| Protocol updates | 1 (v2.0 §12.2) |
+| Runs | 0 (Theoretical Mode محفوظ) |
+
+### الـ Commit المتوقع
+
+- `(pending)`: Idea-002 + full Idea-001 execution (T5.92 + 3 theories + Phil-07 + Master Index + Attribution Map)
+
+### Open Decision للجلسة الجاية
+
+**Section 8.5 (Contrast with LEAP) في PAPER.md:**
+- Option A: نكتبها الآن (تدمج theories في paper section متكامل).
+- Option B: ننتظر review فارس على الـ 4 ملفات الجديدة قبل دمجها.
+- **توصية:** Option B.
+
