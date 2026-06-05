@@ -1,24 +1,36 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-05 (Session 3 — جاري)  
-**الـ Session التالي:** سيبدأ من هنا
+**آخر تحديث:** 2026-06-05 (Session 3)  
+**آخر commit:** `c62835f`
 
 ---
 
-## ✅ اللي اكتمل في Session 3
+## ✅ المكتمل
 
-- ✅ **PAPER/figures/** — 8 figures مكتملين (fig01–fig08)
-- ✅ **PAPER/tables/tab04** — Per-question results matrix
-- ✅ **PAPER/data/aggregated_results.json** — بيانات مجمعة
-- ✅ **5 Gemini keys verified working**
-- ✅ **Critical baseline running** (gpt-oss-120b, 20q)
+- ✅ PAPER.md v0.1 + 8 figures + aggregated data
+- ✅ PAPER_PROTOCOL.md + handoff system
+- ✅ genesis/llm_helpers.py (463 tests passing)
+- ✅ 11 OpenRouter keys + 5 Gemini keys working
+- ✅ **Bug #6 discovered & fixed:** extract_response_text tuple unpacking
 
-## 🔴 الـ Critical Experiment المطلوب
+## 🔴 الـ Critical Experiment — RUNNING NOW
 
-**Run_54**: GENESIS post-fix على gpt-oss-120b, 20q, max_gen=2, --use_evolutionary_discovery
+**Run 55:** GENESIS post-fix on gpt-oss-120b, GPQA Diamond 198 questions
+- Gen 1: 18/198 questions processed, 0 errors
+- Meta-agent wrote correct target_agent.py (14,644 bytes, tuple unpacking OK)
+- Target agent: pipeline tier_2, multi-case JSON keys, max_tokens=16384
+- Estimated completion: ~2 hours
 
 ## 📊 الأرقام الحرجة
-- Pure baseline: **75.00%**
-- Official: 80.1%
-- Gap scaffolding: −44.70
+- Pure baseline: 75.00% (n=20)
+- GENESIS pre-fix (run_53): 30.30%
+- GENESIS post-fix (run_55): RUNNING → expected >75%?
+- Bugs found: 6 (5 original + tuple unpacking)
 - Tests: 463/463
+
+## 🎯 Next: After run_55 completes
+1. Check Gen 1 accuracy on 198 questions
+2. Run evaluation (evaluate.py)
+3. Check if Gen 2 improves further
+4. Answer: GENESIS > 75% pure baseline?
+5. Update PAPER.md Abstract + Conclusion
