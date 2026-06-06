@@ -237,6 +237,8 @@ Every Layer-2 contribution traces back to one of these utterances by F. (preserv
 | 9 | S13.5 | *"قبله اللي حليته وكل ده خليه واضح او اذكرها او اعمل اعاده توثيق عشان اللي هيشتغل علي المشروع بعد كده يبقي واضح ومفيش مغلطات او اي مشاكل فاهمين"* | Documentation pass: this ledger + PROJECT_README + MASTER_TIMELINE | `89dd99c` |
 | 10 | S13.6 | (implicit continuation of #9; agent identified critical research-integrity issues C1+C2 in PAPER.md header and fixed under §14 dual-honesty principle) | Consistency audit: 14 issues found, 11 fixed; AUDIT_REPORT_S13.6.md; §9 checks 10→18 | `eb58198` |
 | 11 | S13.7 | *"عايزك تحصي ليا ايه الحاجات القديمه ... عشان ال agent اللي تيجي تشتغل عليه ثاني في اي وقت تكمل او توسع او اجي بفكره جديده متقلش من المشروع يحافظ علي الجوده و القوه والاداء علي المشروع وميعملش غلطات"* | (1) Cleanup inventory of ~95 Layer A files awaiting Fares decision (CLEANUP_INVENTORY_S13.7.md); (2) Agent Operating Manual for future agents (AGENT_OPERATING_MANUAL.md) | *(this commit)* |
+| 12 | S13.8 | *"عايزك تشتغل علي المشروع وعلي الكلام ده بنفسك"* + *"عايزك انت برضو تعمل ال push وكده"* | Ninja Excavator Gap Analysis + 3 Golden Bridges implementation + Theory Executables + Enhanced Pipeline | `5878235`, `198717f`, `95a0ea0` |
+| 13 | S13.9 | *"تمام طيب كمل"* (continuation delegation) | Technical Debt Cleanup: Locked Values Config, Semantic Grounding v2.0 (structural analysis), singleton reset functions, enhanced pipeline uses locked values | *(this commit)* |
 
 **The chain is auditable.** Every PAPER.md edit and every theoretical artifact can be traced through this table to an explicit Fares utterance.
 

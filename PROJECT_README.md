@@ -1,6 +1,6 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-06 (after Session 13.7 Cleanup Inventory + Agent Operating Manual)
+**Last updated:** 2026-06-06 (after Session 13.9 Cleanup Inventory + Agent Operating Manual)
 **Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
 **Current paper version:** **v0.7** (`PAPER.md`)
@@ -282,9 +282,9 @@ The repo contains **two distinct project layers** that should not be confused:
 | Reasoning saturation median tokens | 989 (correct) vs 6,836 (incorrect) | run_57 |
 | Empty content rate | 35% (7/20) | run_57 (all in incorrect set) |
 | T5.94 length-vs-accuracy correlation | r = −0.54 | Chen et al. on GPT-OSS + GPQA |
-| Tests passing | 463/463 | local |
+| Tests passing | 663/663 | local |
 | Master Index theft scope | 5.1–5.94 | `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md` |
-| Sessions completed | 1 through 13.7 (13 numbered + 12b + 13.5 + 13.6 + 13.7) | this README + MASTER_TIMELINE |
+| Sessions completed | 1 through 13.9 (13 numbered + 12b + 13.5 + 13.6 + 13.7) | this README + MASTER_TIMELINE |
 | Epistemic artifacts produced | **11** (4 theories + 1 philosophy + 4 thefts + 2 ideas) | computed S13 |
 | Foundational docs in repo | **122** (9 re-read since S12; 113 remaining in queue) | `ls GENESIS_*.md` |
 

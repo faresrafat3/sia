@@ -162,11 +162,11 @@ These empirical anchors are **immutable** without new measurements F. has author
 | Reasoning saturation median tokens | 989 (correct) vs 6,836 (incorrect) | run_57 |
 | Empty content rate | 35% (7/20) | run_57 |
 | T5.94 length-vs-accuracy r | −0.54 | Chen et al. on GPT-OSS + GPQA |
-| Tests | 463/463 passing | local |
+| Tests | 663/663 passing | local |
 | Master Index theft scope | 5.1–5.94 | `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md` |
 | Epistemic artifacts produced | 11 | 4 theories + 1 phil + 4 thefts + 2 ideas |
 | Foundational docs in repo | 122 (9 priority re-read) | `ls GENESIS_*_AR.md` |
-| Sessions completed | 1 through 13.7 | this manual + MASTER_TIMELINE |
+| Sessions completed | 1 through 13.9 | this manual + MASTER_TIMELINE |
 
 If you find yourself wanting to change one of these numbers → **STOP** and check with F.
 

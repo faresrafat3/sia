@@ -30,6 +30,7 @@ from ..theory_executables.theories import (
     get_all_executable_theories,
     evaluate_all_theories,
 )
+from ..config.locked_values import get_evidence_dict, get_locked_value
 
 from ..pipeline.minimal_run import run_minimal_pipeline
 from ..task_ingress.service import ingest_task
@@ -233,42 +234,28 @@ def _build_theory_evidence(
 ) -> Dict[str, Any]:
     """
     Build evidence dictionary from pipeline results for theory testing.
-    
+
     Maps run output to the format expected by executable theories.
+    Uses LOCKED VALUES from config instead of hardcoded numbers.
     """
     task = base_result.get("task", {})
     tier_decision = base_result.get("tier_decision", {})
     verification = base_result.get("blackboard", {}).get("verification_state", {})
-    
+
     # Extract accuracy-related data
     is_good = verification.get("verification_summary", {}).get("good_enough", False)
-    
-    evidence = {
-        # For T07
-        "standard_gen1_accuracy": 65.0,   # Known from run_57 (paper locked values)
-        "no_pipeline_gen1_accuracy": 70.0, # Known from run_58
-        
-        # For T08
-        "gen1_accuracy": 65.0,
-        "gen2_accuracy": 65.0,
-        "a3_gen1_accuracy": 70.0,
-        "a3_gen2_accuracy": 60.0,
-        
-        # For T10
-        "median_correct_tokens": 989,
-        "median_incorrect_tokens": 6836,
-        "genesis_empty_content_rate": 0.35,
-        "baseline_empty_content_rate": 0.35,
-        
-        # Current run data
-        "current_task_good_enough": is_good,
-        "current_tier": tier_decision.get("chosen_tier", "unknown"),
-        "current_confidence": tier_decision.get("confidence_in_decision", 0.5),
-    }
-    
+
+    # Use centralized locked values instead of hardcoded numbers
+    evidence = get_evidence_dict()
+
+    # Add current run data (these are per-run, not locked)
+    evidence["current_task_good_enough"] = is_good
+    evidence["current_tier"] = tier_decision.get("chosen_tier", "unknown")
+    evidence["current_confidence"] = tier_decision.get("confidence_in_decision", 0.5)
+
     # Add semantic verification data if available
     if semantic_result:
         evidence["semantic_verdict"] = semantic_result.get("verdict", "unknown")
         evidence["semantic_score"] = semantic_result.get("verification_score", 0.0)
-    
+
     return evidence

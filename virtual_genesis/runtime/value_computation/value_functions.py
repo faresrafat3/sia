@@ -520,8 +520,26 @@ _calculator: Optional[CognitiveReturnCalculator] = None
 
 
 def get_cognitive_return_calculator() -> CognitiveReturnCalculator:
-    """Get the singleton cognitive return calculator."""
+    """Get or create the default cognitive return calculator instance.
+
+    NOTE: Prefer direct CognitiveReturnCalculator() construction for test isolation.
+    This function exists for backward compatibility.
+    """
     global _calculator
     if _calculator is None:
         _calculator = CognitiveReturnCalculator()
     return _calculator
+
+
+def reset_cognitive_return_calculator() -> None:
+    """Reset the singleton calculator. Use in test teardown."""
+    global _calculator
+    _calculator = None
+
+
+def create_cognitive_return_calculator() -> CognitiveReturnCalculator:
+    """Factory function for creating fresh CognitiveReturnCalculator instances.
+
+    Replaces singleton pattern. Use for new code and tests.
+    """
+    return CognitiveReturnCalculator()

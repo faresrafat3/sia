@@ -609,8 +609,32 @@ _engine: Optional[LadderAscentEngine] = None
 
 
 def get_ladder_engine() -> LadderAscentEngine:
-    """Get the singleton ladder ascent engine."""
+    """Get or create the default ladder ascent engine instance.
+
+    NOTE: Prefer direct LadderAscentEngine() construction for test isolation.
+    This function exists for backward compatibility.
+    """
     global _engine
     if _engine is None:
         _engine = LadderAscentEngine()
     return _engine
+
+
+def reset_ladder_engine() -> None:
+    """Reset the singleton ladder engine. Use in test teardown."""
+    global _engine
+    _engine = None
+
+
+def create_ladder_engine(
+    transitions: Optional[List[PhaseTransitionCriterion]] = None,
+    custom_thresholds: Optional[Dict[int, float]] = None,
+) -> LadderAscentEngine:
+    """Factory function for creating fresh LadderAscentEngine instances.
+
+    Replaces singleton pattern. Use for new code and tests.
+    """
+    return LadderAscentEngine(
+        transitions=transitions,
+        custom_thresholds=custom_thresholds,
+    )

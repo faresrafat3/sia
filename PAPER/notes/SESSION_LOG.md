@@ -1518,3 +1518,120 @@ Continuation of S13.5/S13.6 documentation+audit spirit. Same "تمام" → mult
 
 `(pending)`: Session 13.7 — Cleanup Inventory + Agent Operating Manual. CLEANUP_INVENTORY_S13.7 (22 sections inventorying 95% of foundational docs); AGENT_OPERATING_MANUAL (17 sections, 8 rules, 6 mistake case studies). No PAPER changes; no Layer A file modifications. Master docs updated for consistency.
 
+
+## Session 13.8 — 2026-06-06 (Ninja Excavator Gap Analysis + 3 Golden Bridges)
+
+**Trigger:** Fares said *"عايزك تشتغل علي المشروع وعلي الكلام ده بنفسك"* and *"عايزك انت برضو تعمل ال push وكده"*.
+
+**Agent interpretation:** Deep analysis of the project, then implement the highest-leverage fixes identified.
+
+### What was done — Phase A (Analysis)
+
+- Read PAPER.md v0.7 fully, GENESIS_Meta_Theory_AR.md, GENESIS_Cognitive_Economy_Theory_AR.md, STRATEGIC_DEVELOPMENT_PLAN_2026_06.md, and all runtime code
+- Produced **GENESIS_NINJA_EXCAVATION_REPORT.md** (602 lines):
+  - Loop 1: 14 surface gaps
+  - Loop 2: 8 infrastructure gaps
+  - Loop 3: THE GAP — Semantic Grounding Gap (system processes syntax without semantics)
+  - Ninja Scorecard: 22 gaps rated on Depth×Impact×Explorability×Differentiation
+  - Golden Path: 3 priority bridges
+
+### What was done — Phase B (Implementation)
+
+- **Ladder Ascent Engine** (616 lines): 7 levels, EpistemicEntropy, PhaseTransitionCriterion, AbstractionForgettingTrigger
+- **Semantic Verifier** (661 lines): ReasoningPathValidator (5 checks), ConfidenceCalibrator (ECE), TheoryFalsificationEngine
+- **Value Computation Layer** (527 lines): VoC/VoI/VoV/VoA/VoR, CognitiveReturnCalculator, CostTracker
+- **Theory Executables** (733 lines): T07/T08/T09/T10 as executable Python with formal axioms
+- **Enhanced Pipeline** (274 lines): wraps minimal_run.py with all bridges
+
+**Tests:** 102 new tests (517 → 619)
+**Commits:** `5878235`, `198717f`, `95a0ea0`
+
+### Self-audit identified gaps (fixed in S13.9):
+- Doc chain not updated (Rule 8 violation)
+- Singletons cause test pollution
+- Hardcoded paper values
+- Semantic Grounding still keyword-based
+
+
+## Session 13.9 — 2026-06-06 (Technical Debt Cleanup — 6 Fixes)
+
+**Trigger:** Fares said *"تمام طيب كمل"* (continue).
+
+**Agent interpretation:** Execute the 6 technical debt items from S13.8 self-audit, prioritized by severity.
+
+### What was done
+
+**Fix 1: Locked Values Config (NEW) 🔴**
+- Created `virtual_genesis/runtime/config/__init__.py` + `locked_values.py`
+- All paper-locked empirical values in one frozen dataclass
+- `get_locked_value()`, `get_evidence_dict()` functions
+- Immutable — cannot accidentally mutate locked values
+- 8 tests for locked values
+
+**Fix 2: Semantic Grounding v2.0 Rewrite (THE GAP) 🔴**
+- Replaced keyword-based `_infer_intent_vector` with `StructuralIntentAnalyzer`
+  - Uses sentence structure, clause patterns, punctuation, question type
+  - NOT keyword lists — structural markers (conjunctions, verb position, list patterns)
+  - Arabic structural patterns included
+- Replaced keyword-based `_extract_constraints` with `StructuralConstraintExtractor`
+  - Uses conditional clauses, quantifier phrases, negation patterns
+  - Contrast analysis uses character n-gram overlap instead of word-set subtraction
+- Added dependency injection: `create_grounding_checker()`, `reset_grounding_checker()`
+- Added `reset_*` functions for all singletons
+- 26 new structural analysis tests + 8 locked values tests
+
+**Fix 3: Singleton Reset Functions (ALL modules) 🟡**
+- Added `reset_ladder_engine()` + `create_ladder_engine()` to ladder_ascent/engine.py
+- Added `reset_semantic_verifier()` + `create_semantic_verifier()` to semantic_verifier/verifier.py
+- Added `reset_cognitive_return_calculator()` + `create_cognitive_return_calculator()` to value_computation/value_functions.py
+- Added `reset_grounding_checker()` + `create_grounding_checker()` to semantic_grounding/grounding_checker.py
+- All singletons now have clean teardown for test isolation
+
+**Fix 4: Enhanced Pipeline Uses Locked Values 🟢**
+- `_build_theory_evidence()` now uses `get_evidence_dict()` instead of hardcoded 65.0, 70.0, 989, 6836, 0.35
+- Single source of truth for all empirical anchors
+
+**Fix 5: Doc Chain Updated (Rule 8) 🟢**
+- MASTER_TIMELINE.md — S13.9 entry added
+- CONTRIBUTION_LEDGER.md — S13.9 updates
+- HANDOFF.md — current state updated
+- SESSION_LOG.md — this entry
+- PROJECT_README.md — test count updated
+
+**Fix 6: Not yet done (carried forward)**
+- Idea-NNN for Ninja Excavator analysis not created (requires Fares decision on attribution layer)
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| New modules created | 1 (config/locked_values) |
+| Modules rewritten | 1 (semantic_grounding/grounding_checker.py v2.0) |
+| Hardcoded values removed | 7 (65.0, 70.0, 65.0, 60.0, 989, 6836, 0.35) |
+| Singleton reset functions added | 4 (ladder, verifier, calculator, grounding) |
+| Factory functions added | 4 (create_* for each module) |
+| New tests | 44 (619 → 663) |
+| Total tests passing | 663/663 |
+| PAPER.md changes | 0 (technical debt only) |
+| Runs | 0 |
+| API calls | 0 |
+
+### Key Technical Insight
+
+The Semantic Grounding v2.0 rewrite demonstrates the core principle from the Ninja Excavator Report: replacing keyword lists with structural analysis produces a fundamentally different (and more honest) grounding system. The system now:
+
+1. **Detects intent from sentence structure**, not vocabulary — "X vs Y", numbered lists, interrogative starters, contrastive conjunctions
+2. **Extracts constraints from syntax**, not words — conditional clauses, quantifier phrases, negation patterns, boundary markers
+3. **Analyzes contrasts via n-grams**, not word sets — character 4-gram overlap captures sub-word patterns that word-set subtraction misses
+
+This is NOT yet a full semantic grounding system (that would require embeddings or NLP parsing), but it is a **qualitative improvement** over keyword matching — the same text produces different, structurally-grounded results rather than keyword-dependent ones.
+
+### Open Decisions
+
+- Same 5 paths from S13 HANDOFF remain open (Path 1c still TOP PICK)
+- Cleanup policy decision from S13.7 still pending Fares authorization
+- Idea-NNN for Ninja Excavator: agent-formalized analysis — attribution layer depends on Fares decision
+
+### Commit
+
+`(pending)`: Session 13.9 — Technical Debt Cleanup. Locked values config, Semantic Grounding v2.0 (structural analysis replacing keywords), singleton reset functions for all modules, enhanced pipeline uses locked values, doc chain updated. 663 tests passing. No PAPER.md changes.

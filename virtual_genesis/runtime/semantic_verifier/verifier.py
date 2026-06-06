@@ -654,8 +654,26 @@ _verifier: Optional[SemanticVerifier] = None
 
 
 def get_semantic_verifier() -> SemanticVerifier:
-    """Get the singleton semantic verifier."""
+    """Get or create the default semantic verifier instance.
+
+    NOTE: Prefer direct SemanticVerifier() construction for test isolation.
+    This function exists for backward compatibility.
+    """
     global _verifier
     if _verifier is None:
         _verifier = SemanticVerifier()
     return _verifier
+
+
+def reset_semantic_verifier() -> None:
+    """Reset the singleton semantic verifier. Use in test teardown."""
+    global _verifier
+    _verifier = None
+
+
+def create_semantic_verifier() -> SemanticVerifier:
+    """Factory function for creating fresh SemanticVerifier instances.
+
+    Replaces singleton pattern. Use for new code and tests.
+    """
+    return SemanticVerifier()
