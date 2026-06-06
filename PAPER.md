@@ -1,9 +1,12 @@
 # 🧬 GENESIS: Measuring the Impact of LLM Orchestration Architecture on Graduate-Level Scientific Reasoning
 
-**Paper Status:** Draft v0.2 — First Architecture Comparison Complete  
-**Last Updated:** 2026-06-05  
-**Authors:** GENESIS Research Team (Fares + Agent)  
-**Target Venue:** arXiv / ML conference (ICLR/NeurIPS workshop initially)
+**Paper Status:** Draft v0.7 — Attribution honesty restored + Ladder of Abstraction + Hidden Crisis Diagnostic  
+**Last Updated:** 2026-06-06 (Session 12b)  
+**Authors:** Fares Rafat (sole author per NeurIPS 2025 policy; see §12.1)  
+**Agent contributions:** Documented transparently per §12.2 (three-layer structure: Layer 1 Fares-sourced, Layer 2 agent-formalized under F. delegation, Layer 3 joint deliberative). Agent is NOT a co-author.  
+**Target Venue:** arXiv / ML conference (ICLR/NeurIPS workshop initially)  
+**Canonical attribution source:** `CONTRIBUTION_LEDGER.md` (repo root)  
+**Project navigation:** `PROJECT_README.md` (repo root)
 
 ---
 
@@ -1045,7 +1048,7 @@ These are *A.*-initiated in execution but *F.*-authorized in scope. Each item do
 | **§8.5.7 Ladder of Abstraction lens** + **§8.6 Hidden Crisis Diagnostic** — Session 12 paper additions | "تمام" (Session 12) | Formal analysis, Writing — original draft | §8.5.7 and §8.6 of this paper |
 | **Internal Re-Reading Cycle (Session 12)** — surfacing of 12 discoveries from 5 foundational docs under new theoretical lens; including the 3 attribution corrections applied above | "القرار قرارك" (Session 12, via UI delegation) | Investigation, Formal analysis, Validation | `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md`; this row's *very existence* in Layer 2 (rather than Layer 1) is itself a Layer 2 contribution — the re-reading exercise is agent-executed even though its findings are corrections crediting Fares |
 | **All paper text drafting** (Abstract, Introduction, Methodology, Sections 5–11, Conclusion) | Implicit ongoing delegation under v2.0 Protocol | Writing — original draft | Entire `PAPER.md` |
-| **All Figure and Table generation** | Implicit | Visualization | All Figures 1–12, all Tables 1–17 |
+| **All Figure and Table generation** | Implicit | Visualization | 12 figures (fig01–fig12 in `PAPER/figures/`); 8 tables actually present in `PAPER/tables/`: tab04 (per-question results), tab11 (run57 comparison), tab12 (question delta), tab13 (ablation matrix), tab14 (A3 no_pipeline), tab15 (A7 design), tab16 (LEAP vs GENESIS), tab17 (feedback value matrix). Earlier tables (tab01–tab03, tab05–tab10) are referenced inline in PAPER.md sections without dedicated files |
 | **All session continuity infrastructure** (HANDOFF, SESSION_LOG, ATTRIBUTION_MAP, IN_PROGRESS, INTEGRATED) | Implicit | Project administration, Data curation | `PAPER/notes/`, `PAPER/ideas/` |
 
 #### Layer 3 — Joint contributions (deliberative)

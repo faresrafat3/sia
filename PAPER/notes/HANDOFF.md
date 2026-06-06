@@ -1,9 +1,10 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-06 (Session 13.5 — Documentation Pass)
+**آخر تحديث:** 2026-06-06 (Session 13.6 — Consistency Audit Pass)
 **آخر commit:** `(pending after this session)`
-**PAPER version:** **v0.7** (unchanged in S13/S13.5)
+**PAPER version:** **v0.7** (header v0.2→v0.7 fixed in S13.6 audit; content unchanged)
 **Mode:** Theoretical (v2.0)
+**Last audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md` for full report (14 issues found, 11 fixed, 1 false alarm, 2 deferred)
 
 ---
 
@@ -14,10 +15,11 @@ If you're returning to this project after time away, **start here**:
 1. **`PROJECT_README.md`** (repo root) — master entry point with file map, rules, roles
 2. **`MASTER_TIMELINE.md`** (repo root) — canonical chronological story of all sessions
 3. **`CONTRIBUTION_LEDGER.md`** (repo root) — single source of truth for attribution per artifact
-4. **`PAPER_PROTOCOL.md`** — v2.0 Theoretical Mode rules + §12.2 Creative Attribution Rule
-5. **This file** (HANDOFF) — operational current state + 5 open paths
+4. **`AUDIT_REPORT_S13.6.md`** (repo root) — last consistency audit (essential context)
+5. **`PAPER_PROTOCOL.md`** — v2.0 Theoretical Mode rules + §12.2 Creative Attribution Rule
+6. **This file** (HANDOFF) — operational current state + 5 open paths
 
-The three new master docs (created in Session 13.5) replace the need to read 13 session logs to get oriented. They are the **authoritative answer** to "what is this project and where is it now?"
+The four master docs (3 created in Session 13.5 + audit report in S13.6) replace the need to read 13+ session logs to get oriented. They are the **authoritative answer** to "what is this project and where is it now?"
 
 ---
 

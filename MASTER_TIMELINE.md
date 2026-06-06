@@ -1,6 +1,6 @@
 # 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 13)
 
-**Last updated:** 2026-06-06 (after Session 13)
+**Last updated:** 2026-06-06 (after Session 13.6 Consistency Audit)
 **Companion docs:** `PROJECT_README.md` (overview) · `CONTRIBUTION_LEDGER.md` (attribution) · `PAPER/notes/SESSION_LOG.md` (raw verbose log) · `PAPER.md` §12.3 (verbatim Arabic utterances)
 
 This is the **canonical narrative** of how the paper came to exist. If you want to understand any single decision, find the session below where it was made.
@@ -216,7 +216,7 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 
 ## Phase 6 — Documentation Pass (current — Session 13.5 / Session 14)
 
-### Session 13.5 (this commit, ~Jun 6, 2026) — Documentation hardening
+### Session 13.5 (~Jun 6, 2026) — Documentation hardening
 **Trigger:** Fares: *"قبله اللي حليته وكل ده خليه واضح او اذكرها او اعمل اعاده توثيق عشان اللي هيشتغل علي المشروع بعد كده يبقي واضح ومفيش مغلطات او اي مشاكل فاهمين"*
 
 **Done:** Created/updated 3 master documentation files to make the entire project navigable:
@@ -228,6 +228,37 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 - Updated `PAPER/notes/SESSION_LOG.md` for consistency
 
 **No PAPER.md changes.** Documentation pass only.
+
+**Commit:** `89dd99c`.
+
+### Session 13.6 (this commit, ~Jun 6, 2026) — Consistency Audit Pass
+**Trigger:** Fares: *"وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه وصحيحه وملائمه بالنسبه لايه الكلام ده بالنسبه للمشروع كامل"*
+
+**Agent's choice:** Systematic 6-dimension audit + execute fixes for everything broken. Justification for combined audit+execution: critical issues (C1, C2) were active misrepresentations in PAPER.md header that would have caused NeurIPS desk-reject if shared. Delay would violate §14 dual-honesty principle.
+
+**Done:** Created `AUDIT_REPORT_S13.6.md` enumerating 14 issues (3 critical, 8 medium, 3 low). Applied 11 fixes:
+
+🔴 **Critical (research integrity) — all 3 fixed:**
+- **C1**: PAPER.md header said "Draft v0.2 / Updated 2026-06-05" while footer said v0.7 — direct contradiction. Header now matches footer.
+- **C2**: PAPER.md authors line said "GENESIS Research Team (Fares + Agent)" — contradicted §12.1 "Agent is NOT a co-author". Now reads "Fares Rafat (sole author per NeurIPS 2025 policy)". Would have caused desk-reject if not fixed.
+- **C3**: PAPER.md §12.2 claimed "All Tables 1-17" but only 8 table files exist (tab04, tab11-17). Corrected to explicit list with note that tab01-03, tab05-10 are referenced inline only.
+
+🟡 **Medium (documentation drift) — 7 of 8 fixed:**
+- PROJECT_README header/Sessions count updated to 13.6
+- File map completely rewritten to be exhaustive (was missing 4 root dirs, 4 root .md files, root scripts)
+- 9 priority foundational docs labeled with their Layer-1 contribution (Cognitive Economy → Theory-08/10 originator, etc.)
+- Two-layer (Layer A pre-paper / Layer B paper era) distinction made explicit
+
+🟢 **Low — 1 fixed, 2 deferred:**
+- STRATEGIC_DEVELOPMENT_PLAN files categorized as Layer A (pre-paper)
+- CHANGELOG: deferred (MASTER_TIMELINE serves this purpose)
+- Subdir READMEs: deferred (info in PROJECT_README)
+
+**CONTRIBUTION_LEDGER §9 consistency checks** expanded from 10 → 18 (added 8 mechanical checks the audit identified as missing).
+
+**No PAPER scientific content changes** — corrections only, no additions. Path 1b/1c remain pending Fares authorization.
+
+**Commit:** *(this commit)*.
 
 ---
 
@@ -249,7 +280,8 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 | **12** | **~Jun 6** | **"القرار قرارك" (UI)** | **Theoretical** | **Re-Reading batch 1+2: 5 docs, 12 discoveries, 3 attribution corrections PROPOSED** | `da35af4` |
 | **12b** | **~Jun 6** | **"تمام" (auth Path 1)** | **Theoretical** | **3 corrections APPLIED + §8.5.7 + §8.6 + Theory-10 P6 + Phil-07 §9** | `43868ee` (v0.7) |
 | **13** | **~Jun 6** | **"تمام" (auth Path 2)** | **Theoretical** | **Re-Reading batch 3: 4 docs, 11 discoveries, §14.4 partially resolved, 4-pillar gap surfaced** | `3fdb31e` |
-| 13.5 | ~Jun 6 | "قبله اللي حليته وكل ده خليه واضح" | Documentation | This file + PROJECT_README + CONTRIBUTION_LEDGER | *(this commit)* |
+| 13.5 | ~Jun 6 | "قبله اللي حليته وكل ده خليه واضح" | Documentation | PROJECT_README + MASTER_TIMELINE + CONTRIBUTION_LEDGER | `89dd99c` |
+| 13.6 | ~Jun 6 | "وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه" | Audit | AUDIT_REPORT_S13.6 + 3 critical PAPER.md fixes (header, authors, table count) + 7 medium fixes; CONTRIBUTION_LEDGER §9 from 10→18 checks | *(this commit)* |
 
 ---
 

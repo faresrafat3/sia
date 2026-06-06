@@ -1255,3 +1255,121 @@ Same 5 paths offered:
 
 `(pending)`: Session 13.5 — Documentation pass. 3 new master docs (PROJECT_README, MASTER_TIMELINE, CONTRIBUTION_LEDGER). 3 updated docs (HANDOFF, SESSION_LOG, ATTRIBUTION_MAP). No PAPER.md changes. Goal: any future reader can navigate this project without reading 13 session logs.
 
+
+---
+
+## Session 13.6 — 2026-06-06 (Agent-Executed: Consistency Audit Pass)
+
+**Trigger (verbatim, preserved in AUDIT_REPORT_S13.6 §0):**
+> *"وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه وصحيحه وملائمه بالنسبه لايه الكلام ده بالنسبه للمشروع كامل"*
+
+**Translation:** Beyond just documentation, make everything across the whole project clear, accurate, correct, and appropriate.
+
+**Agent interpretation:** Systematic audit of the entire repo for inconsistencies, contradictions, broken cross-references, and stale claims. Beyond the documentation pass of S13.5, this is a *correctness pass*.
+
+### Why "Session 13.6" not "Session 14"
+
+It is a continuation of the S13.5 documentation pass spirit — both are *meta-work* on the project rather than new research or paper edits. Same Fares utterance pattern ("تمام" continuation + explicit follow-up). 13.6 emphasizes the audit/correction nature relative to 13.5's creation nature.
+
+### What the audit covered (6 dimensions)
+
+1. Structural — file structure, naming, broken links
+2. Consistency — numbers, versions, session counts across all docs
+3. Completeness — artifacts referenced in one place exist in others
+4. Naming/versioning — PAPER.md v0.7 references match reality
+5. Cross-reference — pointers between docs actually work
+6. Production readiness — repo navigable by external reader
+
+### Findings — 14 issues (3 critical, 8 medium, 3 low)
+
+Full enumeration in `AUDIT_REPORT_S13.6.md`. Headline:
+
+**🔴 CRITICAL (3):**
+- **C1**: PAPER.md header said "Draft v0.2" while footer said v0.7 — direct contradiction
+- **C2**: PAPER.md authors line said "GENESIS Research Team (Fares + Agent)" — contradicted §12.1 ("Agent is NOT a co-author"). Would have caused NeurIPS desk-reject.
+- **C3**: PAPER.md §12.2 claimed "All Tables 1-17" but only 8 table files exist (tab04, tab11-17)
+
+**🟡 MEDIUM (8):** PROJECT_README stale references; file map missing 4 root dirs, 4 root .md files, root scripts; 122 foundational docs lacked priority labels; etc.
+
+**🟢 LOW (3):** Subdirectory READMEs lack inventory; no project-wide CHANGELOG; etc.
+
+### Fixes applied
+
+| # | Severity | Status |
+|---|---|---|
+| C1 | CRITICAL | ✅ Fixed (PAPER.md header) |
+| C2 | CRITICAL | ✅ Fixed (PAPER.md authors line) |
+| C3 | CRITICAL | ✅ Fixed (PAPER.md §12.2 Table count) |
+| C4-C8, C10-C11 | MEDIUM | ✅ Fixed (PROJECT_README rewrite) |
+| C9 | — | False alarm (no fix needed) |
+| C12 | LOW | ⚠️ Partial (MASTER_TIMELINE serves) |
+| C13 | LOW | ✅ Fixed (categorized as Layer A) |
+| C14 | LOW | ⚠️ Deferred (info in PROJECT_README) |
+
+**Total: 11 of 14 fully fixed; 1 not needed; 2 deferred with reasoning.**
+
+### Authorization scope (important precedent)
+
+This session combined audit + execution. Justification:
+- C1 + C2 are **active misrepresentations** in the public repo (PAPER.md header is the first thing any reviewer reads). Delaying fixes would itself violate §14 dual-honesty principle.
+- C3 is a falsifiable claim that any fact-checker would catch.
+- All medium/low fixes are consistent with the S13.5 documentation pass spirit.
+
+**Distinction maintained:** This session only **fixed what was broken**. It did NOT add substantive new paper content. Path 1c (NEW §15 Theoretical Frame) and Path 1b (small §14 edits) remain pending Fares authorization — they are *additions* not *corrections*.
+
+### Files modified
+
+| File | Type of change |
+|---|---|
+| `PAPER.md` | Header fixed (C1+C2); §12.2 fixed (C3) |
+| `PROJECT_README.md` | Header + Sessions count + file map rewrite (C4-C8, C10-C11) |
+| `CONTRIBUTION_LEDGER.md` | §9 expanded from 10 to 18 consistency checks (added 8 from S13.6 audit) |
+| `AUDIT_REPORT_S13.6.md` | NEW — this session's report |
+| `PAPER/notes/HANDOFF.md` | References to AUDIT_REPORT added |
+| `PAPER/notes/SESSION_LOG.md` | This entry |
+| `PAPER/ideas/ATTRIBUTION_MAP.md` | Session 13.6 row to be added |
+
+### Deeper insight (recorded in AUDIT_REPORT §6)
+
+Documentation drift happens in **two directions:**
+
+1. **Content drift** — what the paper *claims* becomes wrong because reality changed (caught by S12 re-reading via Idea-002 governance)
+2. **Metadata drift** — what surrounds the content (headers, file maps, version footers) becomes wrong because nobody updates them (caught by S13.6 audit)
+
+The propose→authorize→execute chain handles content drift. **S13.6 establishes a parallel chain for metadata drift:** scan → report → fix → document. The project is now self-correcting on **two axes**.
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| Issues found | 14 |
+| Critical (research integrity) | 3 |
+| Medium (consistency) | 8 |
+| Low | 3 |
+| Issues fixed | 11 |
+| False alarms | 1 |
+| Deferred with reasoning | 2 |
+| New file created | 1 (AUDIT_REPORT_S13.6.md) |
+| Existing files updated | 5 |
+| Consistency checks in CONTRIBUTION_LEDGER §9 | 10 → 18 |
+| PAPER.md scientific content changes | 0 (corrections only, no additions) |
+| Runs | 0 |
+| API calls | 0 |
+
+### PAPER.md Version
+
+**v0.7 unchanged** (header was wrong saying v0.2; now matches footer's v0.7). No content changes, only correctness fixes to header and §12.2 Table count claim.
+
+### Open Decisions for Next Session (unchanged from S13)
+
+Same 5 paths:
+- **Path 1c (RECOMMENDED)**: NEW §15 "Theoretical Frame" → v0.8
+- **Path 1b**: Small §14 edits → v0.7.1
+- **Path 2**: Re-read batch 4
+- **Path 3**: Draft new Theory-NN candidate
+- **Path 4**: Idea-003
+
+### Commit المتوقع
+
+`(pending)`: Session 13.6 — Consistency Audit Pass. 14 issues found (3 critical: PAPER.md header/authors/table count); 11 fixed; AUDIT_REPORT_S13.6.md created; CONTRIBUTION_LEDGER §9 expanded to 18 checks. Critical fixes essential before any external sharing. PAPER content unchanged.
+

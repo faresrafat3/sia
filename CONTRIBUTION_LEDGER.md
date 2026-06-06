@@ -278,7 +278,9 @@ Before adding any new artifact (Theory-11, Phil-08, T5.95, new paper section), a
 
 ---
 
-## 9) Consistency check (last performed: Session 13.5)
+## 9) Consistency check (last performed: Session 13.6)
+
+### Original 10 checks (from S13.5)
 
 | Check | Result |
 |---|---|
@@ -286,11 +288,28 @@ Before adding any new artifact (Theory-11, Phil-08, T5.95, new paper section), a
 | Every Phil-NN in `PAPER/philosophy/` has a row in §2 | ✅ 1 row (07), 1 file |
 | Every Idea-NNN in `PAPER/ideas/` has a row in §3 | ✅ 2 rows (001/002), 2 files |
 | Every theft 5.91-5.94 has a row in §4 | ✅ 4 rows (91/92/93/94) |
-| §6 verbatim utterances match `PAPER.md` §12.3 | ✅ all 9 rows present (8 in §12.3 + 1 new for S13.5) |
+| §6 verbatim utterances match `PAPER.md` §12.3 | ✅ all 9 rows present (8 in §12.3 + 1 for S13.5) |
 | §7 corrections match `PAPER.md` §12.2 + ATTRIBUTION_MAP | ✅ 3 corrections applied, marked in both |
 | Pending corrections (§7) match `PAPER/notes/HANDOFF.md` paths | ✅ Path 1b + Path 1c noted |
 | PAPER.md version v0.7 matches version footer | ✅ |
 | Master Index scope 5.1-5.94 matches T5.NN entries | ✅ |
 | All 11 epistemic artifacts (Discovery #18, S13) accounted for | ✅ 4 theories + 1 phil + 4 thefts + 2 ideas = 11 |
 
-If any future consistency check fails, update both this ledger and the diverging document, and add a note to `MASTER_TIMELINE.md` about the discrepancy.
+### Additional 8 checks (added S13.6 after audit)
+
+| Check | Result |
+|---|---|
+| PAPER.md header version matches footer version | ✅ Both v0.7 (was v0.2 in header — fixed S13.6 C1) |
+| PAPER.md authors line matches §12.1 (sole author F., not "Fares + Agent") | ✅ Fixed S13.6 C2 |
+| Figure/table claims in §12.2 match actual file counts (12 fig + 8 tab) | ✅ Fixed S13.6 C3 |
+| PROJECT_README file map covers every root directory | ✅ Fixed S13.6 C6 |
+| PROJECT_README file map covers every root .md file | ✅ Fixed S13.6 C7 |
+| PROJECT_README file map covers every root script/config | ✅ Fixed S13.6 C8 |
+| "Sessions completed" claim matches MASTER_TIMELINE entries | ✅ Fixed S13.6 C4 (now "1 through 13.6") |
+| Foundational docs in repo (122) match PROJECT_README claim | ✅ + 9 priority docs labeled (Fixed S13.6 C10+C11) |
+
+### Total: **18 consistency checks, all green as of Session 13.6**
+
+If any future consistency check fails, update both this ledger and the diverging document, and add a note to `MASTER_TIMELINE.md` about the discrepancy. Run a full audit (S13.6-style) before any version bump that touches PAPER.md, before any external sharing, or every ~5 sessions.
+
+**Reference for audit methodology:** `AUDIT_REPORT_S13.6.md` (repo root).

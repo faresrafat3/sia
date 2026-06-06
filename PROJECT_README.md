@@ -1,10 +1,11 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-06 (after Session 13)
-**Project owner:** Fares Rafat (F.)
+**Last updated:** 2026-06-06 (after Session 13.5 documentation pass + Session 13.6 audit pass)
+**Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
 **Current paper version:** **v0.7** (`PAPER.md`)
 **Current mode:** Theoretical Mode (v2.0 of `PAPER_PROTOCOL.md`)
+**Last consistency audit:** Session 13.6 (this update) — see `AUDIT_REPORT_S13.6.md` for full findings; 3 critical issues fixed in PAPER.md, 11 documentation issues fixed in master docs
 
 > **⚠️ READ THIS FIRST** before touching any file in this repo. This document is the single entry point that tells you:
 > - What this project is
@@ -57,7 +58,7 @@ The propose → authorize → execute chain has run successfully **twice** (Sess
 ### If you are Fares (returning after time away)
 1. This file
 2. `PAPER/notes/HANDOFF.md` (operational current state, 5 open paths)
-3. `MASTER_TIMELINE.md` (full chronological story, Sessions 1-13)
+3. `MASTER_TIMELINE.md` (full chronological story, Sessions 1 through 13.6)
 4. `PAPER.md` v0.7 (the paper itself)
 
 ### If you are a new agent / new session
@@ -84,70 +85,167 @@ The propose → authorize → execute chain has run successfully **twice** (Sess
 
 ## 3) File map — where each piece of knowledge lives
 
+This map is **complete** as of Session 13.6 audit. Every file/directory at the repo root is listed. If you add a new file at the root, update this map.
+
 ```
-GENESIS/
+GENESIS/                                       # repo root
 │
-├── README.md                                  # Layer A (pre-paper prototype) — DO NOT confuse with paper era
+│ ─── 📚 MASTER NAVIGATION DOCS (read these first) ────────────────
+│
 ├── PROJECT_README.md                          # ⭐ THIS FILE — master entry point for paper era
-├── MASTER_TIMELINE.md                         # ⭐ Full chronological story of all 13 sessions
+├── MASTER_TIMELINE.md                         # ⭐ Full chronological story Sessions 1 → 13.6
 ├── CONTRIBUTION_LEDGER.md                     # ⭐ Single source of truth for attribution
+├── AUDIT_REPORT_S13.6.md                      # Last consistency audit findings (Session 13.6)
 │
-├── PAPER.md                                   # The paper itself (v0.7)
+│ ─── 📄 PAPER ARTIFACTS ──────────────────────────────────────────
+│
+├── PAPER.md                                   # The paper itself (v0.7, sole author: F. per §12.1)
 ├── PAPER_PROTOCOL.md                          # v2.0 — Theoretical Mode rules + §12.2 Attribution Rule
 │
+│ ─── 📖 LAYER A (pre-paper) DOCS ─────────────────────────────────
+│
+├── README.md                                  # Layer A prototype docs — predates paper era
+├── SETUP_AND_RUN_GUIDE.md                     # Layer A — operational setup guide for prototype
+├── API_GENESIS_Design_Arabic.md               # Layer A — original system design (Arabic)
+├── QUICK_RUN_20Q_GUIDE_AR.md                  # Operational guide for 20-question subset runs
+├── STRATEGIC_DEVELOPMENT_PLAN_2026_06.md      # Layer A — strategic plan (pre-paper)
+├── STRATEGIC_DEVELOPMENT_PLAN_2026_06_v2.md   # Layer A — strategic plan v2 (pre-paper)
+│
+│ ─── 🗂️ FOUNDATIONAL THEORY DOCS (122 .md files at root) ─────────
+│
+├── GENESIS_*_AR.md                            # 122 Arabic foundational documents (pre-paper)
+│   │
+│   │ Master index of external work:
+│   ├── GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md   # Scope 5.1–5.94 + classical 6.1–6.13
+│   │
+│   │ Theft memos (external papers integrated):
+│   ├── GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md      # T5.92 LEAP (Session 7)
+│   ├── GENESIS_External_Inverted_U_Wu2025_Theft_AR.md # T5.93 Wu et al. (Session 10)
+│   ├── GENESIS_External_DTR_ChenMeng2026_Theft_AR.md  # T5.94 Chen et al. (Session 10)
+│   ├── GENESIS_DeepMind_AlphaEvolve_FunSearch_Theft_AR.md  # T5.86
+│   ├── GENESIS_DeepMind_CoScientist_Theft_AR.md           # T5.85
+│   ├── GENESIS_DeepMind_Aletheia_Theft_AR.md              # T5.84
+│   │
+│   │ The 9 foundational theory docs read in Sessions 12 + 13 (priority docs):
+│   ├── GENESIS_Cognitive_Economy_Theory_AR.md         # ← Theory-08 + Theory-10 originator (S12)
+│   ├── GENESIS_Concept_Formation_Theory_AR.md         # ← Ladder of Abstraction §4 (S12)
+│   ├── GENESIS_Tiered_Intelligence_AR.md              # ← Phil-07 originator (S12)
+│   ├── GENESIS_Productive_Forgetting_Theory_AR.md     # ← Theory-10 P6 contributor (S12)
+│   ├── GENESIS_Anomaly_Crisis_Paradigm_Theory_AR.md   # ← §8.6 Hidden Crisis Diagnostic + Phil-07 attractor (S12)
+│   ├── GENESIS_Self_Benchmarking_Theory_AR.md         # ← 3-tier Value framework (S13)
+│   ├── GENESIS_Meta_Theory_AR.md                      # ← 8-pillar unifying frame "Tiered Externalized Recursive Intelligence" (S13) — biggest single doc
+│   ├── GENESIS_Contradiction_Theory_AR.md             # ← Indicators D+G dependency (S13)
+│   ├── GENESIS_Agent_Identity_Theory_AR.md            # ← §14.4 resolution + Identity Drift (S13)
+│   │
+│   └── ... (113 more foundational docs not yet re-read; queue in HANDOFF.md)
+│
+│ ─── 📑 PAPER PRODUCTION DIRECTORY ───────────────────────────────
+│
 ├── PAPER/
+│   │
 │   ├── ideas/                                 # Idea lifecycle (INBOX → IN_PROGRESS → INTEGRATED)
-│   │   ├── ATTRIBUTION_MAP.md                 # ⭐ central traceability of all contributions
+│   │   ├── ATTRIBUTION_MAP.md                 # ⭐ session-by-session attribution tracker (operational)
 │   │   ├── README.md                          # Ideas Bank explanation
-│   │   ├── INBOX.md                           # New ideas from Fares awaiting work
+│   │   ├── INBOX.md                           # New ideas from Fares awaiting work (currently empty)
 │   │   ├── IN_PROGRESS.md                     # Currently being worked on
 │   │   ├── INTEGRATED.md                      # Ideas that have entered the paper
-│   │   ├── idea_001_*.md                      # LEAP integration (Session 6)
-│   │   └── idea_002_*.md                      # Creative Attribution Rule (Session 7)
+│   │   ├── idea_001_leap_agentic_framework_for_formal_math.md
+│   │   └── idea_002_creative_attribution_rule.md
 │   │
-│   ├── theory/                                # Internal theories
+│   ├── theory/                                # 4 internal theory files + README
 │   │   ├── README.md
 │   │   ├── 07_pipeline_as_memory_vs_decision_injection.md
 │   │   ├── 08_feedback_value_determinism_scope.md
 │   │   ├── 09_anticipatory_concepts_vs_lemmas.md
 │   │   └── 10_reasoning_saturation.md         # Includes P6 lifetime-drift (added S12b)
 │   │
-│   ├── philosophy/
+│   ├── philosophy/                            # 1 philosophy file + README
 │   │   ├── README.md
 │   │   └── 07_meaning_of_general_purpose_sufficiency.md   # Includes §9 stable-attractor (added S12b)
 │   │
-│   ├── figures/                               # Figures 1-12 (fig01-fig12)
-│   ├── tables/                                # Tables 1-17 (tab01-tab17)
-│   ├── data/                                  # Empirical results (aggregated_results.json + per-run)
+│   ├── figures/                               # 12 figures + README (fig01-fig12)
+│   │   ├── README.md
+│   │   ├── fig01_pipeline_overview.md         through fig10_ablation_decision_tree.md (existing)
+│   │   ├── fig11_110_point_gap.md             # Added S7-8 (LEAP integration)
+│   │   └── fig12_feedback_quadrant.md         # Added S7-8 (Theory-08)
+│   │
+│   ├── tables/                                # 8 table files + README (NOT 17 as some docs claimed)
+│   │   ├── README.md
+│   │   ├── tab04_per_question_results.md
+│   │   ├── tab11_run57_comparison.md
+│   │   ├── tab12_question_delta_analysis.md
+│   │   ├── tab13_ablation_matrix.md
+│   │   ├── tab14_a3_no_pipeline_results.md
+│   │   ├── tab15_a7_design.md
+│   │   ├── tab16_leap_vs_genesis.md           # Added S7-8 (LEAP integration)
+│   │   └── tab17_feedback_value_matrix.md     # Added S7-8 (Theory-08)
+│   │   # Note: tables 1-3, 5-10 are referenced inline in PAPER.md sections without dedicated files
+│   │
+│   ├── data/                                  # Empirical results
+│   │   ├── aggregated_results.json
+│   │   ├── run57_genesis_postfix_20q.json
+│   │   └── run58_a3_no_pipeline_20q.json
+│   │
 │   ├── references/                            # External paper references
 │   │
 │   └── notes/                                 # Working notes
 │       ├── HANDOFF.md                         # ⭐ Operational current state for next session
-│       ├── SESSION_LOG.md                     # Chronological log of all sessions
+│       ├── SESSION_LOG.md                     # Chronological log Sessions 1 → 13.6
 │       ├── INTERNAL_RE_READING_SESSION_12.md  # 12 discoveries from re-reading batch 1+2
 │       ├── INTERNAL_RE_READING_SESSION_13.md  # 11 discoveries from re-reading batch 3
-│       ├── TODO_HIGH.md / TODO_MEDIUM.md
+│       ├── TODO_HIGH.md
+│       ├── TODO_MEDIUM.md
 │       └── OPEN_QUESTIONS.md
 │
-├── GENESIS_*_AR.md                            # 122 foundational documents (Arabic, pre-paper)
-│   ├── GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md     # Scope 5.1-5.94 of external work
-│   ├── GENESIS_DeepMind_LEAP_Agentic_Theft_AR.md        # T5.92 (LEAP integration, S7)
-│   ├── GENESIS_External_Inverted_U_Wu2025_Theft_AR.md   # T5.93 (S10)
-│   ├── GENESIS_External_DTR_ChenMeng2026_Theft_AR.md    # T5.94 (S10)
-│   └── ... (118 more foundational theory/spec/memo docs)
+│ ─── 💻 CODE ─────────────────────────────────────────────────────
 │
-├── genesis/                                   # Code (DO NOT execute runs without Fares authorization)
-│   ├── llm_helpers.py                         # 220 lines, 35 tests
-│   ├── orchestrator.py                        # Has ablation modes wired (none/no_pipeline/narrow_feedback/...)
-│   └── tasks/
+├── genesis/                                   # Core code (DO NOT execute runs without F. authorization)
+│   ├── llm_helpers.py                         # 220 lines, 35 tests (Bug #6 fixed)
+│   ├── orchestrator.py                        # Ablation modes wired: none / no_pipeline / narrow_feedback / no_pipeline+narrow_feedback
+│   └── tasks/                                 # includes longcot-chess (NOT agent work — see §7)
 │
 ├── tools/                                     # API key pool, providers, model registry, multi-model benchmark
-├── tasks/gpqa_subset_20/                      # 20-question GPQA subset for fast iteration
-├── runs/                                      # Past run artifacts (run_53 to run_58 are referenced)
+│   ├── api_key_pool.py
+│   ├── providers.py                           # 9 providers documented
+│   ├── model_registry.py                      # 13 models
+│   └── run_multi_model_benchmark.py
+│
+├── virtual_genesis/                           # Layer A prototype code (api, core, eval, persistence, runtime)
+│   └── (organized into 5 subdirs + __init__.py)
+│
+├── tasks/                                     # Benchmark task definitions
+│   └── gpqa_subset_20/                        # 20-question GPQA subset for fast iteration
+│
 ├── tests/                                     # 463 tests passing
 │
-└── .env                                       # API keys (NEVER committed; LOCAL ONLY)
+├── scripts/                                   # Utility scripts (Layer A operational helpers)
+│
+├── runs/                                      # Past run artifacts (run_53 to run_58 referenced in paper)
+│
+├── results/                                   # Layer A ablation/comparison results (pre-paper)
+│
+│ ─── 🔧 ROOT-LEVEL CONFIG & SCRIPTS ──────────────────────────────
+│
+├── pyproject.toml                             # Python project config
+├── run_openrouter_benchmark.py                # OpenRouter benchmark entry script
+├── test_pioneer.py                            # Test utility
+├── push_runs.sh                               # ⚠️ File-permission diff only — NOT agent work
+│
+│ ─── 🔒 NEVER COMMITTED ──────────────────────────────────────────
+│
+└── .env                                       # API keys (LOCAL ONLY; NEVER committed)
 ```
+
+### Two-layer distinction summary
+
+The repo contains **two distinct project layers** that should not be confused:
+
+| Layer | Era | Primary docs | Key files |
+|---|---|---|---|
+| **Layer A** (pre-paper prototype) | Before Session 1 of paper era | `README.md`, `SETUP_AND_RUN_GUIDE.md`, `API_GENESIS_Design_Arabic.md`, `STRATEGIC_DEVELOPMENT_PLAN_*.md` | `virtual_genesis/`, `results/`, `scripts/` |
+| **Layer B** (paper era — current focus) | Sessions 1 through 13.6 | `PAPER.md`, `PROJECT_README.md`, `MASTER_TIMELINE.md`, `CONTRIBUTION_LEDGER.md`, all of `PAPER/` | `genesis/`, `tools/`, `tasks/gpqa_subset_20/`, `runs/`, `tests/` |
+
+**All paper-era sessions document Layer B.** Layer A is preserved for context but not actively edited.
 
 ---
 
@@ -184,7 +282,7 @@ GENESIS/
 | T5.94 length-vs-accuracy correlation | r = −0.54 | Chen et al. on GPT-OSS + GPQA |
 | Tests passing | 463/463 | local |
 | Master Index theft scope | 5.1–5.94 | `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md` |
-| Sessions completed | 1 through 13 | this README + MASTER_TIMELINE |
+| Sessions completed | 1 through 13.6 (13 numbered + 12b + 13.5 + 13.6) | this README + MASTER_TIMELINE |
 | Epistemic artifacts produced | **11** (4 theories + 1 philosophy + 4 thefts + 2 ideas) | computed S13 |
 | Foundational docs in repo | **122** (9 re-read since S12; 113 remaining in queue) | `ls GENESIS_*.md` |
 
