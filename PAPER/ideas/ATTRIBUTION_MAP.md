@@ -94,6 +94,32 @@
 
 > **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
 
+### Session 13 agent-initiated work (Internal Re-Reading Cycle batch 3)
+
+| Work | Trigger | Output | Status |
+|---|---|---|---|
+| **Internal Re-Reading Session 13** | Session 13 Fares delegation ("تمام") | `PAPER/notes/INTERNAL_RE_READING_SESSION_13.md` (~600 lines): 4 more foundational docs re-read (Self-Benchmarking, Meta-Theory, Contradiction, Agent Identity); **11 additional major discoveries** including 1 new attribution correction (§14 ↔ Agent Identity Theory), 1 profound resolution (§14.4 open question via Delegated Cognition vs External Advice distinction), and the discovery that the paper operates within a larger 8-pillar framework ("Tiered Externalized Recursive Intelligence") of which 4 pillars are absent. Cumulative S12+S13: 9/122 docs read, 23 discoveries. | ✅ Research artifact complete; paper edits pending Fares decision (Paths 1b, 1c, 2, 3, 4) |
+
+**Session 13 key discoveries (11 total):**
+
+| # | Discovery | Type |
+|---|---|---|
+| 13 | Benchmark vs Environment object distinction (SB §11) — 110-point gap partly env-attributable | METHODOLOGY |
+| 14 | Anomaly→Test conversion bridge (SB §14) | OPERATIONAL |
+| 15 | **4 of 8 grand pillars absent from paper** (Meta-Theory §7) | COVERAGE GAP |
+| 16 | Meta-Theory §3 intelligence definition is paper's missing anchor | FOUNDATIONAL |
+| 17 | Phil-07 is special case of Meta-Law 10 | CITATION CHAIN |
+| 18 | "Epistemic Artifact" as proper unit of measurement (11 produced) | NEW METRIC |
+| 19 | Contradiction Theory is dynamics bridge between Concept Formation and Anomaly | STRUCTURAL |
+| 20 | Contradiction Ledger as crisis predictor (Hyp D) | NEW FALSIFIABLE |
+| 21 | §14 is Agent Identity Theory applied — citation gap | ATTRIBUTION |
+| 22 | **§14.4 open question resolved** via Agent Identity §12 Delegated/External distinction | PROFOUND |
+| 23 | Session 12→12b is first documented identity-drift correction | METHODOLOGICAL |
+
+**Cumulative S12+S13:** 9 docs read of 122 (7.4%); **23 major discoveries**; 4 attribution corrections (3 applied, 1 pending); 8 new paper section candidates (2 applied as §8.5.7/§8.6, 6 pending); 7 new theory candidates; 2 new falsifiable predictions.
+
+---
+
 ### Session 12 agent-initiated work (Internal Re-Reading Cycle)
 
 | Work | Trigger | Output | Status |
@@ -145,6 +171,8 @@ PAPER.md version: v0.6 → **v0.7**.
 | T5.94 | Chen et al. — DTR + Think@n (UVA + Google) | Agent-initiated (Session 10, Fares-authorized) | MAJOR | 3 (Cycle 8 theft memo + Master Index entry + Theory-10 promotion to "closest external precedent" + PAPER §7.3.2/Appendix B/D updates) |
 | Sections 12–14 | Author Contributions + Acknowledgments + Ethics of Authorship | Agent-initiated (Session 11, Fares-authorized) | META-CORE | 3 sections (~250 lines) + ATTRIBUTION_MAP row + Petridis et al. 2025 + CRediT integration. Makes the paper submission-ready under NeurIPS 2025 LLM-disclosure policy. |
 | Re-Reading S12 | Internal foundational docs re-reading under Theories 07-10 + Phil-07 lens | Agent-initiated (Session 12, Fares-authorized) | META-CORE | `INTERNAL_RE_READING_SESSION_12.md` (~500 lines): 5 docs read, 12 discoveries, **3 attribution corrections proposed for Theory-08/10 + Phil-07**, 9 new pending paper-level proposals. Validates option (F) as highest-leverage HANDOFF strategy. Triggers Idea-002 governance cycle (correction > addition priority). |
+| Path-1 Application S12b | Apply S12 attribution corrections to paper | Agent-executed (Session 12b under Fares "تمام") | META-CORE | PAPER v0.6→v0.7: 3 attribution corrections applied to §12.2; §8.5.7 + §8.6 added (~60 paper lines); Theory-10 P6 added; Phil-07 §9 added; ATTRIBUTION_MAP corrections marked ✅ Applied. **Demonstrates Idea-002 governance functions as a true safety net.** |
+| Re-Reading S13 | Continue Internal Re-Reading (batch 3): Self-Benchmarking + Meta-Theory + Contradiction + Agent Identity | Agent-initiated (Session 13 under Fares "تمام", Path 2 from S12b HANDOFF) | META-CORE | `INTERNAL_RE_READING_SESSION_13.md` (~600 lines): 4 docs read, 11 discoveries, **1 new attribution correction (§14 ↔ Agent Identity Theory)**, **profound discovery that §14.4 open question is resolved by Fares's own Agent Identity §12 distinction**, and most importantly: **4 of 8 grand pillars (Tiered Externalized Recursive Intelligence framework) are absent from paper**. Proposes Path 1b (small §14 edits) + Path 1c (new §15 Theoretical Frame). Cumulative S12+S13: 23 discoveries from 9 docs. |
 
 ---
 

@@ -1030,3 +1030,119 @@ This deliberate self-reference makes the paper an *artifact of the methodology i
 
 `(pending)`: Session 12b — Path 1 corrections applied (PAPER v0.7). 3 attribution corrections, 2 new content sections, theory deepenings, footer bump. The Idea-002 Creative Attribution Rule now demonstrably functional as a safety net.
 
+
+---
+
+## Session 13 — 2026-06-06 (Agent-Initiated: Re-Reading Batch 3, Path 2)
+
+**Trigger:** Fares replied "تمام" to Session 12b's 5-paths offer. Agent interpreted as authorization for **Path 2** (continue re-reading exercise) since that was Session 12b's explicit recommendation.
+
+### السبب وراء القرار
+
+من Session 12b HANDOFF agent recommendation:
+> "**Path 2 first** (continue re-reading) — Session 12 batch 1+2 produced **12 discoveries from 5 docs** (~2.4/doc yield). Extrapolating: another 5-doc batch could surface ~10-12 more, potentially including more attribution corrections."
+
+والتوقع تحقق: 4 docs → 11 discoveries (~2.75/doc) — yield أعلى من المتوقع.
+
+### ما تم — Reading
+
+4 of 5 priority queue docs (~1,912 lines):
+1. `GENESIS_Self_Benchmarking_Theory_AR.md` (454)
+2. `GENESIS_Meta_Theory_AR.md` (477) ← **the biggest single discovery**
+3. `GENESIS_Contradiction_Theory_AR.md` (469)
+4. `GENESIS_Agent_Identity_Theory_AR.md` (512)
+
+Cumulative S12+S13: **9 of 122 docs read (7.4%); 4,112 lines re-read.**
+
+### ما تم — Writing
+
+`PAPER/notes/INTERNAL_RE_READING_SESSION_13.md` (~600 lines):
+- 4 sub-section findings reports
+- Synthesis table: **11 major discoveries**
+- 14 paper-level proposals (5 minor + 4 substantive + 3 future-work + 2 theory-file updates)
+- Meta-finding about paper operating within a larger unacknowledged frame
+- 4-path decision tree for Fares
+
+### Top 3 Discoveries (subjective ranking)
+
+#### #15 — 4 of 8 Grand Pillars Absent from Paper (COVERAGE GAP — HUGE)
+
+Meta-Theory §7 establishes 8 grand pillars for "Tiered Externalized Recursive Intelligence":
+1. Concept Formation ✅ (cited in §8.5.7)
+2. Productive Forgetting ✅ (cited in Theory-10 P6)
+3. **Contradiction Management ❌ NOT IN PAPER**
+4. Anomaly/Crisis/Paradigm ✅ (cited in §8.6)
+5. Cognitive Economy ✅ (Layer 1 §12.2)
+6. **Local Theory Building ❌ NOT IN PAPER**
+7. **Self-Benchmarking ❌ NOT IN PAPER**
+8. **Agent Identity ❌ NOT IN PAPER** (despite §14 Ethics gesturing toward it)
+
+The paper currently does not even name the project's theoretical framework: "**Tiered Externalized Recursive Intelligence**" (Meta-Theory §2).
+
+#### #22 — §14.4 Open Question RESOLVED via Agent Identity Theory §12 (PROFOUND)
+
+§14.4 asks: "When an agent is delegated the choice of what to research next, whose contribution is the result?" We adopted conservative position (Layer 2) but said it might become inadequate.
+
+Agent Identity §12 provides clean distinction:
+- **Delegated Cognition** = computation by another party, operating under MY policy signature + commitment ledger + accountability chain → legitimately MY contribution
+- **External Advice** = external computation, NOT part of self until adoption + integration + provenance attachment
+
+Applied: Theory-10 formalization is *Delegated Cognition* (operating under Fares's commitments) = legitimately Fares's via A. The §14.4 "open question" can be partially closed using Fares's own framework, predating it.
+
+#### #21 — §14 Ethics IS Agent Identity Theory Applied (CITATION GAP)
+
+§14 wrestles with the questions Agent Identity Theory §1 already articulated (responsibility for past decisions, when change is continuity vs replacement, sub-agent vs tool status). §14 currently does not cite Agent Identity Theory. This is the same kind of citation gap Session 12 found for Theory-08/10/Phil-07.
+
+### Other Key Discoveries (8 more)
+
+- #13: Benchmark Object vs Environment Object distinction (110-point gap partly env-attributable)
+- #14: Anomaly→Test conversion as missing operational bridge (Track A.6 candidate)
+- #16: Meta-Theory §3 intelligence definition is paper's missing operational anchor
+- #17: Phil-07 is special case of Meta-Law 10 ("redesign frame, not just contents")
+- #18: "Epistemic Artifact" as proper unit of measurement (we've produced 11; paper counts none)
+- #19: Contradiction Theory bridges Concept Formation and Anomaly Theory (Indicators D+G not independent)
+- #20: Contradiction Ledger as crisis predictor (Hyp D, falsifiable, Future Work)
+- #23: Session 12→12b is first documented identity-drift correction in this project
+
+### Design Decisions
+
+1. **No PAPER.md edits in Session 13.** Same precedent as Session 12: research session, propose → authorize → execute chain preserved.
+2. **4-path decision tree offered** instead of unilateral execution.
+3. **Path 1c (new §15 Theoretical Frame)** explicitly recommended as agent's top pick because:
+   - It is the single biggest theoretical-depth gain available
+   - Every piece is already authored by Fares (just not placed in paper)
+   - No new experiments needed
+   - It elevates GENESIS from "self-contained system" to "instance of a broader research program"
+
+### Statistics
+
+| Metric | S12 | S13 | Total |
+|---|---|---|---|
+| Docs read | 5 | 4 | 9 of 122 |
+| Lines re-read | 2,200 | 1,912 | 4,112 |
+| Major discoveries | 12 | 11 | **23** |
+| Attribution corrections | 3 (applied S12b) | 1 (pending) | 4 |
+| Paper section candidates | 4 (2 applied) | 4 | 8 |
+| Theory candidates | 5 | 2 | 7 |
+| Falsifiable predictions | 1 | 1 | 2 |
+| PAPER.md edits | 0 | 0 | (S12b applied 3 corrections + 2 sections) |
+| Runs | 0 | 0 | 0 |
+| API calls | 0 | 0 | 0 |
+
+### PAPER.md Version
+
+**v0.7 unchanged.** Session 13 is research-only.
+
+### Open Decisions for Next Session
+
+Four paths (refined from Session 12b):
+- **Path 1b**: Apply small §14 edits (cite Agent Identity Theory, partially close §14.4 via §12 distinction). PAPER v0.7 → v0.7.1.
+- **Path 1c**: Apply substantive §15 "Theoretical Frame" addition (8 pillars, intelligence definition, maturity ladder, Table 18 Epistemic Artifact Inventory). PAPER v0.7 → v0.8. **AGENT'S TOP PICK.**
+- **Path 2**: Continue re-reading batch 4 (Local Theory Building, Cognitive_Economy_Ledger spec, others).
+- **Path 3**: Draft a new Theory-NN candidate.
+- **Path 4**: Idea-003 from Fares.
+
+### Commit المتوقع
+
+`(pending)`: Session 13 — Re-reading batch 3 (Path 2). 4 docs read; 11 discoveries; profound resolution of §14.4 open question via Agent Identity Theory §12. Cumulative 23 discoveries from 9 docs. No PAPER.md edits (research session by design).
+
