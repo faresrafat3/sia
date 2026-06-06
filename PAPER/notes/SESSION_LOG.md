@@ -1867,3 +1867,51 @@ Added qualification that concept formation helps conditionally. Five conditions 
 ### Commit
 
 `a06f077` (paper v0.8.2)
+
+
+### Session 14 — Phase 5: Theory-13 Integration (v0.8.2→v0.9)
+
+**Trigger:** Continuation under existing session delegation. GEM 31 from batch 4 re-reading identified Negative Memory as a first-class layer from `GENESIS_Memory_OS_Spec_AR.md` §4.7 + `GENESIS_Productive_Forgetting_Theory_AR.md` §13.4.
+
+### ما تم
+
+**1. Theory-13 standalone file** (`PAPER/theory/13_negative_memory.md`, 165 lines):
+- 4 axioms (Anti-Pattern Storage, Trigger-Gated Retrieval, Forgetting-Resistance, Negative Transfer Prediction)
+- 5 testable predictions (P1-P5)
+- 3 connections: Theory-10 (early termination of known-bad paths), Theory-07 (pipeline anti-patterns), §15.4 maturity stages
+- Empirical anchors: 5 scaffolding bugs, A3 anti-pattern, 35% empty content, reasoning saturation ratio
+- Attribution: Layer 1 (Fares-originated), Layer 2 (agent-formalized)
+
+**2. Theory-13 integrated into PAPER.md** across 7 locations:
+
+| Location | Change |
+|---|---|
+| **§7.3.1 NEW** | Full Theory-13 section (~20 lines): definition, axioms, empirical anchors, Theory-10/07 connections, 5 predictions |
+| **§1.5 #8** | Contribution item for Theory-13 |
+| **§11 Conclusion** | Theory-13 in theory list + final paragraph |
+| **§15.2 Pillars** | Productive Forgetting row updated to reference Theory-13 |
+| **Table 18** | Expanded 11 → **12 epistemic artifacts** (row 12: Theory-13) |
+| **Appendix C** | Theory-13 row added |
+| **§10 Track A.8 NEW** | Future Work track for Negative Memory implementation |
+
+**3. Paper version bump:** v0.8.2 → **v0.9**
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| New theory file | 1 (Theory-13, 165 lines) |
+| PAPER.md sections modified | 7 (§7.3.1 new, §1.5, §11, §15.2, Table 18, Appendix C, §10 A.8) |
+| New PAPER.md lines | ~35 |
+| Internal theories now | **5** (07, 08, 09, 10, 13) |
+| Epistemic artifacts | 11 → **12** |
+| Runs | 0 |
+| API calls | 0 |
+
+### Key Insight
+
+Theory-13 is the first theory in the stack that is *forward-looking*: it doesn't explain why GENESIS fails (theories 07-10 do that), but how a system can *avoid repeating known failures*. This converts the project's bug history (5 scaffolding bugs, A3 anti-pattern, reasoning saturation) from empirical baggage into structured epistemic assets. Negative Memory entries are not debugging logs — they are compressed anti-patterns with trigger conditions, indexed for selective retrieval.
+
+### Commit
+
+`78b5305` (paper v0.9 — Theory-13 integrated as fifth internal theory)

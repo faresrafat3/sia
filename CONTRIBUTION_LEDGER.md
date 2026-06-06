@@ -1,6 +1,6 @@
 # 📒 CONTRIBUTION_LEDGER — Single Source of Truth for Attribution
 
-**Last updated:** 2026-06-06 (after Session 14 complete — v0.8.2)
+**Last updated:** 2026-06-07 (after Session 14 complete — v0.9 Theory-13)
 **Companion docs:** `PROJECT_README.md` · `MASTER_TIMELINE.md` · `PAPER.md` §12.2 · `PAPER/ideas/ATTRIBUTION_MAP.md`
 **Governing rule:** Idea-002 Creative Attribution Rule (PAPER_PROTOCOL §12.2)
 
@@ -83,6 +83,21 @@
 | **Commit when first drafted** | `4bf2773` (originally framed as agent-initiated) |
 | **Commit when re-attributed** | `43868ee` (S12b — corrected to "agent-formalized, Fares-originated") |
 | **Commit when P6 added** | `43868ee` (S12b — novel prediction not in T5.93/T5.94) |
+
+### Theory-13 — Negative Memory as Epistemic Safety Net
+| Field | Value |
+|---|---|
+| **Layer** | **Layer 2** (agent-formalized, Fares-originated) |
+| **Originator (concept)** | **F.** — Memory OS Spec §4.7 (Negative Memory as first-class layer) + Productive Forgetting Theory §13.4 (negative memory primitive), pre-2026 |
+| **Trigger for formalization** | A. (Session 14 batch 4 re-reading) — GEM 31 surfaced Negative Memory as spec'd component, not just concept |
+| **Formalizer** | A. (Session 14 Phase 5) — wrote 165-line theory file with 4 axioms + 5 testable predictions |
+| **Authorizer** | F. (continuation under existing S14 delegation pattern) |
+| **Fares precursor in foundational docs?** | **YES (two)** — `GENESIS_Memory_OS_Spec_AR.md` §4.7 + `GENESIS_Productive_Forgetting_Theory_AR.md` §13.4 (discovered Session 14 batch 4, GEM 31) |
+| **File** | `PAPER/theory/13_negative_memory.md` (165 lines) |
+| **Paper appearances** | §7.3.1 (NEW), §1.5 #8, §11, §15.2, Table 18 (row 12), Appendix C, §10 Track A.8 |
+| **Commit when authored** | `19f74f6` (standalone theory file) |
+| **Commit when integrated** | `78b5305` (paper v0.9 — Theory-13 integrated as fifth internal theory) |
+| **Theory connections** | Theory-10 (early termination of known-bad paths), Theory-07 (pipeline anti-patterns as Negative Memory candidates) |
 
 ---
 
@@ -210,10 +225,11 @@
 | §12.4 What this is for | Layer 2 | A. | S11 |
 | §13 Acknowledgments | Layer 2 | A. drafted | S11 |
 | §14 Ethics of Authorship | Layer 2 | A. drafted | S11 |
-| §14.4 Open question | Layer 2 (open); **Session 13 surfaced partial resolution via Agent Identity §12 — NOT YET APPLIED to paper** | A. (original); resolution awaits Path 1b authorization | S11 (S13 proposed but not yet applied) |
+| §14.4 Open question | **Layer 2 (PARTIALLY RESOLVED S14)** via Agent Identity Theory §12 Delegated/External distinction | A. (original); resolution applied S14 Phase 2 | **S14 (`6dde4a8`)** |
 | **§15 Theoretical Frame: TERI** | **Layer 1 (Fares-originated framework) + Layer 2 (agent-placed)** | **F.** authored all content in `GENESIS_Meta_Theory_AR.md` (pre-2026); **A.** placed into paper S14 | **S14 (`b86af6b`)** |
 | **§14.1 + §14.4 (Ethics update)** | **Layer 1 (Fares-originated framework) + Layer 2 (agent-placed)** | **F.** authored Agent Identity Theory §12 distinction (pre-2026); **A.** applied to §14 S14 | **S14 (`6dde4a8`)** |
 | **§15.2 + §15.4 + §8.5.8 (sharpened)** | **Layer 1 (Fares-originated) + Layer 2 (agent-placed)** | **F.** authored Local Theory Building §11, Concept Selectivity §8, Core Ontology §5 (pre-2026); **A.** placed into paper S14 | **S14 (`a06f077`)** |
+| **§7.3.1 + §1.5 #8 + §11 + §15.2 + Table 18 + Appendix C + Track A.8 (Theory-13)** | **Layer 1 (Fares-originated) + Layer 2 (agent-placed)** | **F.** authored Memory OS §4.7 + Productive Forgetting §13.4 (pre-2026); **A.** formalized as Theory-13 and integrated S14 Phase 5 | **S14 (`78b5305`)** |
 | Appendix A Experiment Details | Layer 2 | A. | S3 |
 | Appendix B Cross-Reference to Thefts | Layer 2 | A. | S10 |
 | Appendix C Cross-Reference to Internal Theories | Layer 2 | A. | S9 |
@@ -295,22 +311,22 @@ Before adding any new artifact (Theory-11, Phil-08, T5.95, new paper section), a
 
 | Check | Result |
 |---|---|
-| Every Theory-NN in `PAPER/theory/` has a row in §1 | ✅ 4 rows (07/08/09/10), 4 files |
+| Every Theory-NN in `PAPER/theory/` has a row in §1 | ✅ 5 rows (07/08/09/10/13), 5 files |
 | Every Phil-NN in `PAPER/philosophy/` has a row in §2 | ✅ 1 row (07), 1 file |
 | Every Idea-NNN in `PAPER/ideas/` has a row in §3 | ✅ 2 rows (001/002), 2 files |
 | Every theft 5.91-5.94 has a row in §4 | ✅ 4 rows (91/92/93/94) |
 | §6 verbatim utterances match `PAPER.md` §12.3 | ✅ all 9 rows present (8 in §12.3 + 1 for S13.5) |
 | §7 corrections match `PAPER.md` §12.2 + ATTRIBUTION_MAP | ✅ 3 corrections applied, marked in both |
 | Pending corrections (§7) match `PAPER/notes/HANDOFF.md` paths | ✅ Path 1b + Path 1c noted |
-| PAPER.md version v0.7 matches version footer | ✅ |
+| PAPER.md version matches version footer | ✅ Both v0.9 |
 | Master Index scope 5.1-5.94 matches T5.NN entries | ✅ |
-| All 11 epistemic artifacts (Discovery #18, S13) accounted for | ✅ 4 theories + 1 phil + 4 thefts + 2 ideas = 11 |
+| All 12 epistemic artifacts (Discovery #18, S13 + Theory-13 S14) accounted for | ✅ 5 theories + 1 phil + 4 thefts + 2 ideas = 12 |
 
 ### Additional 8 checks (added S13.6 after audit)
 
 | Check | Result |
 |---|---|
-| PAPER.md header version matches footer version | ✅ Both v0.7 (was v0.2 in header — fixed S13.6 C1) |
+| PAPER.md header version matches footer version | ✅ Both v0.9 (was v0.2 in header — fixed S13.6 C1) |
 | PAPER.md authors line matches §12.1 (sole author F., not "Fares + Agent") | ✅ Fixed S13.6 C2 |
 | Figure/table claims in §12.2 match actual file counts (12 fig + 8 tab) | ✅ Fixed S13.6 C3 |
 | PROJECT_README file map covers every root directory | ✅ Fixed S13.6 C6 |
@@ -319,7 +335,7 @@ Before adding any new artifact (Theory-11, Phil-08, T5.95, new paper section), a
 | "Sessions completed" claim matches MASTER_TIMELINE entries | ✅ Fixed S13.6 C4 (now "1 through 13.6") |
 | Foundational docs in repo (122) match PROJECT_README claim | ✅ + 9 priority docs labeled (Fixed S13.6 C10+C11) |
 
-### Total: **18 consistency checks, all green as of Session 13.6**
+### Total: **18 consistency checks, all green as of Session 14 (v0.9)**
 
 If any future consistency check fails, update both this ledger and the diverging document, and add a note to `MASTER_TIMELINE.md` about the discrepancy. Run a full audit (S13.6-style) before any version bump that touches PAPER.md, before any external sharing, or every ~5 sessions.
 

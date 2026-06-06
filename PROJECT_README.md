@@ -1,9 +1,9 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-06 (after Session 14 complete
+**Last updated:** 2026-06-07 (after Session 14 complete — v0.9 Theory-13)
 **Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
-**Current paper version:** **v0.8.2** (`PAPER.md`) — §15 TERI Frame + §14 Ethics + §15 sharpened
+**Current paper version:** **v0.9** (`PAPER.md`) — Theory-13 Negative Memory integrated as fifth internal theory
 **Current mode:** Theoretical Mode (v2.0 of `PAPER_PROTOCOL.md`)
 **Last consistency audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md` for full findings; 3 critical issues fixed in PAPER.md, 11 documentation issues fixed in master docs
 
@@ -154,12 +154,13 @@ GENESIS/                                       # repo root
 │   │   ├── idea_001_leap_agentic_framework_for_formal_math.md
 │   │   └── idea_002_creative_attribution_rule.md
 │   │
-│   ├── theory/                                # 4 internal theory files + README
+│   ├── theory/                                # 5 internal theory files + README
 │   │   ├── README.md
 │   │   ├── 07_pipeline_as_memory_vs_decision_injection.md
 │   │   ├── 08_feedback_value_determinism_scope.md
 │   │   ├── 09_anticipatory_concepts_vs_lemmas.md
-│   │   └── 10_reasoning_saturation.md         # Includes P6 lifetime-drift (added S12b)
+│   │   ├── 10_reasoning_saturation.md         # Includes P6 lifetime-drift (added S12b)
+│   │   └── 13_negative_memory.md              # ⭐ NEW S14 — Negative Memory as Epistemic Safety Net
 │   │
 │   ├── philosophy/                            # 1 philosophy file + README
 │   │   ├── README.md
@@ -256,7 +257,7 @@ The repo contains **two distinct project layers** that should not be confused:
 ### LIVE — actively under discussion
 | Item | Status |
 |---|---|
-| `PAPER.md` v0.8.2 | Latest version (S14: §15 TERI Frame + §14 Ethics + §15 sharpened — dependency chain, Four Tests, zero-concept caveat) |
+| `PAPER.md` v0.9 | Latest version (S14: §15 TERI Frame + §14 Ethics + §15 sharpened + Theory-13 Negative Memory — fifth internal theory) |
 | Re-reading exercise | Active; 14 of 122 docs read; 37 cumulative discoveries from S12-S14 |
 | Session 14 complete | 7 commits, 3 paper version bumps (v0.7→v0.8→v0.8.1→v0.8.2) |
 
@@ -285,8 +286,8 @@ The repo contains **two distinct project layers** that should not be confused:
 | Tests passing | 663/663 | local |
 | Master Index theft scope | 5.1–5.94 | `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md` |
 | Sessions completed | 1 through 14 (7 S14 sub-phases, 13 numbered + 12b + 13.5 + 13.6 + 13.7 + 13.8 + 13.9 + 14) | this README + MASTER_TIMELINE |
-| Epistemic artifacts produced | **11** (4 theories + 1 philosophy + 4 thefts + 2 ideas) | computed S13 |
-| Foundational docs in repo | **122** (9 re-read since S12; 113 remaining in queue) | `ls GENESIS_*.md` |
+| Epistemic artifacts produced | **12** (5 theories + 1 philosophy + 4 thefts + 2 ideas) | computed S14 |
+| Foundational docs in repo | **122** (14 re-read since S12; 108 remaining in queue) | `ls GENESIS_*.md` |
 
 ---
 
@@ -353,6 +354,7 @@ These files have appeared in `git status` as modified in past sessions but are N
 | "What is the project's theoretical name?" | PAPER.md §15 → **Tiered Externalized Recursive Intelligence** (placed S14, from `GENESIS_Meta_Theory_AR.md` §2) |
 | "What is intelligence in this framework?" | PAPER.md §15.1 → "organized adaptive epistemic control under bounded resources" |
 | "What are the 8 grand pillars?" | PAPER.md §15.2 |
+| "How many internal theories?" | 5: Theory-07, Theory-08, Theory-09, Theory-10, Theory-13 (Negative Memory, added v0.9) |
 | "What did Fares say in Session N?" | `PAPER/notes/SESSION_LOG.md` + `PAPER.md` §12.3 |
 | "Why is Theory-10 attributed the way it is?" | `CONTRIBUTION_LEDGER.md` + `PAPER.md` §12.2 Layer 1+2 + `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` |
 | "What are the pending decisions?" | `PAPER/notes/HANDOFF.md` "Next" section |

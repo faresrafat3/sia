@@ -1,6 +1,6 @@
 # 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 14)
 
-**Last updated:** 2026-06-06 (after Session 14 complete — §15 TERI Frame + §14 Ethics + Re-reading batch 4 + §15 sharpened)
+**Last updated:** 2026-06-07 (after Session 14 complete — §15 TERI + §14 Ethics + batch 4 + §15 sharpened + Theory-13 → v0.9)
 **Companion docs:** `PROJECT_README.md` (overview) · `CONTRIBUTION_LEDGER.md` (attribution) · `PAPER/notes/SESSION_LOG.md` (raw verbose log) · `PAPER.md` §12.3 (verbatim Arabic utterances)
 
 This is the **canonical narrative** of how the paper came to exist. If you want to understand any single decision, find the session below where it was made.
@@ -354,6 +354,31 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 
 **Commit:** `b86af6b` (paper v0.8).
 
+#### Phase 2 — §14 Ethics Update (v0.8→v0.8.1)
+**Trigger:** Fares: *"القرار قرارك"* (delegation #15).
+**Done:** Agent Identity Theory citation in §14 intro + §14.1; §14.4 renamed "partially resolved" with Delegated Cognition / External Advice distinction. All 4 attribution corrections now complete.
+**Commit:** `6dde4a8` (paper v0.8.1).
+
+#### Phase 3 — Re-reading Batch 4 (14 discoveries)
+**Trigger:** Fares: *"2 تمام"* (delegation #16).
+**Done:** Read 5 docs (~2,820 lines): Local Theory Building, Cognitive Economy Ledger & Tier Router, Core Ontology, Memory OS, Concept Selectivity. 14 discoveries (GEMs 24-33, Discoveries 34-37). Cumulative: 37 from 14/122 docs.
+**Commit:** `f1e79b3`.
+
+#### Phase 4 — §15 Sharpened (v0.8.1→v0.8.2)
+**Trigger:** Fares: *"القرار قرارك"* (delegation #17).
+**Done:** Dependency chain (§15.2), Four Tests (§15.4), zero-concept caveat (§8.5.8).
+**Commit:** `a06f077` (paper v0.8.2).
+
+#### Phase 5 — Theory-13 Integration (v0.8.2→v0.9)
+**Trigger:** Continuation under existing delegation. GEM 31 from batch 4.
+**Done:**
+- Theory-13 standalone file: `PAPER/theory/13_negative_memory.md` (165 lines, 4 axioms, 5 predictions)
+- Integrated into PAPER.md across 7 locations: §7.3.1 NEW, §1.5 #8, §11, §15.2, Table 18 (11→12), Appendix C, Track A.8
+- Theory-13 = fifth internal theory, connects Theory-10 (early termination) + Theory-07 (anti-patterns)
+- Attribution: Layer 1 (Fares-originated — Memory OS §4.7 + Productive Forgetting §13.4); Layer 2 (agent-formalized)
+- Paper version: v0.8.2 → **v0.9**
+**Commit:** `78b5305` (paper v0.9).
+
 ---
 
 ## Quick reference table — every session in one row
@@ -378,7 +403,7 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 | 13.6 | ~Jun 6 | "وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه" | Audit | AUDIT_REPORT_S13.6 + 3 critical PAPER.md fixes (header, authors, table count) + 7 medium fixes; CONTRIBUTION_LEDGER §9 from 10→18 checks | `eb58198` |
 | 13.8 | ~Jun 6 | "عايزك تشتغل علي المشروع... وعلي الكلام ده بنفسك" + "عايزك تعمل ال push" | Theoretical+Implementation | Ninja Excavator Report (602 lines, 3-loop analysis) + 5 new modules (ladder_ascent, semantic_verifier, value_computation, theory_executables, enhanced_pipeline) + 102 new tests (619 total) + 4,891 lines | `5878235`, `198717f` |
 | 13.9 | ~Jun 6 | "تمام طيب كمل" (continuation) | Technical Debt Cleanup | Locked Values Config (immutable frozen dataclass) + Semantic Grounding v2.0 (structural analysis replaces keyword matching) + singleton reset functions for all 4 modules + enhanced pipeline uses locked values + 44 new tests (663 total) + doc chain updated | `31186bf` |
-| **14** | **~Jun 6** | **Multiple delegations** | **Theoretical** | **PAPER v0.7->v0.8->v0.8.1->v0.8.2. Section 15 TERI + Section 14 Ethics + Section 15 sharpened. Re-reading batch 4 (5 docs, 14 discoveries). 7 commits.** | **a06f077** |
+| **14** | **~Jun 6** | **Multiple delegations** | **Theoretical** | **PAPER v0.7→v0.8→v0.8.1→v0.8.2→v0.9. §15 TERI + §14 Ethics + batch 4 re-reading + §15 sharpened + Theory-13 integration. 5 phases. 9 commits.** | **78b5305** |
 | 13.7 | ~Jun 6 | "عايزك تحصي ليا ايه الحاجات القديمه ... وبرضو شفت كل اللي صلحته ده اعملي حاجه عشان ال agent اللي تيجي تشتغل عليه ثاني" | Cleanup+Manual | CLEANUP_INVENTORY_S13.7 (104/122 unreferenced docs, 22 sections, 96 MB virtual_genesis decision flagged) + AGENT_OPERATING_MANUAL (17 sections, 8 non-negotiable rules, 6 common mistakes from real history) | `82bacd9` |
 
 ---
