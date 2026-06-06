@@ -1,9 +1,9 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-06 (after Session 14 — §15 TERI Frame + §14 Ethics update)
+**Last updated:** 2026-06-06 (after Session 14 complete
 **Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
-**Current paper version:** **v0.8.1** (`PAPER.md`) — §15 TERI Frame + §14 Ethics updated
+**Current paper version:** **v0.8.2** (`PAPER.md`) — §15 TERI Frame + §14 Ethics + §15 sharpened
 **Current mode:** Theoretical Mode (v2.0 of `PAPER_PROTOCOL.md`)
 **Last consistency audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md` for full findings; 3 critical issues fixed in PAPER.md, 11 documentation issues fixed in master docs
 
@@ -59,7 +59,7 @@ The propose → authorize → execute chain has run successfully **twice** (Sess
 1. This file
 2. `PAPER/notes/HANDOFF.md` (operational current state, 6 open paths)
 3. `MASTER_TIMELINE.md` (full chronological story, Sessions 1 through 14)
-4. `PAPER.md` v0.8 (the paper itself)
+4. `PAPER.md` v0.8.2 (the paper itself)
 
 ### If you are a new agent / new session
 1. This file
@@ -256,10 +256,9 @@ The repo contains **two distinct project layers** that should not be confused:
 ### LIVE — actively under discussion
 | Item | Status |
 |---|---|
-| `PAPER.md` v0.8 | Latest version (Session 14 added §15 TERI Frame + Table 18; Session 12b corrected attribution + §8.5.7/§8.6) |
-| Session 14 bug: §8.5.4 keyword injection | Awaiting fix authorization |
-| Session 13 pending discoveries (§14 edits) | Awaiting Fares decision: Path 1b / Path 2 / Path 3 / Path 4 / Path 5 |
-| Internal re-reading exercise (Option F) | Active; 9 of 122 docs read; 23 cumulative discoveries |
+| `PAPER.md` v0.8.2 | Latest version (S14: §15 TERI Frame + §14 Ethics + §15 sharpened — dependency chain, Four Tests, zero-concept caveat) |
+| Re-reading exercise | Active; 14 of 122 docs read; 37 cumulative discoveries from S12-S14 |
+| Session 14 complete | 7 commits, 3 paper version bumps (v0.7→v0.8→v0.8.1→v0.8.2) |
 
 ### DEFERRED — infrastructure ready, execution paused
 | Item | Status |
@@ -285,7 +284,7 @@ The repo contains **two distinct project layers** that should not be confused:
 | T5.94 length-vs-accuracy correlation | r = −0.54 | Chen et al. on GPT-OSS + GPQA |
 | Tests passing | 663/663 | local |
 | Master Index theft scope | 5.1–5.94 | `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md` |
-| Sessions completed | 1 through 14 (13 numbered + 12b + 13.5 + 13.6 + 13.7 + 13.8 + 13.9 + 14) | this README + MASTER_TIMELINE |
+| Sessions completed | 1 through 14 (7 S14 sub-phases, 13 numbered + 12b + 13.5 + 13.6 + 13.7 + 13.8 + 13.9 + 14) | this README + MASTER_TIMELINE |
 | Epistemic artifacts produced | **11** (4 theories + 1 philosophy + 4 thefts + 2 ideas) | computed S13 |
 | Foundational docs in repo | **122** (9 re-read since S12; 113 remaining in queue) | `ls GENESIS_*.md` |
 

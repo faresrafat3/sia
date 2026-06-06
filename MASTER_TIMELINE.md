@@ -1,6 +1,6 @@
-# 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 13)
+# 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 14)
 
-**Last updated:** 2026-06-06 (after Session 14 — §15 TERI Frame + §14 Ethics update)
+**Last updated:** 2026-06-06 (after Session 14 complete — §15 TERI Frame + §14 Ethics + Re-reading batch 4 + §15 sharpened)
 **Companion docs:** `PROJECT_README.md` (overview) · `CONTRIBUTION_LEDGER.md` (attribution) · `PAPER/notes/SESSION_LOG.md` (raw verbose log) · `PAPER.md` §12.3 (verbatim Arabic utterances)
 
 This is the **canonical narrative** of how the paper came to exist. If you want to understand any single decision, find the session below where it was made.
@@ -378,7 +378,7 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 | 13.6 | ~Jun 6 | "وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه" | Audit | AUDIT_REPORT_S13.6 + 3 critical PAPER.md fixes (header, authors, table count) + 7 medium fixes; CONTRIBUTION_LEDGER §9 from 10→18 checks | `eb58198` |
 | 13.8 | ~Jun 6 | "عايزك تشتغل علي المشروع... وعلي الكلام ده بنفسك" + "عايزك تعمل ال push" | Theoretical+Implementation | Ninja Excavator Report (602 lines, 3-loop analysis) + 5 new modules (ladder_ascent, semantic_verifier, value_computation, theory_executables, enhanced_pipeline) + 102 new tests (619 total) + 4,891 lines | `5878235`, `198717f` |
 | 13.9 | ~Jun 6 | "تمام طيب كمل" (continuation) | Technical Debt Cleanup | Locked Values Config (immutable frozen dataclass) + Semantic Grounding v2.0 (structural analysis replaces keyword matching) + singleton reset functions for all 4 modules + enhanced pipeline uses locked values + 44 new tests (663 total) + doc chain updated | `31186bf` |
-| **14** | **~Jun 6** | **"تمام اللي انت شايفه" (delegation)** | **Theoretical** | **PAPER §15 TERI Frame (~110 lines, 6 sub-sections, Table 18). 8 pillars mapped (4 absent), 7-layer architecture, maturity ladder. v0.7→v0.8** | **`b86af6b` (v0.8)** |
+| **14** | **~Jun 6** | **Multiple delegations** | **Theoretical** | **PAPER v0.7->v0.8->v0.8.1->v0.8.2. Section 15 TERI + Section 14 Ethics + Section 15 sharpened. Re-reading batch 4 (5 docs, 14 discoveries). 7 commits.** | **a06f077** |
 | 13.7 | ~Jun 6 | "عايزك تحصي ليا ايه الحاجات القديمه ... وبرضو شفت كل اللي صلحته ده اعملي حاجه عشان ال agent اللي تيجي تشتغل عليه ثاني" | Cleanup+Manual | CLEANUP_INVENTORY_S13.7 (104/122 unreferenced docs, 22 sections, 96 MB virtual_genesis decision flagged) + AGENT_OPERATING_MANUAL (17 sections, 8 non-negotiable rules, 6 common mistakes from real history) | `82bacd9` |
 
 ---

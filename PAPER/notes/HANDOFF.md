@@ -1,8 +1,8 @@
 # 📋 HANDOFF — آخر حالة للمشروع
 
-**آخر تحديث:** 2026-06-06 (Session 14 — §15 Theoretical Frame)
-**آخر commit:** `6dde4a8` (paper v0.8.1 §14 + §15)
-**PAPER version:** **v0.8.1** (§15 TERI Frame + §14 Ethics updated with Agent Identity Theory)
+**آخر تحديث:** 2026-06-06 (Session 14 — complete (§15 TERI Frame + §14 Ethics + Re-reading batch 4 + §15 sharpened))
+**آخر commit:** `a06f077` (paper v0.8.2 — Session 14 complete)
+**PAPER version:** **v0.8.2** (§15 TERI Frame + §14 Ethics + batch 4 re-reading + §15 sharpened)
 **Mode:** Theoretical (v2.0)
 **Last audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md`
 **Last cleanup inventory:** Session 13.7 — see `CLEANUP_INVENTORY_S13.7.md`
@@ -75,7 +75,7 @@ These 8 docs replace the need to read 13+ session logs to get oriented. **`AGENT
 ### Master Index thefts (5.1-5.94)
 - T5.91 (ours), T5.92 (LEAP), T5.93 (Wu), T5.94 (Chen UVA+Google)
 
-### PAPER.md v0.8
+### PAPER.md v0.8.2
 - Sections 1-15 + Appendices A-D
 - §8.5 sub-sections 1-8
 - §8.6 Hidden Crisis Diagnostic
@@ -130,20 +130,27 @@ The 5 paths from Session 13 remain open. **Session 13.7 adds a NEW Path A0: clea
 ### ~~Path 1b~~ — ✅ DONE (Session 14) — §14 Ethics updated
 **Added:** Agent Identity Theory citation in §14 intro + §14.1; §14.4 renamed "partially resolved open question" with Delegated Cognition / External Advice distinction. v0.8 → v0.8.1. Commit `6dde4a8`.
 
-### Path 2 — Continue re-reading batch 4 (5+ more foundational docs) ⭐ TOP PICK
+### ~~Path 2~~ — ✅ DONE (Session 14) — Re-reading batch 4
+**Read:** 5 docs (~2,820 lines): Local Theory Building, Cognitive Economy Ledger & Tier Router, Core Ontology, Memory OS, Concept Selectivity. **14 major discoveries** (GEMs 24-33 + Discoveries 34-37). Cumulative: 37 discoveries from 14 of 122 docs. Commit `f1e79b3`.
 
-Remaining priority queue: Local Theory Building, Cognitive_Economy_Ledger spec, and 111 other foundational docs. Per S12+S13 yield rate (~2.55 discoveries/doc), batch 4 expected to surface 8-12 more discoveries.
+### ~~Path A (from batch 4)~~ — ✅ DONE (Session 14) — §15 sharpened
+**Added:** Dependency chain note (§15.2), Four Tests quality criterion (§15.4), zero-concept honest caveat (§8.5.8). v0.8.1 → v0.8.2. Commit `a06f077`.
+
+### Path 2 — Re-read batch 5 (5+ more foundational docs) ⭐ TOP PICK
+
+Next priority queue: Contradiction Ledger Spec, Anomaly/Crisis Manager Spec, Identity Object Spec, Evaluation Redesign, Module API Contracts, and 108 other foundational docs. Per S12-S14 yield rate (~2.65 discoveries/doc), batch 5 expected to surface 10-14 more discoveries.
 
 ### Path 3 — Draft a new Theory-NN candidate
 
-7 candidates now surfaced across S12 + S13:
+8 candidates now surfaced across S12 + S13 + S14:
 - Theory-11A: Reasoning Tier Asymmetry (Tiered Intelligence + Theory-10)
 - Theory-12A: Premium Compute Rule (Cognitive Economy §22)
 - Theory-11B: Task-Ontology Selection (Paradigm Layer 1 gap)
 - Theory-12B: Improvement Regime Taxonomy (Paradigm Layer 5 gap)
-- Theory-13: Negative Memory primitive (Productive Forgetting §13.4)
+- Theory-13: Negative Memory primitive (Memory OS §4.7 + Productive Forgetting §13.4 — now confirmed as *spec'd component*, not just theory)
 - 3-tier Value Framework (Cognitive Economy 7D → Theory-08 2D → Self-Benchmarking §10 4D)
 - Epistemic Artifact accounting (Meta-Theory §9)
+- System Integrity Invariants (Core Ontology §5 — 9 global invariants)
 
 ### Path 4 — Idea-003 from Fares
 
@@ -151,7 +158,7 @@ INBOX empty. Any source (paper link, idea, observation, question) gets full Idea
 
 ### Path 5 — Submission preparation
 
-Anonymization for double-blind venues + BibTeX bibliography + final figure formatting (some still ASCII). Cosmetic but increasingly viable now that paper has §§12-14 + §8.5.7 + §8.6.
+Anonymization for double-blind venues + BibTeX bibliography + final figure formatting (some still ASCII). Cosmetic but increasingly viable now that paper has §§12-15 + §8.5.7 + §8.6.
 
 ---
 
@@ -164,10 +171,14 @@ Anonymization for double-blind venues + BibTeX bibliography + final figure forma
 - LEAP vs GENESIS gap: **110 points**
 - Reasoning saturation: 989 vs 6,836 median tokens
 - External validation (T5.94): r = −0.54 on same model family + GPQA
-- Tests: 463/463
+- Tests: 663/663
 - Master Index scope: **5.1–5.94**
-- **Paper version: v0.8.1**
-- Foundational docs in repo: **122** (9 re-read; 113 in queue)
+- **Paper version: v0.8.2**
+- Foundational docs in repo: **122** (14 re-read; 108 in queue)
+- Epistemic artifacts produced: **11** (4 theories + 1 phil + 4 thefts + 2 ideas) — inventoried in Table 18
+- Sessions completed: **14** (+ S12b + S13.5 + S13.6 + S13.7 + S13.8 + S13.9 = 20 total sub-sessions)
+- Delegation authorizations from Fares: **15** (preserved verbatim in CONTRIBUTION_LEDGER §6)
+- Cumulative discoveries from re-reading: **37** (from 14 of 122 foundational docs)
 - Epistemic artifacts produced: **11** (4 theories + 1 phil + 4 thefts + 2 ideas) — now inventoried in Table 18
 - Sessions completed: **14** (+ S12b correction + S13.5 documentation + S13.6 audit + S13.7 cleanup + S13.8 ninja + S13.9 tech debt)
 - Delegation authorizations from Fares: **14** (preserved verbatim in CONTRIBUTION_LEDGER §6)
@@ -180,7 +191,7 @@ Anonymization for double-blind venues + BibTeX bibliography + final figure forma
 2. Read this file (3 min)
 3. Read `CONTRIBUTION_LEDGER.md` if doing anything touching attribution (10 min)
 4. Read `MASTER_TIMELINE.md` if you want full context (15 min)
-5. Read `PAPER.md` v0.8.1 if doing paper edits (20 min)
+5. Read `PAPER.md` v0.8.2 if doing paper edits (20 min)
 6. Ask Fares: **"Path 1b (small §14 edits citing Agent Identity Theory), Path 2 (re-read batch 4), Path 3 (Theory-NN candidate), Path 4 (Idea-003), Path 5 (submission prep), or Path 6 (fix §8.5.4 keyword injection bug)?"**
 
 **Rules (non-negotiable):**

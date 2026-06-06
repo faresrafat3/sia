@@ -1796,3 +1796,74 @@ The attribution correction loop is now **complete**.
 ### Commit
 
 `6dde4a8` (paper v0.8.1 §14 Ethics update)
+
+
+### Session 14 — Phase 3: Re-reading Batch 4 (5 docs, 14 discoveries)
+
+**Trigger:** Fares: *"2 تمام"* (authorized Path 2 — continue re-reading).
+
+**Agent's choice:** Batch 4 — 5 priority docs: Local Theory Building, Cognitive Economy Ledger & Tier Router, Core Ontology, Memory OS, Concept Selectivity.
+
+### ما تم — Reading (5 docs, ~2,820 lines)
+
+| Doc | Lines | Key discovery |
+|---|---|---|
+| `GENESIS_Local_Theory_Building_AR.md` | 565 | GEM 24: Four Tests of theory; GEM 25: Self-Theory as Stage 6 mechanism |
+| `GENESIS_Cognitive_Economy_Ledger_And_Tier_Router_Spec_AR.md` | 608 | GEM 27: Premium must buy reusable cognition; GEM 28: 10 action classes |
+| `GENESIS_Core_Ontology_AR.md` | 747 | GEM 29: 9 Global Invariants; GEM 30: Promotion/Demotion lifecycle |
+| `GENESIS_Memory_OS_Spec_AR.md` | 611 | GEM 31: Negative Memory layer; GEM 32: 5 Retrieval Modes |
+| `GENESIS_Concept_Selectivity_Spec_AR.md` | 294 | GEM 33: Zero-Concept Conditions |
+
+### 14 discoveries total (GEMs 24-33 + Discoveries 34-37)
+
+Full enumeration in `PAPER/notes/INTERNAL_RE_READING_SESSION_14.md`.
+
+### Meta-finding
+
+The 122 foundational docs are not a pile of notes — they form a **complete system specification**. Core Ontology = the language (20 entity types); Memory OS = the substrate; Concept Formation + Selectivity = the abstraction engine; Local Theory Building = the theory engine; Economy Ledger = the resource governor. The 4 "absent" pillars aren't aspirational — they're *already specified*.
+
+### Cumulative statistics
+
+| Metric | S12 | S13 | S14 | Total |
+|---|---|---|---|---|
+| Docs read | 5 | 4 | 5 | **14 of 122** |
+| Lines re-read | 2,200 | 1,912 | 2,820 | **~6,932** |
+| Major discoveries | 12 | 11 | 14 | **37** |
+| Attribution corrections | 3 | 1 | 0 new | **4 (all applied)** |
+
+### Commit
+
+`f1e79b3` (research artifact only, no PAPER.md changes)
+
+
+### Session 14 — Phase 4: Path A — §15 Sharpened (v0.8.2)
+
+**Trigger:** Fares: *"القرار قرارك"* (delegation — agent chooses path).
+
+**Agent's choice:** Path A from batch 4 findings — 3 minor §15 edits.
+
+### ما تم — PAPER.md §15 edits (~8 lines added)
+
+**1. §15.2 — Dependency chain note (new paragraph):**
+Added that the 4 absent pillars form a dependency chain (Concept Selectivity → Core Ontology → Local Theory Building → Self-Benchmarking → Agent Identity), not independent gaps. Each has a specification predating the paper — gap is implementation, not conception.
+
+**2. §15.4 — Four Tests quality criterion (new paragraph):**
+Added that a mature local theory must satisfy: (1) compression, (2) explanation, (3) prediction, (4) prescription. From Local Theory Building doc §11. A theory satisfying only compression + explanation is storytelling, not theory.
+
+**3. §8.5.8 — Zero-concept honest caveat (new paragraph):**
+Added qualification that concept formation helps conditionally. Five conditions exist where NO concept should be activated. Indiscriminate activation is a failure mode. From Concept Selectivity doc §8.
+
+### Statistics
+
+| Metric | Count |
+|---|---|
+| PAPER.md paragraphs added | 3 |
+| New lines | ~8 |
+| Sections modified | §15.2, §15.4, §8.5.8 |
+| Paper version | v0.8.1 → **v0.8.2** |
+| Runs | 0 |
+| API calls | 0 |
+
+### Commit
+
+`a06f077` (paper v0.8.2)

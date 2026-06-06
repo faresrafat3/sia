@@ -1,6 +1,6 @@
 # 📒 CONTRIBUTION_LEDGER — Single Source of Truth for Attribution
 
-**Last updated:** 2026-06-06 (after Session 14 — §15 Theoretical Frame)
+**Last updated:** 2026-06-06 (after Session 14 complete — v0.8.2)
 **Companion docs:** `PROJECT_README.md` · `MASTER_TIMELINE.md` · `PAPER.md` §12.2 · `PAPER/ideas/ATTRIBUTION_MAP.md`
 **Governing rule:** Idea-002 Creative Attribution Rule (PAPER_PROTOCOL §12.2)
 
@@ -213,6 +213,7 @@
 | §14.4 Open question | Layer 2 (open); **Session 13 surfaced partial resolution via Agent Identity §12 — NOT YET APPLIED to paper** | A. (original); resolution awaits Path 1b authorization | S11 (S13 proposed but not yet applied) |
 | **§15 Theoretical Frame: TERI** | **Layer 1 (Fares-originated framework) + Layer 2 (agent-placed)** | **F.** authored all content in `GENESIS_Meta_Theory_AR.md` (pre-2026); **A.** placed into paper S14 | **S14 (`b86af6b`)** |
 | **§14.1 + §14.4 (Ethics update)** | **Layer 1 (Fares-originated framework) + Layer 2 (agent-placed)** | **F.** authored Agent Identity Theory §12 distinction (pre-2026); **A.** applied to §14 S14 | **S14 (`6dde4a8`)** |
+| **§15.2 + §15.4 + §8.5.8 (sharpened)** | **Layer 1 (Fares-originated) + Layer 2 (agent-placed)** | **F.** authored Local Theory Building §11, Concept Selectivity §8, Core Ontology §5 (pre-2026); **A.** placed into paper S14 | **S14 (`a06f077`)** |
 | Appendix A Experiment Details | Layer 2 | A. | S3 |
 | Appendix B Cross-Reference to Thefts | Layer 2 | A. | S10 |
 | Appendix C Cross-Reference to Internal Theories | Layer 2 | A. | S9 |
@@ -242,6 +243,9 @@ Every Layer-2 contribution traces back to one of these utterances by F. (preserv
 | 12 | S13.8 | *"عايزك تشتغل علي المشروع وعلي الكلام ده بنفسك"* + *"عايزك انت برضو تعمل ال push وكده"* | Ninja Excavator Gap Analysis + 3 Golden Bridges implementation + Theory Executables + Enhanced Pipeline | `5878235`, `198717f`, `95a0ea0` |
 | 13 | S13.9 | *"تمام طيب كمل"* (continuation delegation) | Technical Debt Cleanup: Locked Values Config, Semantic Grounding v2.0 (structural analysis), singleton reset functions, enhanced pipeline uses locked values | *(this commit)* |
 | 14 | S14 | *"تمام اللي انت شايفه"* (delegation — agent chooses path) | Path 1c: PAPER §15 Theoretical Frame (TERI). ~110 lines, 6 sub-sections, Table 18. v0.7→v0.8 | `b86af6b` |
+| 15 | S14 | *"القرار قرارك"* (delegation — agent chooses path) | Path 1b: §14 Ethics updated with Agent Identity Theory. v0.8→v0.8.1 | `6dde4a8` |
+| 16 | S14 | *"2 تمام"* (authorized Path 2) | Re-reading batch 4: 5 docs, 14 discoveries. Research only, no PAPER edits | `f1e79b3` |
+| 17 | S14 | *"القرار قرارك"* (delegation — agent chooses path) | Path A: §15 sharpened (dependency chain, Four Tests, zero-concept). v0.8.1→v0.8.2 | `a06f077` |
 
 **The chain is auditable.** Every PAPER.md edit and every theoretical artifact can be traced through this table to an explicit Fares utterance.
 
