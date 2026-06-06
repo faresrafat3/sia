@@ -1,6 +1,6 @@
 # 📒 CONTRIBUTION_LEDGER — Single Source of Truth for Attribution
 
-**Last updated:** 2026-06-06 (after Session 13.7 Cleanup Inventory + Agent Operating Manual)
+**Last updated:** 2026-06-06 (after Session 14 — §15 Theoretical Frame)
 **Companion docs:** `PROJECT_README.md` · `MASTER_TIMELINE.md` · `PAPER.md` §12.2 · `PAPER/ideas/ATTRIBUTION_MAP.md`
 **Governing rule:** Idea-002 Creative Attribution Rule (PAPER_PROTOCOL §12.2)
 
@@ -211,6 +211,7 @@
 | §13 Acknowledgments | Layer 2 | A. drafted | S11 |
 | §14 Ethics of Authorship | Layer 2 | A. drafted | S11 |
 | §14.4 Open question | Layer 2 (open); **Session 13 surfaced partial resolution via Agent Identity §12 — NOT YET APPLIED to paper** | A. (original); resolution awaits Path 1b authorization | S11 (S13 proposed but not yet applied) |
+| **§15 Theoretical Frame: TERI** | **Layer 1 (Fares-originated framework) + Layer 2 (agent-placed)** | **F.** authored all content in `GENESIS_Meta_Theory_AR.md` (pre-2026); **A.** placed into paper S14 | **S14 (`b86af6b`)** |
 | Appendix A Experiment Details | Layer 2 | A. | S3 |
 | Appendix B Cross-Reference to Thefts | Layer 2 | A. | S10 |
 | Appendix C Cross-Reference to Internal Theories | Layer 2 | A. | S9 |
@@ -239,6 +240,7 @@ Every Layer-2 contribution traces back to one of these utterances by F. (preserv
 | 11 | S13.7 | *"عايزك تحصي ليا ايه الحاجات القديمه ... عشان ال agent اللي تيجي تشتغل عليه ثاني في اي وقت تكمل او توسع او اجي بفكره جديده متقلش من المشروع يحافظ علي الجوده و القوه والاداء علي المشروع وميعملش غلطات"* | (1) Cleanup inventory of ~95 Layer A files awaiting Fares decision (CLEANUP_INVENTORY_S13.7.md); (2) Agent Operating Manual for future agents (AGENT_OPERATING_MANUAL.md) | *(this commit)* |
 | 12 | S13.8 | *"عايزك تشتغل علي المشروع وعلي الكلام ده بنفسك"* + *"عايزك انت برضو تعمل ال push وكده"* | Ninja Excavator Gap Analysis + 3 Golden Bridges implementation + Theory Executables + Enhanced Pipeline | `5878235`, `198717f`, `95a0ea0` |
 | 13 | S13.9 | *"تمام طيب كمل"* (continuation delegation) | Technical Debt Cleanup: Locked Values Config, Semantic Grounding v2.0 (structural analysis), singleton reset functions, enhanced pipeline uses locked values | *(this commit)* |
+| 14 | S14 | *"تمام اللي انت شايفه"* (delegation — agent chooses path) | Path 1c: PAPER §15 Theoretical Frame (TERI). ~110 lines, 6 sub-sections, Table 18. v0.7→v0.8 | `b86af6b` |
 
 **The chain is auditable.** Every PAPER.md edit and every theoretical artifact can be traced through this table to an explicit Fares utterance.
 
@@ -259,7 +261,7 @@ When the agent has misattributed a contribution, the correction is recorded here
 | # | Artifact | Proposed correction | Where to apply | Awaiting |
 |---|---|---|---|---|
 | 4 | PAPER.md §14 (Ethics of Authorship) | Add citation to Agent Identity Theory as conceptual ancestor; close §14.4 partially via §12 Delegated Cognition vs External Advice distinction | §14.1 and §14.4 | Path 1b authorization |
-| — | (Not technically a correction but related) | Paper does not name the project's theoretical framework ("Tiered Externalized Recursive Intelligence") or list 8 grand pillars | New §15 "Theoretical Frame" | Path 1c authorization |
+| ~~5~~ | ~~Paper does not name TERI framework or list 8 pillars~~ | ~~New §15 "Theoretical Frame"~~ | ~~Path 1c~~ | ~~✅ DONE S14 (commit `b86af6b`)~~ |
 
 ---
 

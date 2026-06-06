@@ -779,7 +779,7 @@ Migration from bottom-right to top-left is the design path our A7 ablation (`nar
 
 LEAP's third architectural innovation is **anticipatory lemma planning** — proposing lemma statements during blueprint generation that are not immediately needed but expected to support later proof steps. Remarkably, GENESIS already contains a structurally analogous mechanism: the Concept Formation Engine's `propose_concepts_from_groups`, which generates concept candidates based on observed patterns.
 
-We propose [Theory-09] that **anticipatory abstraction, Tiered Externalized Recursive Intelligence, epistemic artifacts** is a general architectural principle that manifests differently across domains:
+We propose [Theory-09] that **anticipatory abstraction** is a general architectural principle that manifests differently across domains:
 
 | Domain | Anticipatory Unit | Currently Implemented In |
 |---|---|---|

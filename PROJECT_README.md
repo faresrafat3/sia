@@ -1,11 +1,11 @@
 # 🗺️ PROJECT_README — Master Entry Point
 
-**Last updated:** 2026-06-06 (after Session 13.9 Cleanup Inventory + Agent Operating Manual)
+**Last updated:** 2026-06-06 (after Session 14 — §15 Theoretical Frame)
 **Project owner:** Fares Rafat (F.) — sole author per NeurIPS 2025 policy
 **Project repo:** https://github.com/faresrafat3/GENESIS
-**Current paper version:** **v0.7** (`PAPER.md`)
+**Current paper version:** **v0.8** (`PAPER.md`) — §15 TERI Frame added
 **Current mode:** Theoretical Mode (v2.0 of `PAPER_PROTOCOL.md`)
-**Last consistency audit:** Session 13.6 (this update) — see `AUDIT_REPORT_S13.6.md` for full findings; 3 critical issues fixed in PAPER.md, 11 documentation issues fixed in master docs
+**Last consistency audit:** Session 13.6 — see `AUDIT_REPORT_S13.6.md` for full findings; 3 critical issues fixed in PAPER.md, 11 documentation issues fixed in master docs
 
 > **⚠️ READ THIS FIRST** before touching any file in this repo. This document is the single entry point that tells you:
 > - What this project is
@@ -57,9 +57,9 @@ The propose → authorize → execute chain has run successfully **twice** (Sess
 
 ### If you are Fares (returning after time away)
 1. This file
-2. `PAPER/notes/HANDOFF.md` (operational current state, 5 open paths)
-3. `MASTER_TIMELINE.md` (full chronological story, Sessions 1 through 13.6)
-4. `PAPER.md` v0.7 (the paper itself)
+2. `PAPER/notes/HANDOFF.md` (operational current state, 6 open paths)
+3. `MASTER_TIMELINE.md` (full chronological story, Sessions 1 through 14)
+4. `PAPER.md` v0.8 (the paper itself)
 
 ### If you are a new agent / new session
 1. This file
@@ -256,8 +256,9 @@ The repo contains **two distinct project layers** that should not be confused:
 ### LIVE — actively under discussion
 | Item | Status |
 |---|---|
-| `PAPER.md` v0.7 | Latest version (Sessions 12b applied 3 attribution corrections + §8.5.7 Ladder + §8.6 Hidden Crisis Diagnostic) |
-| Session 13 discoveries (11 items) | Awaiting Fares decision: Path 1b / Path 1c / Path 2 / Path 3 / Path 4 |
+| `PAPER.md` v0.8 | Latest version (Session 14 added §15 TERI Frame + Table 18; Session 12b corrected attribution + §8.5.7/§8.6) |
+| Session 14 bug: §8.5.4 keyword injection | Awaiting fix authorization |
+| Session 13 pending discoveries (§14 edits) | Awaiting Fares decision: Path 1b / Path 2 / Path 3 / Path 4 / Path 5 |
 | Internal re-reading exercise (Option F) | Active; 9 of 122 docs read; 23 cumulative discoveries |
 
 ### DEFERRED — infrastructure ready, execution paused
@@ -284,7 +285,7 @@ The repo contains **two distinct project layers** that should not be confused:
 | T5.94 length-vs-accuracy correlation | r = −0.54 | Chen et al. on GPT-OSS + GPQA |
 | Tests passing | 663/663 | local |
 | Master Index theft scope | 5.1–5.94 | `GENESIS_Legitimate_Thefts_MASTER_INDEX_AR.md` |
-| Sessions completed | 1 through 13.9 (13 numbered + 12b + 13.5 + 13.6 + 13.7) | this README + MASTER_TIMELINE |
+| Sessions completed | 1 through 14 (13 numbered + 12b + 13.5 + 13.6 + 13.7 + 13.8 + 13.9 + 14) | this README + MASTER_TIMELINE |
 | Epistemic artifacts produced | **11** (4 theories + 1 philosophy + 4 thefts + 2 ideas) | computed S13 |
 | Foundational docs in repo | **122** (9 re-read since S12; 113 remaining in queue) | `ls GENESIS_*.md` |
 
@@ -350,9 +351,9 @@ These files have appeared in `git status` as modified in past sessions but are N
 
 | Question | Document |
 |---|---|
-| "What is the project's theoretical name?" | `GENESIS_Meta_Theory_AR.md` §2 → **Tiered Externalized Recursive Intelligence** (NOT yet in paper as of v0.7; pending Path 1c) |
-| "What is intelligence in this framework?" | `GENESIS_Meta_Theory_AR.md` §3 → "organized adaptive epistemic control under bounded resources" |
-| "What are the 8 grand pillars?" | `GENESIS_Meta_Theory_AR.md` §7 |
+| "What is the project's theoretical name?" | PAPER.md §15 → **Tiered Externalized Recursive Intelligence** (placed S14, from `GENESIS_Meta_Theory_AR.md` §2) |
+| "What is intelligence in this framework?" | PAPER.md §15.1 → "organized adaptive epistemic control under bounded resources" |
+| "What are the 8 grand pillars?" | PAPER.md §15.2 |
 | "What did Fares say in Session N?" | `PAPER/notes/SESSION_LOG.md` + `PAPER.md` §12.3 |
 | "Why is Theory-10 attributed the way it is?" | `CONTRIBUTION_LEDGER.md` + `PAPER.md` §12.2 Layer 1+2 + `PAPER/notes/INTERNAL_RE_READING_SESSION_12.md` |
 | "What are the pending decisions?" | `PAPER/notes/HANDOFF.md` "Next" section |

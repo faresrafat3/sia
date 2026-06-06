@@ -90,6 +90,27 @@
 
 ---
 
+### Session 14 agent-executed work (§15 Theoretical Frame — Path 1c)
+
+| Work | Trigger | Output | Status |
+|---|---|---|---|
+| **§15 Theoretical Frame: Tiered Externalized Recursive Intelligence** | Session 14 Fares: "تمام اللي انت شايفه" (delegation) | PAPER.md §15 (~110 lines, 6 sub-sections): TERI framework named; 8 grand pillars mapped (4 covered, 4 absent); 7-layer architecture; maturity ladder (Stages 0-6, GENESIS at 1-2, LEAP at 3-4); Table 18 (11 epistemic artifacts × 5 value dimensions); §15.6 three revelations. All content from Fares's pre-2026 `GENESIS_Meta_Theory_AR.md` (discovered S13 Discovery #15, placed S14). PAPER version v0.7 → v0.8. Commit `b86af6b`. | ✅ Integrated |
+
+**Session 14 key content:**
+
+| Sub-section | Content | Lines |
+|---|---|---|
+| §15.1 | Framework name (TERI) + operational intelligence definition | ~20 |
+| §15.2 | Eight grand pillars — 4 covered, 4 absent | ~20 |
+| §15.3 | Seven-layer architecture with coverage map | ~15 |
+| §15.4 | Maturity ladder (Stages 0-6); 110-pt gap = 2-stage maturity gap | ~15 |
+| §15.5 | Table 18: Epistemic Artifact Inventory (11 × 5) | ~25 |
+| §15.6 | Three insights from the frame | ~15 |
+
+**Attribution:** Layer 1 (Fares-originated — all content from `GENESIS_Meta_Theory_AR.md`, pre-2026); Layer 2 (agent-placed into paper under "تمام اللي انت شايفه" delegation).
+
+---
+
 ## Agent-Initiated Synthesis (per [Idea-002] disclosure rule)
 
 > **Disclosure principle (Idea-002):** Even Fares-authorized agent work is attributed transparently. When Fares says "القرار عندك" the agent is empowered to act, but the resulting work is labeled as **agent-initiated** (not Fares-authored) so the final paper can honor the actual division of intellectual labor.
@@ -196,6 +217,7 @@ PAPER.md version: v0.6 → **v0.7**.
 | Re-Reading S12 | Internal foundational docs re-reading under Theories 07-10 + Phil-07 lens | Agent-initiated (Session 12, Fares-authorized) | META-CORE | `INTERNAL_RE_READING_SESSION_12.md` (~500 lines): 5 docs read, 12 discoveries, **3 attribution corrections proposed for Theory-08/10 + Phil-07**, 9 new pending paper-level proposals. Validates option (F) as highest-leverage HANDOFF strategy. Triggers Idea-002 governance cycle (correction > addition priority). |
 | Path-1 Application S12b | Apply S12 attribution corrections to paper | Agent-executed (Session 12b under Fares "تمام") | META-CORE | PAPER v0.6→v0.7: 3 attribution corrections applied to §12.2; §8.5.7 + §8.6 added (~60 paper lines); Theory-10 P6 added; Phil-07 §9 added; ATTRIBUTION_MAP corrections marked ✅ Applied. **Demonstrates Idea-002 governance functions as a true safety net.** |
 | Re-Reading S13 | Continue Internal Re-Reading (batch 3): Self-Benchmarking + Meta-Theory + Contradiction + Agent Identity | Agent-initiated (Session 13 under Fares "تمام", Path 2 from S12b HANDOFF) | META-CORE | `INTERNAL_RE_READING_SESSION_13.md` (~600 lines): 4 docs read, 11 discoveries, **1 new attribution correction (§14 ↔ Agent Identity Theory)**, **profound discovery that §14.4 open question is resolved by Fares's own Agent Identity §12 distinction**, and most importantly: **4 of 8 grand pillars (Tiered Externalized Recursive Intelligence framework) are absent from paper**. Proposes Path 1b (small §14 edits) + Path 1c (new §15 Theoretical Frame). Cumulative S12+S13: 23 discoveries from 9 docs. |
+| S14 §15 TERI Frame | Path 1c execution: Place TERI framework into PAPER.md as §15 | Agent-executed (Session 14 under Fares "تمام اللي انت شايفه") | **CORE** | PAPER v0.7→v0.8: §15 added (~110 lines, 6 sub-sections). TERI framework named; 8 pillars mapped; 7-layer architecture; maturity ladder; Table 18 (11 epistemic artifacts). All content from Fares's pre-2026 `GENESIS_Meta_Theory_AR.md`. **Elevates paper from "honest negative result + theories" to "honest negative result + theories + the frame that explains why these theories."** |
 
 ---
 

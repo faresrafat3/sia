@@ -1,6 +1,6 @@
 # 📜 MASTER_TIMELINE — Full Chronological Story (Sessions 1 through 13)
 
-**Last updated:** 2026-06-06 (after Session 13.7 Cleanup Inventory + Agent Operating Manual)
+**Last updated:** 2026-06-06 (after Session 14 — §15 Theoretical Frame)
 **Companion docs:** `PROJECT_README.md` (overview) · `CONTRIBUTION_LEDGER.md` (attribution) · `PAPER/notes/SESSION_LOG.md` (raw verbose log) · `PAPER.md` §12.3 (verbatim Arabic utterances)
 
 This is the **canonical narrative** of how the paper came to exist. If you want to understand any single decision, find the session below where it was made.
@@ -330,6 +330,32 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 
 ---
 
+### Session 14 (~Jun 6, 2026) — §15 Theoretical Frame: Tiered Externalized Recursive Intelligence
+
+**Trigger:** Fares: *"تمام اللي انت شايفه"* (delegation #14 — agent chooses path).
+
+**Agent's choice:** Path 1c from S13 HANDOFF (agent's top recommendation since S13).
+
+**Done:**
+- Added PAPER.md §15 "Theoretical Frame: Tiered Externalized Recursive Intelligence" (~110 lines):
+  - §15.1: TERI acronym + operational intelligence definition ("organized adaptive epistemic control under bounded resources")
+  - §15.2: Eight Grand Pillars (4 covered, **4 absent**: Contradiction Management, Local Theory Building, Self-Benchmarking, Agent Identity)
+  - §15.3: Seven-Layer Architecture (Experience→Memory→Abstraction→Theory→Governance→Economic→Reflexive Identity)
+  - §15.4: Maturity Ladder (Stages 0-6; GENESIS at 1-2, LEAP at 3-4)
+  - §15.5: Table 18 — Epistemic Artifact Inventory (11 artifacts × 5 value dimensions)
+  - §15.6: Three insights from the frame
+- Updated keywords in Abstract
+- Attribution note: Layer 1 (Fares-originated from `GENESIS_Meta_Theory_AR.md`, pre-2026); Layer 2 (agent-placed)
+- Paper version: v0.7 → **v0.8**
+
+**Bug discovered:** Keywords accidentally injected into §8.5.4 Theory-09 sentence body. Fix pending.
+
+**No runs. No API calls. No code changes. Paper-only edit.**
+
+**Commit:** `b86af6b` (paper v0.8).
+
+---
+
 ## Quick reference table — every session in one row
 
 | Session | Date | Trigger (Fares utterance) | Mode | Output | Commit |
@@ -351,7 +377,8 @@ External frameworks integrated: CRediT taxonomy (ANSI/NISO Z39.104-2022), Petrid
 | 13.5 | ~Jun 6 | "قبله اللي حليته وكل ده خليه واضح" | Documentation | PROJECT_README + MASTER_TIMELINE + CONTRIBUTION_LEDGER | `89dd99c` |
 | 13.6 | ~Jun 6 | "وبرضو غير التوثيق عايز اخلي الامور كلها واضحه ومضبوطه" | Audit | AUDIT_REPORT_S13.6 + 3 critical PAPER.md fixes (header, authors, table count) + 7 medium fixes; CONTRIBUTION_LEDGER §9 from 10→18 checks | `eb58198` |
 | 13.8 | ~Jun 6 | "عايزك تشتغل علي المشروع... وعلي الكلام ده بنفسك" + "عايزك تعمل ال push" | Theoretical+Implementation | Ninja Excavator Report (602 lines, 3-loop analysis) + 5 new modules (ladder_ascent, semantic_verifier, value_computation, theory_executables, enhanced_pipeline) + 102 new tests (619 total) + 4,891 lines | `5878235`, `198717f` |
-| 13.9 | ~Jun 6 | "تمام طيب كمل" (continuation) | Technical Debt Cleanup | Locked Values Config (immutable frozen dataclass) + Semantic Grounding v2.0 (structural analysis replaces keyword matching) + singleton reset functions for all 4 modules + enhanced pipeline uses locked values + 44 new tests (663 total) + doc chain updated | *(this commit)* |
+| 13.9 | ~Jun 6 | "تمام طيب كمل" (continuation) | Technical Debt Cleanup | Locked Values Config (immutable frozen dataclass) + Semantic Grounding v2.0 (structural analysis replaces keyword matching) + singleton reset functions for all 4 modules + enhanced pipeline uses locked values + 44 new tests (663 total) + doc chain updated | `31186bf` |
+| **14** | **~Jun 6** | **"تمام اللي انت شايفه" (delegation)** | **Theoretical** | **PAPER §15 TERI Frame (~110 lines, 6 sub-sections, Table 18). 8 pillars mapped (4 absent), 7-layer architecture, maturity ladder. v0.7→v0.8** | **`b86af6b` (v0.8)** |
 | 13.7 | ~Jun 6 | "عايزك تحصي ليا ايه الحاجات القديمه ... وبرضو شفت كل اللي صلحته ده اعملي حاجه عشان ال agent اللي تيجي تشتغل عليه ثاني" | Cleanup+Manual | CLEANUP_INVENTORY_S13.7 (104/122 unreferenced docs, 22 sections, 96 MB virtual_genesis decision flagged) + AGENT_OPERATING_MANUAL (17 sections, 8 non-negotiable rules, 6 common mistakes from real history) | `82bacd9` |
 
 ---
