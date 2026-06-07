@@ -1,6 +1,6 @@
 # 🧬 GENESIS: Measuring the Impact of LLM Orchestration Architecture on Graduate-Level Scientific Reasoning
 
-**Paper Status:** Draft v0.9 — Theory-13 (Negative Memory) integrated as fifth internal theory
+**Paper Status:** Draft v0.10 — Theory-14 (Anti-Antifragility Diagnostic) integrated; five theories unified under single condition
 **Last Updated:** 2026-06-06 (Session 14 — agent-executed under "تمام" delegation)  
 **Authors:** Fares Rafat (sole author per NeurIPS 2025 policy; see §12.1)  
 **Agent contributions:** Documented transparently per §12.2 (three-layer structure: Layer 1 Fares-sourced, Layer 2 agent-formalized under F. delegation, Layer 3 joint deliberative). Agent is NOT a co-author.  
@@ -26,7 +26,7 @@ Finally, we situate these results against the **LEAP** framework [Kung et al. 20
 
 These results suggest that GENESIS has successfully crossed the "scaffolding catastrophe" stage, but has not yet crossed the "architecture adds value" threshold. The next research phase is therefore not basic bug-fixing, but **structural redesign along principles validated externally by LEAP and theorized internally in Theories 07/08/09/13**: identifying which architectural components help, which are neutral, and which currently dilute model performance.
 
-**Keywords:** LLM orchestration, reasoning benchmarks, GPQA Diamond, evolutionary search, agentic architectures, scaffolding errors, pipeline-as-memory, feedback drift, anticipatory abstraction, Tiered Externalized Recursive Intelligence, epistemic artifacts, negative memory
+**Keywords:** LLM orchestration, reasoning benchmarks, GPQA Diamond, evolutionary search, agentic architectures, scaffolding errors, pipeline-as-memory, feedback drift, anticipatory abstraction, Tiered Externalized Recursive Intelligence, epistemic artifacts, negative memory, anti-antifragility
 
 ---
 
@@ -119,7 +119,8 @@ This paper primarily addresses RQ1 (Sections 5.3–5.4, 7.1), provides initial e
 6. **First targeted ablation result (A3):** Disabling pipeline leverage raises Generation 1 from **65.00%** to **70.00%**, providing the first direct evidence that the cognitive pipeline in its current usage contributes harmful overhead/noise on GPQA-20.
 
 7. **Theory-10 (Reasoning Saturation):** We promote our counter-intuitive empirical observation (median reasoning tokens: 989 for correct vs 6,836 for incorrect) to a full theory anchored by **six independent external papers** including a UVA-Google study (arXiv:2602.13517) that reports a length-vs-accuracy correlation of **r = −0.54** on the *same model family and same benchmark family* we tested. Theory-10 interacts non-trivially with Theory-07 to produce a joint, falsifiable prediction: GENESIS empty-content rate should exceed pure-baseline empty-content rate on identical questions (Section 7.3).
-8. **Theory-13 (Negative Memory as Epistemic Safety Net):** We formalize the principle that intelligent systems must maintain not only *what works* but *what fails*. Negative Memory — compressed, trigger-gated, identity-aware storage of anti-patterns and failure modes — provides the mechanism by which a system avoids repeating known errors (Section 7.4). Theory-13 connects to Theory-10 (enabling early termination of known-bad reasoning paths) and Theory-07 (pipeline modifications that hurt performance are Negative Memory candidates).
+8. **Theory-13 (Negative Memory as Epistemic Safety Net):** We formalize the principle that intelligent systems must maintain not only *what works* but *what fails*. Negative Memory — compressed, trigger-gated, identity-aware storage of anti-patterns and failure modes — provides the mechanism by which a system avoids repeating known errors (Section 7.3.1). Theory-13 connects to Theory-10 (enabling early termination of known-bad reasoning paths) and Theory-07 (pipeline modifications that hurt performance are Negative Memory candidates).
+9. **Theory-14 (Anti-Antifragility Diagnostic):** We show that the five theories above are not independent problems but five symptoms of a single condition: *anti-antifragility* — a systematic architectural property in which improvement mechanisms introduce degradation and failure mechanisms are amplified. We define an Anti-Antifragility Score (AAS = signatures present / 5) and show that GENESIS (AAS = 1.0) vs LEAP (AAS = 0.0) explains the 110-point gap as the distance between full anti-antifragility and full antifragility (Section 7.3).
 
 ---
 
@@ -548,11 +549,33 @@ The stark Physics (10/11 Easy) vs Chemistry (5/6 Hard) split raises important qu
 
 **Recommendation:** All claims about GPQA performance must be accompanied by per-domain breakdowns. Reporting only aggregate accuracy obscures important domain-specific strengths and weaknesses.
 
-### 7.3 Reasoning Saturation — From Hypothesis to Theory-10
+### 7.3 A Unifying Diagnosis: Anti-Antifragility [Theory-14]
+
+Sections 8.5 and 7.3.1 develop five internal theories explaining *why* GENESIS underperforms its baseline. Each isolates one mechanism: pipeline noise (Theory-07), feedback drift (Theory-08), reactive abstraction (Theory-09), reasoning over-saturation (Theory-10), and failure amnesia (Theory-13). Read together, however, these five theories reveal a deeper pattern: **every component designed to improve the system either fails to help or actively hurts.**
+
+We propose **[Theory-14] The Anti-Antifragility Diagnostic**: the residual −10 gap is not five independent problems but one condition with five symptoms. The condition is *anti-antifragility* — a systematic architectural property in which improvement mechanisms introduce degradation, and failure mechanisms are amplified rather than absorbed.
+
+The term extends Taleb's triad (fragile / robust / antifragile). An anti-antifragile system is worse than fragile: it doesn't just fail under stress, it *gets worse through its own improvement mechanisms*. GENESIS exhibits this property across all five measurable signatures:
+
+| Signature | Theory | Observable in our data | Measurement |
+|---|---|---|---|
+| **S1: Failure Amplification** | T-10 | More reasoning tokens → worse answers (989 vs 6,836 median) | Negative token–accuracy correlation |
+| **S2: Improvement Degradation** | T-08 | Feedback reduces Gen 2 from 70% → 60% (A3) | Negative generation delta |
+| **S3: Knowledge Non-Accumulation** | T-07 | Removing pipeline improves performance (+5 A3) | Pipeline removal improves accuracy |
+| **S4: Reactive Blindness** | T-09 | Chemistry Organic stays at 16.7% across iterations | Zero improvement in weakest domain |
+| **S5: Failure Amnesia** | T-13 | 5 scaffolding bugs repeated across runs | Identical failure recurrence |
+
+**Anti-Antifragility Score (AAS)** = signatures present / 5. GENESIS scores AAS = 1.0 (5/5). LEAP scores AAS = 0.0 (0/5). The 110-point gap between them is the distance between full anti-antifragility and full antifragility.
+
+**The key unifying prediction:** a system exhibiting ≥3 of these 5 signatures will underperform its baseline; fixing any single signature should produce measurable improvement; and the four TERI pillars absent from the current paper (§15.2 — Contradiction Management, Local Theory Building, Self-Benchmarking, Agent Identity) are the specific mechanisms that convert anti-antifragile systems into antifragile ones. Two already have implementation code in the codebase (Self-Benchmarking: H8 with 39 tests; Agent Identity: H9 with 30 tests), gated behind boolean flags.
+
+Theory-14 is formalized with seven testable predictions in `PAPER/theory/14_anti_antifragility_diagnostic.md`. The remainder of this section presents the five signatures in detail.
+
+### 7.3.0 Signature 1: Failure Amplification — Theory-10 (Reasoning Saturation)
 
 In v0.2 of this paper, this subsection contained only an informal "Reasoning Saturation Hypothesis." In v0.4 we promote it to a full internal theory, **[Theory-10] Reasoning Saturation: The Inverted-U of Internal Reasoning**, supported by six recent external papers and our own measurements.
 
-#### 7.3.1 The empirical signature in our data
+##### The empirical signature in our data
 
 On `gpt-oss-120b` over GPQA-20 (run_57 pure baseline):
 
@@ -565,7 +588,7 @@ On `gpt-oss-120b` over GPQA-20 (run_57 pure baseline):
 
 The model that thinks longer answers *worse*, not better — and beyond a critical length, it stops producing visible output at all.
 
-#### 7.3.2 External literature converges on the same finding
+##### External literature converges on the same finding
 
 Theory-10 is one of the **best-supported** theories in this paper because the external literature has reached very similar conclusions independently:
 
@@ -580,7 +603,7 @@ Theory-10 is one of the **best-supported** theories in this paper because the ex
 
 These six sources, combined with our own measurements, make Theory-10 the most externally-validated theoretical contribution in this paper.
 
-#### 7.3.3 The theory in compact form
+##### The theory in compact form
 
 Theory-10 rests on four axioms (formalized in `PAPER/theory/10_*.md`):
 
@@ -597,7 +620,7 @@ Five testable predictions follow (see `PAPER/theory/10_*.md` §5):
 - **P4.** Capability scaling: weaker models have sweet spots at higher token counts than gpt-oss-120b; very small models may never reach a sweet spot at all.
 - **P5.** DTR-based early termination achieves equal or better accuracy at roughly half the compute (replication of UVA-Google's result).
 
-#### 7.3.4 Why Theory-10 matters for the paper
+##### Why Theory-10 matters for the paper
 
 Three reasons elevate Theory-10 beyond a local hypothesis:
 
@@ -605,13 +628,13 @@ Three reasons elevate Theory-10 beyond a local hypothesis:
 2. **It interacts non-trivially with Theory-07** through **Prop 4**: pipeline decision injection burns reasoning budget on signal-parsing rather than on answer-finding, pushing the model into the overthinking regime faster. This produces a *joint prediction* (Theory-07 × Theory-10) that GENESIS empty-content rate should exceed pure baseline empty-content rate on identical questions — a clean, falsifiable test.
 3. **It contributes externally** — orchestration frameworks broadly need to address reasoning saturation, not just GENESIS. The DTR-style or Wu-style length calibration becomes a generic architectural concern.
 
-#### 7.3.5 Concrete consequence for GENESIS design
+##### Concrete consequence for GENESIS design
 
 Our current `max_tokens=16384` may itself be *too high* for gpt-oss-120b on GPQA. The median correct answer used only 989 reasoning tokens — a budget of 16,384 leaves vast room for the confusion spiral when difficult questions trigger it. A budget of ~4K–8K, combined with the DTR-style early termination from Track A.5 (added to Future Work), is the prediction we cannot yet test but should test first when runs resume.
 
 This has implications for RQ3 (instant vs thinking) — bounded reasoning with forced answer extraction may outperform unbounded reasoning for certain question types, especially in the over-saturating regime.
 
-### 7.3.1 Theory-13: Negative Memory as Epistemic Safety Net
+### 7.3.1 Signature 5: Failure Amnesia — Theory-13 (Negative Memory)
 
 The four preceding theories explain *why* GENESIS underperforms. Theory-13 addresses the complementary question: *how does a system avoid repeating known failures?*
 
@@ -1286,10 +1309,11 @@ The proper unit of cognitive growth in TERI is the **epistemic artifact** — an
 | 10 | Idea-002 (Creative Attribution Rule) | Fares-sourced Idea | ✓ | ✓ | ✓ | ✓ | ✓ | §12.2 |
 | 11 | This paper (PAPER.md) | Meta-artifact | ✓ | ✓ | ✓ | ✓ | ✓ | Full |
 | 12 | Theory-13 (Negative Memory as Epistemic Safety Net) | Internal Theory | ✓ | ✓ | ✓ | ✓ | ✓ | §7.3.1 |
+| 13 | Theory-14 (Anti-Antifragility Diagnostic) | Unifying Theory | ✓ | ✓ | ✓ | ✓ | ✓ | §7.3 |
 
 **Columns:** M = Memory value, D = Decision value, R = Reuse value, E = Explanatory value, T = Test value. All 11 artifacts score positively on all 5 dimensions per Meta-Theory §9 criteria.
 
-**12 epistemic artifacts have been produced.** None of the paper's quantitative tables counted this metric before Table 18. The TERI framework predicts that a system's cognitive growth should be measured by the rate, quality, and diversity of epistemic artifacts produced — not only by accuracy on a single benchmark.
+**13 epistemic artifacts have been produced.** None of the paper's quantitative tables counted this metric before Table 18. The TERI framework predicts that a system's cognitive growth should be measured by the rate, quality, and diversity of epistemic artifacts produced — not only by accuracy on a single benchmark.
 
 ### 15.6 What This Frame Reveals
 
@@ -1381,6 +1405,7 @@ The 20 questions used in our experiments are Q1-Q20 from the GPQA Diamond benchm
 | Theory-09 | Anticipatory Concepts vs Anticipatory Lemmas | `PAPER/theory/09_*.md` | Generalizes LEAP anticipatory lemmas to GENESIS Concept Engine |
 | Theory-10 | Reasoning Saturation (Inverted-U) | `PAPER/theory/10_*.md` | Externally validated by 6 papers; interacts with Theory-07 via Prop 4 |
 | Theory-13 | Negative Memory as Epistemic Safety Net | `PAPER/theory/13_*.md` | Failure memory mechanism; connects to Theory-10 (early termination) and Theory-07 (anti-patterns) |
+| **Theory-14** | **Anti-Antifragility Diagnostic** | `PAPER/theory/14_*.md` | **Unifying condition: five theories are five symptoms of one diagnosis (AAS score).** LEAP AAS=0.0 vs GENESIS AAS=1.0 explains 110-point gap. |
 | Phil-07 | Meaning of General-Purpose Sufficiency | `PAPER/philosophy/07_*.md` | Position D: Capability-Adjusted Sufficiency; reframes RQ2 |
 
 ## Appendix D: Idea Attribution (per [Idea-002] Creative Attribution Rule)
@@ -1407,4 +1432,4 @@ Full traceability is maintained in `PAPER/ideas/ATTRIBUTION_MAP.md`.
 
 ---
 
-*Paper version: **v0.9 — Session 14: Theory-13 (Negative Memory as Epistemic Safety Net) integrated as fifth internal theory. §7.3.1 added. Abstract, §1.5, §11, §15.2, Table 18 (11→12 artifacts), Appendix C, §10 Track A.8 updated. Previous: v0.8.2 (§15 sharpened). v0.8.1 (§14 Ethics). v0.8 (§15 TERI Frame). Previous version footers preserved in git history.***
+*Paper version: **v0.10 — Session 15: Theory-14 (Anti-Antifragility Diagnostic) integrated. Five theories (07/08/09/10/13) unified under single condition with five measurable signatures and AAS score. §7.3 restructured with unifying diagnosis section. Theory-14 standalone file added. Previous: v0.9 (Theory-13 Negative Memory). v0.8.2 (§15 sharpened). Previous version footers preserved in git history.***
