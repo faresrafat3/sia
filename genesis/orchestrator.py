@@ -1186,6 +1186,14 @@ Note: The meta-agent will fill in the task-specific parts intelligently. Make th
     if use_web_search:
         META_AGENT_PROMPT = META_AGENT_PROMPT.rstrip() + "\n" + web_search_snippet
 
+    # Append enhanced pipeline snippet (Layer 4)
+    try:
+        from genesis.enhanced_pipeline_bridge import get_enhanced_pipeline_snippet
+        enhanced_snippet = get_enhanced_pipeline_snippet(enabled=True)
+        META_AGENT_PROMPT = META_AGENT_PROMPT.rstrip() + "\n" + enhanced_snippet
+    except Exception:
+        pass  # non-critical — minimal pipeline still works
+
 
     ablation_feedback_parts = []
     if no_pipeline_active:
@@ -1466,6 +1474,33 @@ STOP after writing the file. NO FILE READING.
         # Check if improvement.md exists in current gen directory (created by previous feedback agent)
         improvement_md_path = os.path.join(current_gen_directory, "improvement.md")
 
+        # ========================
+        # SECTION 5a.2.5: Enhanced Pipeline Signal Extraction (Layer 4)
+        # ========================
+        # Extracts LadderAscent + SemanticVerifier + ValueComputation signals
+        # from what the target agent left in its output artifacts.
+        # Produces ladder_state.json + feedback section for Feedback Agent.
+        ladder_summary = None
+        enhanced_feedback_section = ""
+        try:
+            from genesis.enhanced_pipeline_bridge import run_enhanced_pipeline_check
+            ladder_summary, enhanced_feedback_section = run_enhanced_pipeline_check(
+                run_dir=RUN_DIRECTORY,
+                current_gen=current_gen,
+                gen_dir=current_gen_directory,
+            )
+            if ladder_summary.is_enhanced:
+                logger.info(
+                    f"  🔬 Enhanced signals: level={ladder_summary.current_level} "
+                    f"entropy={ladder_summary.entropy:.3f} "
+                    f"semantic={ladder_summary.semantic_verdict} "
+                    f"cog_return={ladder_summary.value_cognitive_return:.3f}"
+                )
+            else:
+                logger.info("  🔬 Enhanced pipeline: no signals found (agent used minimal pipeline)")
+        except Exception as e:
+            logger.warning(f"  ⚠ Enhanced pipeline signal extraction failed: {e}")
+
         # Add generation to context (do this before feedback agent runs)
         context_mgr.add_generation(
             gen_num=current_gen,
@@ -1479,6 +1514,8 @@ STOP after writing the file. NO FILE READING.
                 "execution_type": "Multi-trajectory"
                 if (os.path.isdir(os.path.join(current_gen_directory, "agent_execution")))
                 else "Single",
+                "ladder_level": ladder_summary.current_level if ladder_summary else None,
+                "enhanced": ladder_summary.is_enhanced if ladder_summary else False,
             },
         )
 
@@ -1801,7 +1838,7 @@ The system's internal diagnostics suggest the current approach has reached its c
                 TASK=TASK,
                 EXECUTION_STATUS=execution_status,
                 EXECUTION_SECTION=execution_section,
-                SPIN_SECTION=spin_section + regime_section,
+                SPIN_SECTION=spin_section + regime_section + enhanced_feedback_section,
                 IMPROVEMENT_DIR=next_gen_directory,
                 ablation_feedback_instruction=ablation_feedback_instruction,
             )
