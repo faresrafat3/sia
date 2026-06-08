@@ -567,6 +567,16 @@ def main():
             "Reports saved to gen_X/regime_transition_report.json."
         ),
     )
+    parser.add_argument(
+        "--use_web_search",
+        action="store_true",
+        help=(
+            "Enable web search tool in target agents. "
+            "Stolen from DeepResearcher+A-RAG+SAGE: agents can call web_search() "
+            "with modes quick/deep/read. Requires SERPER_API_KEY env var. "
+            "Adds evidence_log.json to each gen directory."
+        ),
+    )
     args = parser.parse_args()
 
     max_gen = args.max_gen
@@ -601,8 +611,10 @@ def main():
     logger.info(f"  - Ablation mode: {ablation_mode}")
     use_evo = getattr(args, "use_evolutionary_discovery", False)
     use_regime = getattr(args, "use_regime_detection", False)
+    use_web_search = getattr(args, "use_web_search", False)
     logger.info(f"  - Evolutionary Discovery (AlphaEvolve-style): {'ENABLED' if use_evo else 'disabled'}")
     logger.info(f"  - Regime Transition Detection (H8): {'ENABLED' if use_regime else 'disabled'}")
+    logger.info(f"  - Web Search Tool (DeepResearcher+A-RAG): {'ENABLED' if use_web_search else 'disabled'}")
 
     # ========================
     # SECTION 1: Load Files from Task Directory
@@ -1041,11 +1053,76 @@ STOP after writing the one file. No more actions, no reading other files.
 
 Note: The meta-agent will fill in the task-specific parts intelligently. Make the code robust, use try/except, dict access everywhere for pipeline result. The logging block above MUST be present (verbatim or closely adapted) + imports at VERY TOP to avoid scope/import errors.
 """
+    # ── Web Search Snippet (stolen: DeepResearcher + A-RAG + SAGE + WebThinker) ──
+    if use_web_search:
+        web_search_snippet = """
+# ═══════════════════════════════════════════════════════════════════
+# 🌐 WEB SEARCH TOOL (GENESIS Deep Research — enabled for this run)
+# Stolen from: DeepResearcher(2504.03160) + A-RAG(2602.03442) + SAGE(2602.05975)
+# ═══════════════════════════════════════════════════════════════════
+# Add this import at the top of your file:
+#   from genesis.tools.web_search import web_search, extract_keywords, EvidenceLog, multi_query_search, format_results_for_prompt
+
+# AVAILABLE TOOLS:
+#
+# 1. Quick search (snippet only — fast, use for: platforms, facts, availability)
+#    results = web_search("Clickworker payment proof Egypt 2025", mode="quick")
+#    # Returns: [{title, url, snippet, date, credibility_hint}]
+#
+# 2. Deep search (snippet + first page content)
+#    results = web_search("query", mode="deep")
+#
+# 3. Read specific URL (full page content)
+#    page = web_search("https://reddit.com/r/beermoney/...", mode="read")
+#
+# 4. Multi-query (stolen from DeepResearcher — search multiple queries at once)
+#    results = multi_query_search(["query1", "query2", "query3"], mode="quick")
+#
+# 5. Keyword extraction (stolen from SAGE — BM25 insight)
+#    keywords = extract_keywords("مهام مدفوعة للمصريين", llm_client=client)
+#    results = web_search(" ".join(keywords), mode="quick")  # more precise
+#
+# 6. Format results for prompt
+#    text = format_results_for_prompt(results, max_results=5)
+#    # Inject into your LLM prompt for evidence-grounded generation
+
+# EVIDENCE LOG (stolen from Rulers 2601.08654 — schema-constrained):
+# Track every claim with its source. Unanchored claims = hallucination.
+#
+#    evidence_log = EvidenceLog()
+#    results = web_search("query", evidence_log=evidence_log)
+#    evidence_log.add_claim(
+#        claim="Appen is available in Egypt without VPN",
+#        source_url="https://reddit.com/r/beermoney/...",
+#        source_title="Reddit: Appen Egypt experience",
+#        source_date="2025-03-15",
+#        confidence="HIGH",  # HIGH | MEDIUM | LOW | UNVERIFIED
+#        quote="I'm from Egypt and it works fine without VPN",
+#    )
+#    evidence_log.save(os.path.join(WORKING_DIR, "evidence_log.json"))
+#    print(f"Hallucination rate: {evidence_log.hallucination_rate:.0%}")
+
+# SEARCH STRATEGY (stolen from WebThinker — Think-Search-Draft loop):
+# 1. Think first: what sub-goals need web evidence?
+# 2. Extract keywords before searching (SAGE insight for precision)
+# 3. Search with multiple queries for same sub-goal (DeepResearcher)
+# 4. START DRAFTING while searching — don't wait for all results
+# 5. For each claim: cite source URL and date
+# 6. If source not found: write "UNVERIFIED — needs manual check"
+#
+# SERPER_API_KEY is available as environment variable automatically.
+"""
+    else:
+        web_search_snippet = ""
+
     META_AGENT_PROMPT = META_AGENT_PROMPT.format(
     task_model=task_model,
     META_AGENT_WORKING_DIRECTORY=META_AGENT_WORKING_DIRECTORY,
     ablation_instruction=ablation_instruction,
 )
+    # Append web search snippet after format (it has no format placeholders)
+    if use_web_search:
+        META_AGENT_PROMPT = META_AGENT_PROMPT.rstrip() + "\n" + web_search_snippet
 
 
     ablation_feedback_parts = []
@@ -1189,7 +1266,11 @@ STOP after writing the file. NO FILE READING.
             # Use the per-run venv python so that packages installed for the run (pandas, python-dotenv, etc.) are available to the target_agent
             venv_python = os.path.join(venv_dir, "bin", "python")
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            command = f"set -o pipefail; PYTHONPATH={project_root} {venv_python} -u {target_agent_path} --dataset_dir {ABS_DATASET_DIRECTORY} --working_dir {current_gen_directory} 2>&1 | tee {stdout_log_file}"
+            # Pass SERPER_API_KEY if web search enabled
+            serper_env = ""
+            if use_web_search and os.getenv("SERPER_API_KEY"):
+                serper_env = f"SERPER_API_KEY={os.getenv('SERPER_API_KEY')} "
+            command = f"set -o pipefail; {serper_env}PYTHONPATH={project_root} {venv_python} -u {target_agent_path} --dataset_dir {ABS_DATASET_DIRECTORY} --working_dir {current_gen_directory} 2>&1 | tee {stdout_log_file}"
 
             # Run with shell=True and bash to enable pipefail
             result = subprocess.run(
